@@ -115,7 +115,6 @@ URL:		http://www.go-ooo.org
 License:	LGPL
 Group:		Office
 BuildRoot:	%{_tmppath}/%{name}-%{version}-root
-PreReq:		/usr/sbin/chkfontpath
 Requires:	freetype2 >= 2.1.3-3mdk
 Requires:	ghostscript
 Requires:	libgcc >= 3.2-0.3mdk
@@ -467,7 +466,7 @@ Group:		Office
 Provides:	%{ooname}-l10n = %{version}-%{release}
 Requires:	%{ooname} = %{version}
 Requires:	locales-it
-Requires:	fonts-ttf-vera
+Requires:	fonts-ttf-dejavu
 Requires:	urw-fonts
 Requires:	myspell-it
 Requires:	myspell-hyph-it
@@ -658,7 +657,7 @@ Group:		Office
 Provides:	%{ooname}-l10n = %{version}-%{release}
 Requires:	%{ooname} = %{version}
 Requires:	locales-da
-Requires:	fonts-ttf-vera
+Requires:	fonts-ttf-dejavu
 Requires:	urw-fonts
 Requires:	myspell-da, myspell-hyph-da
 Obsoletes:	OpenOffice.org-l10n-da
@@ -681,7 +680,7 @@ Group:		Office
 Provides:	%{ooname}-l10n = %{version}-%{release}
 Requires:	%{ooname} = %{version}
 Requires:	locales-de
-Requires:	fonts-ttf-vera
+Requires:	fonts-ttf-dejavu
 Requires:	urw-fonts
 Requires:	myspell-de
 Requires:	myspell-hyph-de
@@ -751,7 +750,7 @@ Group:		Office
 Provides:	%{ooname}-l10n = %{version}-%{release}
 Requires:	%{ooname} = %{version}
 Requires:	locales-es
-Requires:	fonts-ttf-vera
+Requires:	fonts-ttf-dejavu
 Requires:	urw-fonts
 Requires:	myspell-es
 Requires:	myspell-hyph-es
@@ -777,7 +776,7 @@ Group:		Office
 Provides:	%{ooname}-l10n = %{version}-%{release}
 Requires:	%{ooname} = %{version}
 Requires:	locales-et
-Requires:	fonts-ttf-vera
+Requires:	fonts-ttf-dejavu
 Requires:	urw-fonts
 Requires:	myspell-et
 Requires:	myspell-hyph-et
@@ -801,7 +800,7 @@ Group:		Office
 Provides:	%{ooname}-l10n = %{version}-%{release}
 Requires:	%{ooname} = %{version}
 Requires:	locales-eu
-Requires:	fonts-ttf-vera
+Requires:	fonts-ttf-dejavu
 Requires:	urw-fonts
 Obsoletes:	OpenOffice.org-l10n-eu
 Obsoletes:	OpenOffice.org-help-eu
@@ -825,7 +824,7 @@ Group:		Office
 Provides:	%{ooname}-l10n = %{version}-%{release}
 Requires:	%{ooname} = %{version}
 Requires:	locales-fi
-Requires:	fonts-ttf-vera
+Requires:	fonts-ttf-dejavu
 Requires:	urw-fonts
 Requires:	myspell-hyph-fi
 Obsoletes:	OpenOffice.org-l10n-fi
@@ -850,7 +849,7 @@ Group:		Office
 Provides:	%{ooname}-l10n = %{version}-%{release}
 Requires:	%{ooname} = %{version}
 Requires:	locales-fr
-Requires:	fonts-ttf-vera
+Requires:	fonts-ttf-dejavu
 Requires:	urw-fonts
 Requires:	myspell-fr
 Requires:	myspell-hyph-fr
@@ -1026,7 +1025,7 @@ Group:		Office
 Provides:	%{ooname}-l10n = %{version}-%{release}
 Requires:	%{ooname} = %{version}
 Requires:	locales-nl
-Requires:	fonts-ttf-vera
+Requires:	fonts-ttf-dejavu
 Requires:	urw-fonts
 Requires:	myspell-nl
 Requires:	myspell-hyph-nl
@@ -1095,7 +1094,7 @@ Group:		Office
 Provides:	%{ooname}-l10n = %{version}-%{release}
 Requires:	%{ooname} = %{version}
 Requires:	locales-pt
-Requires:	fonts-ttf-vera
+Requires:	fonts-ttf-dejavu
 Requires:	urw-fonts
 Requires:	myspell-pt
 Requires:	myspell-hyph-pt
@@ -1217,7 +1216,7 @@ Group:		Office
 Provides:	%{ooname}-l10n = %{version}-%{release}
 Requires:	%{ooname} = %{version}
 Requires:	locales-sv
-Requires:	fonts-ttf-vera
+Requires:	fonts-ttf-dejavu
 Requires:	urw-fonts
 Requires:	myspell-sv
 Requires:	myspell-hyph-sv
