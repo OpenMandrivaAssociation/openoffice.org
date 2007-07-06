@@ -148,7 +148,7 @@ BuildRequires:	ccache
 #
 BuildRequires:  automake1.8
 BuildRequires:	autoconf
-%ifarch x86_64
+%if %{use_systemboost}
 BuildRequires:	boost-devel
 %endif
 BuildRequires:	bison >= 1.32-2mdk
