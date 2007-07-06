@@ -79,7 +79,7 @@
 %{?_without_systemdb: %global use_systemdb 0}
 
 %define use_systemboost 0
-%{?_with_systemboost: %global use_systeboost 1}
+%{?_with_systemboost: %global use_systemboost 1}
 %{?_without_systemboost: %global use_systemboost 0}
 
 %define skip_install	0
