@@ -360,6 +360,7 @@ Patch12:	ooo-build-2.2.1-libwpg.patch
 Patch14:	ooo-build-2.2.1-kde.patch
 Patch16:	oof680-m18-core-ooqstart.patch
 Patch17:	ooo-build-fix-build-java-target-patch.patch
+Patch18:	ooo-build-2.2.1-neon.patch
 
 %description
 OpenOffice.org is an Open Source, community-developed, multi-platform
@@ -1368,6 +1369,7 @@ standard locales system.
 %patch14 -p1 -b .kde
 %patch16 -p1 -b .ooqstart
 %patch17 -p1 -b .javac
+%patch18 -p1 -b .neon
 
 
 %build
@@ -1559,6 +1561,9 @@ make \
 
 
 %install
+# sbin due to icu stuff there
+PATH=$PATH:/usr/sbin
+
 %if ! %{skip_install}
 rm -rf %{buildroot}
 make install DESTDIR=%{buildroot}
