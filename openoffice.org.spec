@@ -1,3 +1,5 @@
+%define unstable	0
+
 %ifarch x86_64
 %define	ooname		openoffice.org64
 %define name		openoffice.org64
@@ -15,7 +17,7 @@
 %define release		%mkrel 1
 
 %define oootagver	oof680-m18
-%define ooobuildver	2.2.1
+%define ooobuildver	2.2.1.10110
 %define jdkver		1_5_0_11
 %ifarch x86_64
 %define mdvsuffix	2.2_64
@@ -117,6 +119,7 @@ Group:		Office
 BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 Requires:	freetype2 >= 2.1.3-3mdk
 Requires:	ghostscript
+Requires:	fonts-ttf-liberation
 Requires:	libgcc >= 3.2-0.3mdk
 Requires:	libstdc++ >= 3.2-0.3mdk
 Requires:	%{mklibname unixODBC 1}
@@ -198,7 +201,7 @@ BuildRequires:	mono-data-sqlite
 BuildRequires:	mozilla-firefox-devel
 BuildRequires:	nss-devel
 BuildRequires:  nas-devel
-BuildRequires:	neon-devel
+BuildRequires:	neon-devel >= 0.26
 BuildRequires:	pam-devel
 BuildRequires:	perl
 BuildRequires:	perl-Archive-Zip
@@ -355,11 +358,11 @@ Patch4:		openoffice.org2-2.0.2-qstart.patch
 Patch6:		openoffice.org-2.1.0-firefox-xpcom.patch
 Patch8:		ooo-build-2.2.1-xdg.patch
 Patch10:	openoffice.org-2.1.0-install.patch
-Patch12:	ooo-build-2.2.1-libwpg.patch
 Patch14:	ooo-build-2.2.1-kde.patch
 Patch16:	oof680-m18-core-ooqstart.patch
 Patch17:	ooo-build-fix-build-java-target-patch.patch
 Patch18:	ooo-build-2.2.1-neon.patch
+Patch19:	ooo-build-2.2.1-desktop_files.patch
 
 %description
 OpenOffice.org is an Open Source, community-developed, multi-platform
@@ -1364,11 +1367,13 @@ standard locales system.
 %endif
 %patch8 -p1 -b .xdg
 %patch10 -p1 -b .oooinst
-%patch12 -p1 -b .libwpg
 %patch14 -p1 -b .kde
 %patch16 -p1 -b .ooqstart
 %patch17 -p1 -b .javac
 %patch18 -p1 -b .neon
+%if ! %unstable
+%patch19 -p1 -b .desktop_files
+%endif
 
 
 %build
