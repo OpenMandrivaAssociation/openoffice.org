@@ -127,7 +127,7 @@ Requires:	mandrake_desk >= 10.1-6mdk
 Requires:	Xaw3d
 # Due to %{_bindir}/paperconf
 Requires:	paper-utils
-PreReq: /usr/sbin/update-alternatives
+PreReq: update-alternatives
 Requires(post): desktop-file-utils
 Requires(postun): desktop-file-utils
 Obsoletes:	OpenOffice.org
