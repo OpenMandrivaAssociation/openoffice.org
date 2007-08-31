@@ -1630,50 +1630,55 @@ GenerateMenu math \
 desktop-file-install --vendor="" \
   --remove-category="Application" \
   --add-category="Office" \
-  --add-category="X-MandrivaLinux-Office-Wordprocessors" \
+  --add-category="X-MandrivaLinux-CrossDesktop" \
   --add-mime-type="application/vnd.ms-works;application/x-msworks-wp;zz-application/zz-winassoc-wps" \
   --dir %{buildroot}%{_datadir}/applications %{buildroot}%{_datadir}/applications/writer*desktop
 
 desktop-file-install --vendor="" \
   --remove-category="Application" \
   --add-category="Office" \
-  --add-category="X-MandrivaLinux-Office-Spreadsheets" \
+  --add-category="X-MandrivaLinux-CrossDesktop" \
   --dir %{buildroot}%{_datadir}/applications %{buildroot}%{_datadir}/applications/calc*desktop
 
 desktop-file-install --vendor="" \
   --remove-category="Application" \
+  --remove-category="Graphics" \
+  --remove-category="VectorGraphics" \
   --add-category="Office" \
-  --add-category="X-MandrivaLinux-Office-Drawing" \
+  --add-category="X-MandrivaLinux-CrossDesktop" \
   --dir %{buildroot}%{_datadir}/applications %{buildroot}%{_datadir}/applications/draw*desktop
 
 desktop-file-install --vendor="" \
   --remove-category="Application" \
   --add-category="Office" \
-  --add-category="X-MandrivaLinux-Office-Presentations" \
+  --add-category="X-MandrivaLinux-CrossDesktop" \
   --dir %{buildroot}%{_datadir}/applications %{buildroot}%{_datadir}/applications/impress*desktop
 
 desktop-file-install --vendor="" \
   --remove-category="Application" \
   --add-category="Office" \
-  --add-category="X-MandrivaLinux-Office-Other" \
+  --add-category="X-MandrivaLinux-CrossDesktop" \
   --dir %{buildroot}%{_datadir}/applications %{buildroot}%{_datadir}/applications/math*desktop
 
 desktop-file-install --vendor="" \
   --remove-category="Application" \
+  --remove-category="Network" \
+  --remove-category="WebDevelopment" \
   --add-category="Office" \
-  --add-category="X-MandrivaLinux-Office-Other" \
+  --add-category="X-MandrivaLinux-CrossDesktop" \
   --dir %{buildroot}%{_datadir}/applications %{buildroot}%{_datadir}/applications/web*desktop
 
 desktop-file-install --vendor="" \
   --remove-category="Application" \
   --add-category="Office" \
-  --add-category="X-MandrivaLinux-Office" \
+  --add-category="X-MandrivaLinux-CrossDesktop" \
   --dir %{buildroot}%{_datadir}/applications %{buildroot}%{_datadir}/applications/template*desktop
 
 desktop-file-install --vendor="" \
   --remove-category="Application" \
+  --remove-category="Database" \
   --add-category="Office" \
-  --add-category="X-MandrivaLinux-MoreApplications-Databases" \
+  --add-category="X-MandrivaLinux-CrossDesktop" \
   --dir %{buildroot}%{_datadir}/applications %{buildroot}%{_datadir}/applications/base*desktop
 
 # FontOOo|DictOOo wizard
