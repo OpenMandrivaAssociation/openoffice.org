@@ -829,7 +829,7 @@ Requires:	%{ooname} = %{version}
 Requires:	locales-fi
 Requires:	fonts-ttf-dejavu
 Requires:	urw-fonts
-Requires:	myspell-hyph-fi
+Requires:	%{ooname}-voikko
 Obsoletes:	OpenOffice.org-l10n-fi
 Obsoletes:	OpenOffice.org-help-fi
 Provides:	OpenOffice.org-l10n-fi
