@@ -363,6 +363,7 @@ Patch16:	oof680-m18-core-ooqstart.patch
 Patch17:	ooo-build-fix-build-java-target-patch.patch
 Patch18:	ooo-build-2.2.1-neon.patch
 Patch19:	ooo-build-2.2.1-desktop_files.patch
+Patch20:	ooo-build-2.2.1-neon2.patch
 
 %description
 OpenOffice.org is an Open Source, community-developed, multi-platform
@@ -1374,6 +1375,7 @@ standard locales system.
 %if ! %unstable
 %patch19 -p1 -b .desktop_files
 %endif
+%patch20 -p1 -b .neon2
 
 
 %build
