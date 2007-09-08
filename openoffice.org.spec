@@ -1753,7 +1753,7 @@ rm -rf %{buildroot}
 %postun
 %{clean_menus}
 %{clean_desktop_database}
-if [ "$1" = "0" ]; then
+if [ ! -e "%{_bindir}/ooffice%{mdvsuffix}" ]; then
         /usr/sbin/update-alternatives --remove ooffice %{_bindir}/ooffice%{mdvsuffix}
 fi
 
