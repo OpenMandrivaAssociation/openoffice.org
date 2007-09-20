@@ -14,7 +14,7 @@
 #define _source_payload w9.bzdio
 
 %define version		2.2.1
-%define release		%mkrel 2
+%define release		%mkrel 3
 
 %define oootagver	oof680-m18
 %define ooobuildver	2.2.1.10110
@@ -364,6 +364,7 @@ Patch17:	ooo-build-fix-build-java-target-patch.patch
 Patch18:	ooo-build-2.2.1-neon.patch
 Patch19:	ooo-build-2.2.1-desktop_files.patch
 Patch20:	ooo-build-2.2.1-neon2.patch
+Patch21:	openoffice.org-2.2.1-CVE-2007-2834.patch
 
 %description
 OpenOffice.org is an Open Source, community-developed, multi-platform
@@ -1376,6 +1377,7 @@ standard locales system.
 %patch19 -p1 -b .desktop_files
 %endif
 %patch20 -p1 -b .neon2
+%patch21 -p1 -b .cve-2007-2834
 
 # Fix Icon tags
 sed -i s/.png$// desktop/*desktop*
