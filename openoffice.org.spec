@@ -1475,6 +1475,7 @@ CXXFLAGS="%{optflags} %{optsafe} -fno-omit-frame-pointer -fno-strict-aliasing -f
 	--with-build-version="%{ooobuildver}" \
         --enable-odk \
         --enable-java \
+	--enable-gstreamer \
 	--with-firefox \
 	--with-system-mozilla \
 	--with-system-libs \
