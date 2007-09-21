@@ -351,6 +351,8 @@ Source32:	openabout_mandriva64.bmp
 Source50:	http://oooconv.free.fr/fontooo/FontOOo.sxw.bz2
 Source51:	http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/dicooo/DicOOo.sxw.bz2
 Source53:	extra_kde-mimetypes.tar.bz2
+Source60:	openoffice.org.csh
+Source61:	openoffice.org.sh
 
 Patch1:		ooo-build-2.1.0-lzmatarball.patch
 Patch2:		openoffice.org2-2.0.1-localwidget.patch
@@ -1731,6 +1733,10 @@ tar -xjf %{SOURCE53} -C %{buildroot}%{_datadir}/mimelnk/application/
 mv %{buildroot}%{_libdir}/pkgconfig/mono-ooo-%{mdvsuffix}.pc \
    %{buildroot}%{_libdir}/pkgconfig/mono-ooo%{mdvsuffix}-2.2.pc
 
+# Install profile.d/ files (#33475)
+install -D %{_sourcedir}/openoffice.org.csh %{buildroot}%{_sysconfdir}/profile.d/openoffice.org.csh
+install -D %{_sourcedir}/openoffice.org.sh %{buildroot}%{_sysconfdir}/profile.d/openoffice.org.sh
+
 %clean
 %if ! %{skip_install}
 rm -rf %{buildroot}
@@ -1763,6 +1769,7 @@ fi
 %files -f build/common_list_fixed.txt
 %defattr(-,root,root)
 %{_sysconfdir}/bash_completion.d/o*%{mdvsuffix}.sh
+%{_sysconfdir}/profile.d/*
 %{_bindir}/*
 %{_datadir}/pixmaps/*.png
 %{_datadir}/mime/packages/openoffice.xml
