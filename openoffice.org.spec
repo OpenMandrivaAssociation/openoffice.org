@@ -1382,10 +1382,11 @@ standard locales system.
 %endif
 %patch20 -p1 -b .neon2
 %patch21 -p1 -b .cve-2007-2834
-%patch22 -p1 -b .bug26983
 
 # Fix Icon tags
 sed -i s/.png$// desktop/*desktop*
+
+%patch22 -p1 -b .bug26983
 
 %build
 # Workaround for bug http://qa.mandriva.com/show_bug.cgi?id=27771
