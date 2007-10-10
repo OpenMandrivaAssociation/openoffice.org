@@ -355,7 +355,6 @@ Source60:	openoffice.org.csh
 Source61:	openoffice.org.sh
 
 Patch1:		ooo-build-2.1.0-lzmatarball.patch
-Patch2:		openoffice.org2-2.0.1-localwidget.patch
 Patch4:		openoffice.org2-2.0.2-qstart.patch
 Patch6:		openoffice.org-2.1.0-firefox-xpcom.patch
 Patch8:		ooo-build-2.2.1-xdg.patch
@@ -1366,7 +1365,6 @@ standard locales system.
 %patch1 -p1 -b .lzma
 %endif
 
-#%patch2 -p1 -b .localwidget
 %patch4 -p1 -b .qstart
 %if %{mdkversion} >= 200710
 %patch6 -p1 -b .xpcom
@@ -1374,7 +1372,6 @@ standard locales system.
 %patch8 -p1 -b .xdg
 %patch10 -p1 -b .oooinst
 %patch14 -p1 -b .kde
-%patch16 -p1 -b .ooqstart
 %patch17 -p1 -b .javac
 %patch18 -p1 -b .neon
 %if ! %unstable
@@ -1382,6 +1379,7 @@ standard locales system.
 %endif
 %patch20 -p1 -b .neon2
 %patch21 -p1 -b .cve-2007-2834
+%patch16 -p1 -b .ooqstart
 
 # Fix Icon tags
 sed -i s/.png$// desktop/*desktop*
