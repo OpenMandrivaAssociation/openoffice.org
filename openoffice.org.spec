@@ -60,7 +60,7 @@
 %{?_without_icecream: %global use_icecream 0}
 
 %define use_ccache	0
-%define ccachedir	%{_tmppath}/.ccache
+%define ccachedir	~/.ccache-OOo%{mdvsuffix}
 %{?_with_ccache: %global use_ccache 1}
 %{?_without_ccache: %global use_ccache 0}
 
