@@ -368,6 +368,8 @@ Patch20:	ooo-build-2.2.1-neon2.patch
 Patch21:	openoffice.org-2.2.1-CVE-2007-2834.patch
 # (mrl) Force document downloads. http://qa.mandriva.com/show_bug.cgi?id=26983
 Patch22:	ooo-build-2.2.1-force_downloads.patch
+# (mrl) Adds Angola
+Patch23:	ooo-build-2.2.1-angola.patch
 
 %description
 OpenOffice.org is an Open Source, community-developed, multi-platform
@@ -1380,6 +1382,7 @@ standard locales system.
 %patch20 -p1 -b .neon2
 %patch21 -p1 -b .cve-2007-2834
 %patch16 -p1 -b .ooqstart
+%patch23 -p1 -b .angola
 
 # Fix Icon tags
 sed -i s/.png$// desktop/*desktop*
