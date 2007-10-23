@@ -1561,12 +1561,12 @@ CXXFLAGS="%{optflags} %{optsafe} -fno-omit-frame-pointer -fno-strict-aliasing -f
  %if !%{use_ccache} && %{use_icecream}
 	--with-gcc-speedup=icecream \
 	--with-icecream-max-jobs=10 \
-	--with-icecream-bindir=%{_libdir}/icecream/bin
+	--with-icecream-bindir=%{_libdir}/icecc/bin
  %else
   %if %{use_ccache} && %{use_icecream}
 	--with-gcc-speedup=ccache,icecream \
 	--with-icecream-max-jobs=10 \
-	--with-icecream-bindir=%{_libdir}/icecream/bin
+	--with-icecream-bindir=%{_libdir}/icecc/bin
   %endif
  %endif
 %endif
