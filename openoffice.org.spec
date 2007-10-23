@@ -1739,8 +1739,13 @@ mv %{buildroot}%{_libdir}/pkgconfig/mono-ooo-%{mdvsuffix}.pc \
    %{buildroot}%{_libdir}/pkgconfig/mono-ooo%{mdvsuffix}-2.2.pc
 
 # Install profile.d/ files (#33475)
-install -D %{_sourcedir}/openoffice.org.csh %{buildroot}%{_sysconfdir}/profile.d/openoffice.org.csh
-install -D %{_sourcedir}/openoffice.org.sh %{buildroot}%{_sysconfdir}/profile.d/openoffice.org.sh
+mkdir -p %{buildroot}%{_sysconfdir}/profile.d
+sed 's/@VERSION@/%{mdvsuffix}/g' \
+	%{_sourcedir}/openoffice.org.csh > \
+	%{buildroot}%{_sysconfdir}/profile.d/openoffice.org.csh
+sed 's/@VERSION@/%{mdvsuffix}/g' \
+	%{_sourcedir}/openoffice.org.sh > \
+	%{buildroot}%{_sysconfdir}/profile.d/openoffice.org.sh
 
 %clean
 %if ! %{skip_install}
