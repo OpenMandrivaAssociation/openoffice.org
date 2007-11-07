@@ -29,12 +29,6 @@
 %define libdbver	4.2
 %define ooolangs	"en-US af ar bg br bs ca cs cy da de el en-GB es et eu fi fr he hi hu it ja ko mk nb nl nn pl pt pt-BR ru sk sl sv ta tr zh-TW zh-CN zu"
 
-%ifarch x86_64
-%define ooomenu		openoffice.org64-%{mdvsuffix}
-%else
-%define ooomenu		openoffice.org-%{mdvsuffix}
-%endif
-
 %define oootarext	bz2
 
 %ifarch x86_64
@@ -1882,59 +1876,7 @@ rm -rf %{buildroot}%{ooodir}/share/template/wizard/letter/
 # <mrl> Link to the shared one
 rm -rf %{buildroot}%{ooodir}/share/dict/ooo
 ln -s %{_datadir}/dict/ooo %{buildroot}%{ooodir}/share/dict
-%else
-rm -f %{buildroot}%{_menudir}/%{ooomenu}
 %endif
-
-# Generate menus
-mkdir -p %{buildroot}%{_menudir}
-
-GenerateMenu() {
-[ -f "%{buildroot}%{_menudir}/%{ooomenu}" ] || touch %{buildroot}%{_menudir}/%{ooomenu}
-mimetypes_item=
-[ "$6" != "" ] && mimetypes_item="mimetypes=\"$6\""
-cat >> %{buildroot}%{_menudir}/%{ooomenu} << EOF
-?package(%{name}): needs=x11 section="$2" icon="$3" title="$4" longtitle="$5" command="oo$1%{mdvsuffix}" \
-$mimetypes_item kde_opt="InitialPreference=110" \
-xdg="true" \
-startup_notify="true"
-EOF
-}
-
-GenerateMenu calc \
-  "Office/Spreadsheets" \
-  "ooo-calc%{mdvsuffix}.png" \
-  "OpenOffice.org Calc" \
-  "OpenOffice.org Spreadsheet" \
-  "application/vnd.sun.xml.calc,application/vnd.sun.xml.calc.template,application/vnd.ms-excel,application/vnd.stardivision.calc,application/vnd.stardivision.chart,application/vnd.lotus-1-2-3,text/x-comma-separated-values,application/vnd.oasis.opendocument.spreadsheet,application/vnd.oasis.opendocument.spreadsheet-template"
-
-GenerateMenu draw \
-  "Office/Drawing" \
-  "ooo-draw%{mdvsuffix}.png" \
-  "OpenOffice.org Draw" \
-  "OpenOffice.org Drawing" \
-  "application/vnd.sun.xml.draw,application/vnd.sun.xml.draw.template,application/vnd.stardivision.draw,application/vnd.oasis.opendocument.graphics,application/vnd.oasis.opendocument.graphics-template"
-
-GenerateMenu impress \
-  "Office/Presentations" \
-  "ooo-impress%{mdvsuffix}.png" \
-  "OpenOffice.org Impress" \
-  "OpenOffice.org Presentation" \
-  "application/vnd.sun.xml.impress,application/vnd.sun.xml.impress.template,application/vnd.ms-powerpoint,application/vnd.stardivision.impress,application/vnd.oasis.opendocument.presentation,application/vnd.oasis.opendocument.presentation-template"
-
-GenerateMenu writer \
-  "Office/Wordprocessors" \
-  "ooo-writer%{mdvsuffix}.png" \
-  "OpenOffice.org Writer" \
-  "OpenOffice.org Word Processing Component" \
-  "application/vnd.sun.xml.writer,application/vnd.sun.xml.writer.global,application/vnd.sun.xml.writer.template,application/vnd.ms-word,application/x-mswrite,application/vnd.stardivision.writer,application/vnd.wordperfect,application/wordperfect,application/rtf,text/rtf,application/vnd.oasis.opendocument.text,application/vnd.oasis.opendocument.text-master,application/vnd.oasis.opendocument.text-template,application/vnd.ms-works,application/x-msworks-wp,zz-application/zz-winassoc-wps"
-
-GenerateMenu math \
-  "Office/Wordprocessors" \
-  "ooo-math%{mdvsuffix}.png" \
-  "OpenOffice.org Math" \
-  "OpenOffice.org Formula Editor" \
-  "application/vnd.stardivision.math,application/vnd.sun.xml.writer.math"
 
 # desktop files
 desktop-file-install --vendor="" \
@@ -2129,7 +2071,6 @@ fi
 %{_bindir}/ooffice%{mdvsuffix}
 %{_bindir}/oofromtemplate%{mdvsuffix}
 %{_bindir}/ootool%{mdvsuffix}
-%{_menudir}/%{ooomenu}
 %{ooodir}/LICENSE
 %{ooodir}/LICENSE.html
 %{ooodir}/README
