@@ -2068,6 +2068,8 @@ fi
 
 %files base
 %{_bindir}/oobase%{mdvsuffix}
+# <mrl> Please note ? at filenames. They are needed because 32b builds produces
+# "li" files while 64b builds produces "lx" files.
 %{ooodir}/program/libabp680l?.so
 %{ooodir}/program/libadabas2.so
 %{ooodir}/program/libdbacfg680l?.so
@@ -2455,8 +2457,7 @@ fi
 %{ooodir}/program/basprov680l?.uno.so
 %{ooodir}/program/behelper.uno.so
 %{ooodir}/program/bridgefac.uno.so
-# As I don't know how to make !x86_64
-%ifarch i586
+%ifnarch x86_64
 %{ooodir}/program/cairocanvas.uno.so
 %endif
 %{ooodir}/program/canvasfactory.uno.so
