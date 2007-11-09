@@ -80,10 +80,6 @@
 %{?_with_systemboost: %global use_systemboost 1}
 %{?_without_systemboost: %global use_systemboost 0}
 
-%define skip_install	0
-%{?_with_skipinstall: %global skip_install 1}
-%{?_without_skipinstall: %global skip_install 0}
-
 # disable for now in X86-64 (gengal segfaults)
 %ifarch x86_64
 %define use_systemdb	1
@@ -1415,7 +1411,8 @@ standard locales system.
 Summary:	Portuguese Brazilian language support for OpenOffice.org
 Group:		Office
 Provides:	%{ooname}-l10n = %{version}-%{release}
-Requires:	%{ooname}-common = %{version}
+# Due to alternatives setup, we must have -release here. (BrOffice)
+Requires:	%{ooname}-common = %{version}-%{release}
 Requires:	locales-pt
 Requires:	urw-fonts
 Requires:	myspell-pt_BR
@@ -1867,7 +1864,6 @@ make \
 # sbin due to icu stuff there
 PATH=$PATH:/usr/sbin
 
-%if ! %{skip_install}
 rm -rf %{buildroot}
 make install DESTDIR=%{buildroot}
 rm -rf %{buildroot}/opt
@@ -1876,7 +1872,6 @@ rm -rf %{buildroot}%{ooodir}/share/template/wizard/letter/
 # <mrl> Link to the shared one
 rm -rf %{buildroot}%{ooodir}/share/dict/ooo
 ln -s %{_datadir}/dict/ooo %{buildroot}%{ooodir}/share/dict
-%endif
 
 # desktop files
 desktop-file-install --vendor="" \
@@ -1974,6 +1969,36 @@ sed 's/@VERSION@/%{mdvsuffix}/g' \
 	%{_sourcedir}/openoffice.org.sh > \
 	%{buildroot}%{_sysconfdir}/profile.d/openoffice.org.sh
 
+# BrOffice.org Support (install)
+function bro() {
+  exp="$1"
+  f="$2"
+  mv "$f" "$f.ooo"
+  sed "$exp" "$f.ooo" > "$f.bro"
+}
+
+# Change suite name in the program itself
+cd %{buildroot}%{ooodir}
+bro "s/OpenO/BrO/;s/openo/bro/" program/bootstraprc
+bro "s/en-US/pt-BR/;s/openo/bro/" program/versionrc
+bro "s/OpenO/BrO/" share/registry/data/org/openoffice/Setup.xcu
+cd -
+
+# Change the suite name in .desktop files
+cd %{buildroot}%{_datadir}/applications
+for i in *.desktop; do
+  bro "s/OpenO/BrO/" "$i"
+done
+cd -
+
+# Place symlinks br<app> -> oo<app>
+cd %{buildroot}%{_bindir}
+for i in oo*; do
+  ln -s $i ${i/oo/br}
+done
+cd -
+# End of BrOffice support (install)
+
 # QA Tools not wanted for now
 rm -f %{buildroot}%{ooodir}/program/libcommuni680l?.so
 rm -f %{buildroot}%{ooodir}/program/libsimplecm680l?.so
@@ -1981,13 +2006,9 @@ rm -f %{buildroot}%{ooodir}/program/testtool.bin
 rm -f %{buildroot}%{ooodir}/program/testtoolrc
 
 %clean
-%if ! %{skip_install}
 rm -rf %{buildroot}
-%endif
 
-%post
-%{update_menus}
-%{update_desktop_database}
+%post common
 # <mrl> Bogus versioning in previous alternatives setup forces us to do this
 # We can safelly remove it, as we are obsoleting that version anyway.
 /usr/sbin/update-alternatives --remove ooffice %{_bindir}/ooffice2.1 || :
@@ -2001,12 +2022,94 @@ rm -rf %{buildroot}
         --slave %{_bindir}/ooweb     ooweb     %{_bindir}/ooweb%{mdvsuffix}
 [ -e %{_bindir}/ooffice ] || /usr/sbin/update-alternatives --auto ooffice
 
-%postun
-%{clean_menus}
-%{clean_desktop_database}
+# BrOffice support %post
+# alternatives names follows oobr_<filename> mark, making it explicit.
+/usr/sbin/update-alternatives \
+        --install %{ooodir}/program/bootstraprc oobr_bootstraprc \
+		%{ooodir}/program/bootstraprc.ooo 1 \
+        --slave %{ooodir}/program/versionrc oobr_versionrc \
+		%{ooodir}/program/versionrc.ooo \
+        --slave %{ooodir}/share/registry/data/org/openoffice/Setup.xcu oobr_Setup.xcu \
+		%{ooodir}/share/registry/data/org/openoffice/Setup.xcu.ooo \
+	--slave %{_datadir}/applications/base.desktop oobr_base.desktop \
+		%{_datadir}/applications/base.desktop.ooo \
+	--slave %{_datadir}/applications/calc.desktop oobr_calc.desktop \
+		%{_datadir}/applications/calc.desktop.ooo \
+	--slave %{_datadir}/applications/draw.desktop oobr_draw.desktop \
+		%{_datadir}/applications/draw.desktop.ooo \
+	--slave %{_datadir}/applications/impress.desktop oobr_impress.desktop \
+		%{_datadir}/applications/impress.desktop.ooo \
+	--slave %{_datadir}/applications/math.desktop oobr_math.desktop \
+		%{_datadir}/applications/math.desktop.ooo \
+	--slave %{_datadir}/applications/template.desktop oobr_template.desktop \
+		%{_datadir}/applications/template.desktop.ooo \
+	--slave %{_datadir}/applications/web.desktop oobr_web.desktop \
+		%{_datadir}/applications/web.desktop.ooo \
+	--slave %{_datadir}/applications/writer.desktop oobr_writer.desktop \
+		%{_datadir}/applications/writer.desktop.ooo
+# Always do this configuration, as the switch should be transparent.
+/usr/sbin/update-alternatives --auto oobr_bootstraprc
+# End of BrOffice support %post
+
+# This must be after alterantives setup.
+%{update_desktop_database}
+
+%postun common
 if [ ! -e "%{_bindir}/ooffice%{mdvsuffix}" ]; then
         /usr/sbin/update-alternatives --remove ooffice %{_bindir}/ooffice%{mdvsuffix}
 fi
+
+# BrOffice support %postun common
+if [ ! -e "%{ooodir}/program/bootstraprc.ooo" ]; then
+        /usr/sbin/update-alternatives --remove oobr_bootstraprc %{ooodir}/program/bootstraprc.ooo
+fi
+# End of BrOffice support %postun common
+
+# This must be after alterantives setup.
+%{clean_desktop_database}
+
+%post l10n-pt_BR
+# BrOffice support %post l10n-pt_BR
+# alternatives names follows oobr_<filename> mark, making it explicit.
+/usr/sbin/update-alternatives \
+        --install %{ooodir}/program/bootstraprc oobr_bootstraprc \
+		%{ooodir}/program/bootstraprc.bro 2 \
+        --slave %{ooodir}/program/versionrc oobr_versionrc \
+		%{ooodir}/program/versionrc.bro \
+        --slave %{ooodir}/share/registry/data/org/openoffice/Setup.xcu oobr_Setup.xcu \
+		%{ooodir}/share/registry/data/org/openoffice/Setup.xcu.bro \
+	--slave %{_datadir}/applications/base.desktop oobr_base.desktop \
+		%{_datadir}/applications/base.desktop.bro \
+	--slave %{_datadir}/applications/calc.desktop oobr_calc.desktop \
+		%{_datadir}/applications/calc.desktop.bro \
+	--slave %{_datadir}/applications/draw.desktop oobr_draw.desktop \
+		%{_datadir}/applications/draw.desktop.bro \
+	--slave %{_datadir}/applications/impress.desktop oobr_impress.desktop \
+		%{_datadir}/applications/impress.desktop.bro \
+	--slave %{_datadir}/applications/math.desktop oobr_math.desktop \
+		%{_datadir}/applications/math.desktop.bro \
+	--slave %{_datadir}/applications/template.desktop oobr_template.desktop \
+		%{_datadir}/applications/template.desktop.bro \
+	--slave %{_datadir}/applications/web.desktop oobr_web.desktop \
+		%{_datadir}/applications/web.desktop.bro \
+	--slave %{_datadir}/applications/writer.desktop oobr_writer.desktop \
+		%{_datadir}/applications/writer.desktop.bro
+# Always do this configuration, as the switch should be transparent.
+/usr/sbin/update-alternatives --auto oobr_bootstraprc
+# End of BrOffice support %post l10n-pt_BR
+
+# This must be after alterantives setup.
+%{update_desktop_database}
+
+%postun l10n-pt_BR
+# BrOffice support %postun l10n-pt_BR
+if [ ! -e "%{ooodir}/program/bootstraprc.bro" ]; then
+        /usr/sbin/update-alternatives --remove oobr_bootstraprc %{ooodir}/program/bootstraprc.bro
+fi
+# End of BrOffice support %postun l10n-pt_BR
+
+# This must be after alterantives setup.
+%{clean_desktop_database}
 
 %files base
 %{_bindir}/oobase%{mdvsuffix}
@@ -2039,7 +2142,7 @@ fi
 %{ooodir}/share/registry/modules/org/openoffice/TypeDetection/Misc/fcfg_database_others.xcu
 %{ooodir}/share/registry/modules/org/openoffice/TypeDetection/Types/fcfg_database_types.xcu
 %{ooodir}/share/xdg/base*.desktop
-%{_datadir}/applications/base*.desktop
+%{_datadir}/applications/base*.desktop.ooo
 %{_mandir}/man1/oobase%{mdvsuffix}.1*
 
 %files calc
@@ -2062,7 +2165,7 @@ fi
 %{ooodir}/share/registry/schema/org/openoffice/Office/UI/CalcCommands.xcs
 %{ooodir}/share/registry/schema/org/openoffice/Office/UI/CalcWindowState.xcs
 %{ooodir}/share/xdg/calc*.desktop
-%{_datadir}/applications/calc*.desktop
+%{_datadir}/applications/calc*.desktop.ooo
 %{_mandir}/man1/oocalc%{mdvsuffix}.1*
 
 %files common
@@ -2115,7 +2218,7 @@ fi
 %{ooodir}/presets/wordbook
 #%{ooodir}/program/about.bmp
 %{ooodir}/program/addin
-%{ooodir}/program/bootstraprc
+%{ooodir}/program/bootstraprc.ooo
 %{ooodir}/program/cde-open-url
 %{ooodir}/program/configimport
 %{ooodir}/program/configmgrrc
@@ -2173,7 +2276,7 @@ fi
 %{ooodir}/program/unohelper.py
 %{ooodir}/program/unopkg
 %{ooodir}/program/unorc
-%{ooodir}/program/versionrc
+%{ooodir}/program/versionrc.ooo
 %{ooodir}/program/viewdoc
 %{ooodir}/readmes/README_en-US
 %{ooodir}/readmes/README_en-US.html
@@ -2256,7 +2359,7 @@ fi
 %{ooodir}/share/registry/data/org/openoffice/Office/Views.xcu
 %{ooodir}/share/registry/data/org/openoffice/Office/WebWizard.xcu
 %{ooodir}/share/registry/data/org/openoffice/Office/Writer.xcu
-%{ooodir}/share/registry/data/org/openoffice/Setup.xcu
+%{ooodir}/share/registry/data/org/openoffice/Setup.xcu.ooo
 %{ooodir}/share/registry/data/org/openoffice/TypeDetection
 %{ooodir}/share/registry/data/org/openoffice/UserProfile.xcu
 %{ooodir}/share/registry/data/org/openoffice/VCL.xcu
@@ -2368,7 +2471,7 @@ fi
 %{ooodir}/share/xdg/extension*.desktop
 %{ooodir}/share/xdg/printeradmin*.desktop
 %{ooodir}/share/xslt
-%{_datadir}/applications/template*.desktop
+%{_datadir}/applications/template*.desktop.ooo
 %{_datadir}/icons/hicolor/*/apps/ooo-base%{mdvsuffix}.*
 %{_datadir}/icons/hicolor/*/apps/ooo-calc%{mdvsuffix}.*
 %{_datadir}/icons/hicolor/*/apps/ooo-draw%{mdvsuffix}.*
@@ -2695,7 +2798,7 @@ fi
 %{ooodir}/share/registry/modules/org/openoffice/TypeDetection/Types/fcfg_drawgraphics_types.xcu
 %{ooodir}/share/registry/schema/org/openoffice/Office/UI/DrawWindowState.xcs
 %{ooodir}/share/xdg/draw*.desktop
-%{_datadir}/applications/draw*.desktop
+%{_datadir}/applications/draw*.desktop.ooo
 %{_mandir}/man1/oodraw%{mdvsuffix}.1*
 
 %files dtd-officedocument1.0
@@ -2761,7 +2864,7 @@ fi
 %{ooodir}/share/registry/schema/org/openoffice/Office/UI/Effects.xcs
 %{ooodir}/share/registry/schema/org/openoffice/Office/UI/ImpressWindowState.xcs
 %{ooodir}/share/xdg/impress*.desktop
-%{_datadir}/applications/impress*.desktop
+%{_datadir}/applications/impress*.desktop.ooo
 %{_mandir}/man1/ooimpress%{mdvsuffix}.1*
 
 %files java-common
@@ -2793,7 +2896,7 @@ fi
 %{ooodir}/share/registry/modules/org/openoffice/TypeDetection/Types/fcfg_math_types.xcu
 %{ooodir}/share/registry/schema/org/openoffice/Office/UI/MathCommands.xcs
 %{ooodir}/share/xdg/math*.desktop
-%{_datadir}/applications/math*.desktop
+%{_datadir}/applications/math*.desktop.ooo
 %{_mandir}/man1/oomath%{mdvsuffix}.1*
 
 %files openclipart
@@ -2868,8 +2971,8 @@ fi
 %{ooodir}/share/registry/schema/org/openoffice/Office/UI/WriterWebWindowState.xcs
 %{ooodir}/share/registry/schema/org/openoffice/Office/UI/WriterWindowState.xcs
 %{ooodir}/share/xdg/writer*.desktop
-%{_datadir}/applications/writer*.desktop
-%{_datadir}/applications/web*.desktop
+%{_datadir}/applications/writer*.desktop.ooo
+%{_datadir}/applications/web*.desktop.ooo
 %{_mandir}/man1/ooweb%{mdvsuffix}.1*
 %{_mandir}/man1/oowriter%{mdvsuffix}.1*
 
@@ -2975,6 +3078,15 @@ fi
 
 %files l10n-pt_BR -f build/lang_pt-BR_list.txt
 %defattr(-,root,root)
+# BrOffice support
+# Yes, by this way there will be broken symlinks if you don't make a full suite
+# installation.
+%{_bindir}/brcalc2.3
+%{_bindir}/br*
+%{_datadir}/applications/*.desktop.bro
+%{ooodir}/program/bootstraprc.bro
+%{ooodir}/program/versionrc.bro
+%{ooodir}/share/registry/data/org/openoffice/Setup.xcu.bro
 
 %files l10n-ru -f build/lang_ru_list.txt
 %defattr(-,root,root)
