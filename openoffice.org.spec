@@ -287,6 +287,8 @@ Patch22:	ooo-build-2.2.1-force_downloads.patch
 Patch23:	ooo-build-2.2.1-angola.patch
 # (mrl) Fix Wizards FontOOo and DictOOo paths
 Patch24:	ooo-build-2.2.1-wizards.patch
+# (mrl) Fix erroneus g_free usages (#34724)
+Patch25:	ooo-build-2.3.0.5-gtk.patch
 
 %description
 OpenOffice.org is an Open Source, community-developed, multi-platform
@@ -1663,6 +1665,7 @@ standard locales system.
 %patch16 -p1 -b .ooqstart
 %patch23 -p1 -b .angola
 %patch24 -p0 -b .wizards
+%patch25 -p1 -b .gtk
 
 # Fix Icon tags
 sed -i s/.png$// desktop/*desktop*
@@ -3081,7 +3084,6 @@ fi
 # BrOffice support
 # Yes, by this way there will be broken symlinks if you don't make a full suite
 # installation.
-%{_bindir}/brcalc2.3
 %{_bindir}/br*
 %{_datadir}/applications/*.desktop.bro
 %{ooodir}/program/bootstraprc.bro
