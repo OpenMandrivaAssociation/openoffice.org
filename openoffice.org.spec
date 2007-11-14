@@ -18,7 +18,7 @@
 %define release		%mkrel 1
 
 %define oootagver	oog680-m7
-%define ooobuildver	2.3.0.5
+%define ooobuildver	2.3.0.5.20071114mdv
 %define jdkver		1_5_0_11
 %ifarch x86_64
 %define mdvsuffix	2.3_64
@@ -275,20 +275,9 @@ Source61:	openoffice.org.sh
 Patch1:		ooo-build-2.1.0-lzmatarball.patch
 Patch4:		openoffice.org2-2.0.2-qstart.patch
 Patch6:		openoffice.org-2.1.0-firefox-xpcom.patch
-Patch8:		ooo-build-2.2.1-xdg.patch
-Patch10:	openoffice.org-2.1.0-install.patch
 Patch14:	ooo-build-2.2.1-kde.patch
-Patch16:	oof680-m18-core-ooqstart.patch
 Patch17:	ooo-build-fix-build-java-target-patch.patch
 Patch19:	ooo-build-2.2.1-desktop_files.patch
-# (mrl) Force document downloads. http://qa.mandriva.com/show_bug.cgi?id=26983
-Patch22:	ooo-build-2.2.1-force_downloads.patch
-# (mrl) Adds Angola
-Patch23:	ooo-build-2.2.1-angola.patch
-# (mrl) Fix Wizards FontOOo and DictOOo paths
-Patch24:	ooo-build-2.2.1-wizards.patch
-# (mrl) Fix erroneus g_free usages (#34724)
-Patch25:	ooo-build-2.3.0.5-gtk.patch
 
 %description
 OpenOffice.org is an Open Source, community-developed, multi-platform
@@ -1654,23 +1643,13 @@ standard locales system.
 %endif
 
 %patch4 -p1 -b .qstart
-%patch6 -p1 -b .xpcom
-%patch8 -p1 -b .xdg
-%patch10 -p1 -b .oooinst
+# Seems not needed
+#patch6 -p1 -b .xpcom
 %patch14 -p1 -b .kde
 #%patch17 -p1 -b .javac
 %if ! %unstable
 %patch19 -p1 -b .desktop_files
 %endif
-%patch16 -p1 -b .ooqstart
-%patch23 -p1 -b .angola
-%patch24 -p0 -b .wizards
-%patch25 -p1 -b .gtk
-
-# Fix Icon tags
-sed -i s/.png$// desktop/*desktop*
-
-%patch22 -p1 -b .bug26983
 
 # We want odk
 #sed -i /disable-odk/d distro-configs/Mandriva*
@@ -1967,10 +1946,10 @@ mv %{buildroot}%{_libdir}/pkgconfig/mono-ooo-%{mdvsuffix}.pc \
 mkdir -p %{buildroot}%{_sysconfdir}/profile.d
 sed 's/@VERSION@/%{mdvsuffix}/g' \
 	%{_sourcedir}/openoffice.org.csh > \
-	%{buildroot}%{_sysconfdir}/profile.d/openoffice.org.csh
+	%{buildroot}%{_sysconfdir}/profile.d/openoffice.org%{mdvsuffix}.csh
 sed 's/@VERSION@/%{mdvsuffix}/g' \
 	%{_sourcedir}/openoffice.org.sh > \
-	%{buildroot}%{_sysconfdir}/profile.d/openoffice.org.sh
+	%{buildroot}%{_sysconfdir}/profile.d/openoffice.org%{mdvsuffix}.sh
 
 # BrOffice.org Support (install)
 function bro() {
@@ -2172,7 +2151,8 @@ fi
 %{_mandir}/man1/oocalc%{mdvsuffix}.1*
 
 %files common
-%{_sysconfdir}/*
+%{_sysconfdir}/bash_completion.d/ooffice%{mdvsuffix}.sh
+%{_sysconfdir}/profile.d/openoffice.org%{mdvsuffix}.*
 %{_bindir}/ooconfig%{mdvsuffix}
 %{_bindir}/ooffice%{mdvsuffix}
 %{_bindir}/oofromtemplate%{mdvsuffix}
