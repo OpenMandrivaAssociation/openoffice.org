@@ -1,5 +1,9 @@
 %define unstable	0
 
+%define l10n   1
+%{?_with_l10n: %global l10n 1}
+%{?_without_l10n: %global l10n 0}
+
 %ifarch x86_64
 %define	ooname		openoffice.org64
 %define name		openoffice.org64
@@ -15,10 +19,10 @@
 #define _source_payload w9.bzdio
 
 %define version		2.3.0.5
-%define release		%mkrel 1
+%define release		%mkrel 2
 
 %define oootagver	oog680-m7
-%define ooobuildver	2.3.0.5.20071114mdv
+%define ooobuildver	2.3.0.5.20071122mdv
 %define jdkver		1_5_0_11
 %ifarch x86_64
 %define mdvsuffix	2.3_64
@@ -27,7 +31,11 @@
 %endif
 %define ooodir		%{_libdir}/ooo-%{mdvsuffix}
 %define libdbver	4.2
+%if l10n
 %define ooolangs	"en-US af ar bg br bs ca cs cy da de el en-GB es et eu fi fr he hi hu it ja ko mk nb nl nn pl pt pt-BR ru sk sl sv ta tr zh-TW zh-CN zu"
+%else
+%define ooolangs	"en-US"
+%endif
 
 %define oootarext	bz2
 
@@ -267,7 +275,8 @@ Source28:	openabout_mandriva.bmp
 Source31:	openintro_mandriva64.bmp
 Source32:	openabout_mandriva64.bmp
 #
-Source50:	http://oooconv.free.fr/fontooo/FontOOo.sxw.bz2
+# http://oooconv.free.fr/fontooo/FontOOo.sxw.bz2
+Source50:	FontOOo.sxw
 Source51:	ftp://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/DicOOo.sxw
 Source60:	openoffice.org.csh
 Source61:	openoffice.org.sh
@@ -301,6 +310,7 @@ Requires: %{name}-common = %{version}
 Requires: %{name}-core = %{version}
 # Due to the split
 Conflicts: %{name} = 2.2.1
+Conflicts: %{name}-common <= 2.3.0.5-1mdv
 
 %description base
 OpenOffice.org is a full-featured office productivity suite that provides a
@@ -332,6 +342,7 @@ Requires: %{name}-common = %{version}
 Requires: %{name}-core = %{version}
 # Due to the split
 Conflicts: %{name} = 2.2.1
+Conflicts: %{name}-common <= 2.3.0.5-1mdv
 
 %description calc
 OpenOffice.org is a full-featured office productivity suite that provides a
@@ -359,6 +370,8 @@ Requires(post): desktop-file-utils update-alternatives
 Requires(postun): desktop-file-utils update-alternatives
 # Due to the split
 Conflicts: %{name} = 2.2.1
+Conflicts: %{name}-devel <= 2.3.0.5-1mdv
+Conflicts: %{name}-math <= 2.3.0.5-1mdv
 
 %description common
 OpenOffice.org is a full-featured office productivity suite that provides a
@@ -371,6 +384,13 @@ Group: Office
 Summary: OpenOffice.org office suite architecture dependent files
 # Due to the split
 Conflicts: %{name} = 2.2.1
+Conflicts: %{name}-base <= 2.3.0.5-1mdv
+Conflicts: %{name}-common <= 2.3.0.5-1mdv
+Conflicts: %{name}-devel <= 2.3.0.5-1mdv
+Conflicts: %{name}-draw <= 2.3.0.5-1mdv
+Conflicts: %{name}-impress <= 2.3.0.5-1mdv
+Conflicts: %{name}-kde <= 2.3.0.5-1mdv
+Conflicts: %{name}-writer <= 2.3.0.5-1mdv
 
 %description core
 OpenOffice.org is a full-featured office productivity suite that provides a
@@ -421,6 +441,8 @@ Requires: %{name}-common = %{version}
 Requires: %{name}-core = %{version}
 # Due to the split
 Conflicts: %{name} = 2.2.1
+Conflicts: %{name}-common <= 2.3.0.5-1mdv
+Conflicts: %{name}-impress <= 2.3.0.5-1mdv
 
 %description draw
 OpenOffice.org is a full-featured office productivity suite that provides a
@@ -443,21 +465,6 @@ near drop-in replacement for Microsoft(R) Office.
 This package contains the Document Type Definition (DTD) of the OpenOffice.org
 1.x(!) XML file format.
 
-%package evolution
-Group: Office
-Summary: Evolution Addressbook support for OpenOffice.org
-Requires: %{name}-common = %{version}
-Requires: %{name}-core = %{version}
-# Due to the split
-Conflicts: %{name} = 2.2.1
-
-%description evolution
-OpenOffice.org is a full-featured office productivity suite that provides a
-near drop-in replacement for Microsoft(R) Office.
-
-This package allows OpenOffice.org to access Evolution address books. You need
-to install evolution separately.
-
 %package filter-binfilter
 Group: Office
 Summary: Legacy filters (e.g. StarOffice 5.2) for OpenOffice.org
@@ -465,6 +472,10 @@ Requires: %{name}-common = %{version}
 Requires: %{name}-core = %{version}
 # Due to the split
 Conflicts: %{name} = 2.2.1
+Obsoletes: %{name}-filter-mobiledev <= 2.3.0.5
+Conflicts: %{name}-filter-mobiledev <= 2.3.0.5
+Conflicts: %{name}-common <= 2.3.0.5-1mdv
+Conflicts: %{name}-core <= 2.3.0.5-1mdv
 
 %description filter-binfilter
 OpenOffice.org is a full-featured office productivity suite that provides
@@ -478,29 +489,15 @@ This package contains the "binfilters", legacy filters for
    + Excel
    + Lotus
 
-%package filter-mobiledev
-Group: Office
-Summary: Mobile Devices Filters for OpenOffice.org
-Requires: %{name}-common = %{version}
-Requires: %{name}-core = %{version}
-# Due to the split
-Conflicts: %{name} = 2.2.1
-
-%description filter-mobiledev
-OpenOffice.org is a full-featured office productivity suite that provides a
-near drop-in replacement for Microsoft(R) Office.
-
-This package contains the filters for Mobile Devices:
- * AportisDoc (Palm)
- * PocketWord
- * PocketExcel
-
 %package gnome
 Group: Office
 Summary: GNOME Integration for OpenOffice.org (VFS, GConf)
-Requires: %{name}-gtk = %{version}
 # Due to the split
 Conflicts: %{name} = 2.2.1
+Obsoletes: %{name}-gtk <= 2.3.0.5
+Conflicts: %{name}-gtk <= 2.3.0.5
+Obsoletes: %{name}-evolution <= 2.3.0.5
+Conflicts: %{name}-evolution <= 2.3.0.5
 
 %description gnome
 OpenOffice.org is a full-featured office productivity suite that provides a
@@ -513,23 +510,6 @@ You can extend the functionality of this by installing these packages:
  * openoffice.org-evolution: Evolution addressbook support
  * evolution
 
-%package gtk
-Group: Office
-Summary: GTK Integration for OpenOffice.org (Widgets, Dialogs, Quickstarter)
-Requires: %{name}-common = %{version}
-Requires: %{name}-core = %{version}
-Suggests: %{name}-style-tango = %{version}
-# Due to the split
-Conflicts: %{name} = 2.2.1
-
-%description gtk
-OpenOffice.org is a full-featured office productivity suite that provides a
-near drop-in replacement for Microsoft(R) Office.
-
-This package contains the Gtk plugin for drawing OOo's widgets with Gtk+ and a
-Gtk/GNOMEish File Picker when running under GNOME. It also contains a
-QuickStarter for the "notification area".
-
 %package impress
 Group: Office
 Summary: OpenOffice.org office suite - presentation
@@ -538,6 +518,7 @@ Requires: %{name}-core = %{version}
 Requires: %{name}-draw = %{version}
 # Due to the split
 Conflicts: %{name} = 2.2.1
+Conflicts: %{name}-common <= 2.3.0.5-1mdv
 
 %description impress
 OpenOffice.org is a full-featured office productivity suite that provides a
@@ -572,6 +553,7 @@ Requires: %{name}-common = %{version}
 Requires: %{name}-core = %{version}
 # Due to the split
 Conflicts: %{name} = 2.2.1
+Conflicts: %{name}-common <= 2.3.0.5-1mdv
 
 %description java-common
 OpenOffice.org is a full-featured office productivity suite that provides a
@@ -590,6 +572,7 @@ Requires: %{name}-common = %{version}
 Requires: %{name}-core = %{version}
 # Due to the split
 Conflicts: %{name} = 2.2.1
+Conflicts: %{name}-common <= 2.3.0.5-1mdv
 
 %description math
 OpenOffice.org is a full-featured office productivity suite that provides a
@@ -613,6 +596,19 @@ near drop-in replacement for Microsoft(R) Office.
 This package contains the OpenOffice.org Open Clipart data, including images
 and sounds.
 
+%package pyuno
+Group: Office
+Summary: Python bindings for UNO library
+# FIXME
+#Requires: %{name}-common = %{version}
+Conflicts: %{name}-common <= 2.3.0.5-1mdv
+
+%description pyuno
+OpenOffice.org is a full-featured office productivity suite that provides a
+near drop-in replacement for Microsoft(R) Office.
+
+This package contains the Python bindings for the UNO library.
+
 #%package qa-api-tests
 #Group: Office
 #Summary: OpenOffice.org API Test Data
@@ -625,23 +621,21 @@ and sounds.
 #near drop-in replacement for Microsoft(R) Office.
 #
 #This package contains the test data for the OpenOffice.org Java and Basic APIs.
-#
-#%package qa-tools
-#Group: Office
-#Summary: OpenOffice.org Automatic Test Programs
-#Requires: %{name}-common = %{version}
-## Due to the split
-#Conflicts: %{name} = 2.2.1
-#
-#%description qa-tools
-#OpenOffice.org is a full-featured office productivity suite that provides a
-#near drop-in replacement for Microsoft(R) Office.
-#
-#This package contains the test tools to automatically test the OpenOffice.org
-#programs.
-#
-#Install the openoffice.org-qa-api-tests package to get the official
-#testscripts, or write your own scripts.
+
+%package testtool
+Group: Office
+Summary: OpenOffice.org Automatic Test Programs
+Requires: %{name}-common = %{version}
+# Due to the split
+Conflicts: %{name} = 2.2.1
+Conflicts: %{name}-common <= 2.3.0.5-1mdv
+
+%description testtool
+OpenOffice.org is a full-featured office productivity suite that provides a
+near drop-in replacement for Microsoft(R) Office.
+
+This package contains the test tools to automatically test the OpenOffice.org
+programs.
 
 %package style-andromeda
 Group: Office
@@ -728,6 +722,8 @@ Requires: %{name}-common = %{version}
 Requires: %{name}-core = %{version}
 # Due to the split
 Conflicts: %{name} = 2.2.1
+Conflicts: %{name}-common <= 2.3.0.5-1mdv
+Conflicts: %{name}-core <= 2.3.0.5-1mdv
 
 %description writer
 OpenOffice.org is a full-featured office productivity suite that provides a
@@ -748,6 +744,7 @@ set of APIs exposed by OpenOffice.org via UNO.
 Currently the use of Mono for add-ins & scripting inside OO.o itself is
 not supported.
 
+%if %l10n
 %package l10n-it
 Summary:	Italian language support for OpenOffice.org
 Group:		Office
@@ -1633,6 +1630,7 @@ It contains the user interface, the templates and the autotext
 features. Please note that not all of these are available for all
 possible language. You can switch user interface language using the
 standard locales system.
+%endif
 
 %prep
 %setup -q -n ooo-build-%{ooobuildver}
@@ -1723,7 +1721,6 @@ fi
 
 %if %{use_ccache}
 export CCACHE_DIR=%{ccachedir}
-export PATH=$PATH:%{_libdir}/ccache/bin
 %endif
 
 export     ARCH_FLAGS="%{optflags} %{optsafe} -fno-omit-frame-pointer -fno-strict-aliasing"
@@ -1744,7 +1741,7 @@ CXXFLAGS="%{optflags} %{optsafe} -fno-omit-frame-pointer -fno-strict-aliasing -f
 	--with-vendor=Mandriva \
         --with-tag=%{oootagver} \
 	--with-build-version="%{ooobuildver}" \
-        --disable-odk \
+        --enable-odk \
         --disable-qadevooo \
         --enable-java \
 	--enable-gstreamer \
@@ -1803,6 +1800,8 @@ CXXFLAGS="%{optflags} %{optsafe} -fno-omit-frame-pointer -fno-strict-aliasing -f
 	--with-dynamic-xinerama \
 	--enable-binfilter \
         --enable-access \
+	--enable-split-app-modules \
+	--enable-split-opt-features \
 %if %use_hunspell
         --enable-hunspell \
 %else
@@ -1850,7 +1849,7 @@ rm -rf %{buildroot}
 make install DESTDIR=%{buildroot}
 rm -rf %{buildroot}/opt
 # <mrl> This is buggy and duplicated.
-rm -rf %{buildroot}%{ooodir}/share/template/wizard/letter/
+#rm -rf %{buildroot}%{ooodir}/share/template/wizard/letter/
 # <mrl> Link to the shared one
 rm -rf %{buildroot}%{ooodir}/share/dict/ooo
 ln -s %{_datadir}/dict/ooo %{buildroot}%{ooodir}/share/dict
@@ -1911,9 +1910,8 @@ desktop-file-install --vendor="" \
   --dir %{buildroot}%{_datadir}/applications %{buildroot}%{_datadir}/applications/base*desktop
 
 # FontOOo|DictOOo wizard
-bzcat %{SOURCE50} > %{buildroot}%{_libdir}/ooo-%{mdvsuffix}/share/dict/FontOOo.sxw
+install -m 644 %{SOURCE50} %{buildroot}%{_libdir}/ooo-%{mdvsuffix}/share/dict/FontOOo.sxw
 install -m 644 %{SOURCE51} %{buildroot}%{_libdir}/ooo-%{mdvsuffix}/share/dict/DicOOo.sxw
-chmod 644 %{buildroot}%{_libdir}/ooo-%{mdvsuffix}/share/dict/*sxw
 
 # fix permissions for stripping
 find %{buildroot} -type f -exec chmod u+rw '{}' \;
@@ -1924,25 +1922,26 @@ find %{buildroot} -type f \( -name '*.so' -o -name '*.so.*' \) -exec chmod a+x '
 # remove /usr/bin/soffice (made with update-alternatives)
 rm -f %{buildroot}%{_bindir}/soffice
 
-cat build/common_list.txt | \
-        grep -v gallery/htmltheme.orig | \
-        grep -v ^$ | \
-        sed -e 's/^\t//g' > build/common_list_fixed.txt
+# Fix sdk listing
+sort -u build/sdk_list.txt > build/sdk_list_fixed.txt
 
+# Versionify bash_completion (ooo-wrapper.sh)
 if [ -f %{buildroot}%{_sysconfdir}/bash_completion.d/ooo-wrapper.sh ]; then
  mv %{buildroot}%{_sysconfdir}/bash_completion.d/ooo-wrapper.sh \
  	%{buildroot}%{_sysconfdir}/bash_completion.d/ooo-wrapper%{mdvsuffix}.sh
 fi
 
+# Versionify bash_completion (ooffice.sh)
 if [ -f %{buildroot}%{_sysconfdir}/bash_completion.d/ooffice.sh ]; then
  mv %{buildroot}%{_sysconfdir}/bash_completion.d/ooffice.sh \
  	%{buildroot}%{_sysconfdir}/bash_completion.d/ooffice%{mdvsuffix}.sh
 fi
 
+# Versionify mono-ooo.pc
 mv %{buildroot}%{_libdir}/pkgconfig/mono-ooo-%{mdvsuffix}.pc \
-   %{buildroot}%{_libdir}/pkgconfig/mono-ooo%{mdvsuffix}-2.2.pc
+   %{buildroot}%{_libdir}/pkgconfig/mono-ooo%{mdvsuffix}-2.3.pc
 
-# Install profile.d/ files (#33475)
+# Install versioned profile.d/ files (#33475)
 mkdir -p %{buildroot}%{_sysconfdir}/profile.d
 sed 's/@VERSION@/%{mdvsuffix}/g' \
 	%{_sourcedir}/openoffice.org.csh > \
@@ -1956,7 +1955,10 @@ function bro() {
   exp="$1"
   f="$2"
   mv "$f" "$f.ooo"
+%if %l10n
   sed "$exp" "$f.ooo" > "$f.bro"
+%endif
+  sed -i "s@$f\$@$f.ooo@" %{_builddir}/ooo-build-%{ooobuildver}/build/*.txt
 }
 
 # Change suite name in the program itself
@@ -1967,25 +1969,22 @@ bro "s/OpenO/BrO/" share/registry/data/org/openoffice/Setup.xcu
 cd -
 
 # Change the suite name in .desktop files
-cd %{buildroot}%{_datadir}/applications
-for i in *.desktop; do
+# Use paths this way to /usr/lib/ooo/xdg/ don't get changed too
+cd %{buildroot}%{_datadir}/
+for i in applications/*.desktop; do
   bro "s/OpenO/BrO/" "$i"
 done
 cd -
 
 # Place symlinks br<app> -> oo<app>
+%if %l10n
 cd %{buildroot}%{_bindir}
 for i in oo*; do
   ln -s $i ${i/oo/br}
 done
 cd -
+%endif
 # End of BrOffice support (install)
-
-# QA Tools not wanted for now
-rm -f %{buildroot}%{ooodir}/program/libcommuni680l?.so
-rm -f %{buildroot}%{ooodir}/program/libsimplecm680l?.so
-rm -f %{buildroot}%{ooodir}/program/testtool.bin
-rm -f %{buildroot}%{ooodir}/program/testtoolrc
 
 %clean
 rm -rf %{buildroot}
@@ -2050,6 +2049,7 @@ fi
 # This must be after alterantives setup.
 %{clean_desktop_database}
 
+%if %l10n
 %post l10n-pt_BR
 # BrOffice support %post l10n-pt_BR
 # alternatives names follows oobr_<filename> mark, making it explicit.
@@ -2092,368 +2092,30 @@ fi
 
 # This must be after alterantives setup.
 %{clean_desktop_database}
+%endif
 
-%files base
+%files base -f build/base_list.txt
 %{_bindir}/oobase%{mdvsuffix}
-# <mrl> Please note ? at filenames. They are needed because 32b builds produces
-# "li" files while 64b builds produces "lx" files.
-%{ooodir}/program/libabp680l?.so
-%{ooodir}/program/libadabas2.so
-%{ooodir}/program/libdbacfg680l?.so
-%{ooodir}/program/libdbase680l?.so
-%{ooodir}/program/libdbaxml680l?.so
-%{ooodir}/program/libdbp680l?.so
-%{ooodir}/program/libdbpool2.so
-%{ooodir}/program/libdbu680l?.so
-%{ooodir}/program/libflat680l?.so
-%{ooodir}/program/libhsqldb2.so
-%{ooodir}/program/libjdbc2.so
-%{ooodir}/program/libmdb680l?.so
-%{ooodir}/program/libmdbimpl680l?.so
-%{ooodir}/program/libmysql2.so
-%{ooodir}/program/libodbc2.so
-%{ooodir}/program/libodbcbase2.so
-%{ooodir}/program/librpt680l?.so
-%{ooodir}/program/librptui680l?.so
-%{ooodir}/program/librptxml680l?.so
-%{ooodir}/program/libsdbc2.so
-%{ooodir}/program/sbase
-%{ooodir}/share/registry/modules/org/openoffice/Office/Common/Common-base.xcu
-%{ooodir}/share/registry/modules/org/openoffice/Setup/Setup-base.xcu
-%{ooodir}/share/registry/modules/org/openoffice/TypeDetection/Filter/fcfg_database_filters.xcu
-%{ooodir}/share/registry/modules/org/openoffice/TypeDetection/Misc/fcfg_database_others.xcu
-%{ooodir}/share/registry/modules/org/openoffice/TypeDetection/Types/fcfg_database_types.xcu
-%{ooodir}/share/xdg/base*.desktop
+### <mrl> Please note ? at filenames. They are needed because 32b builds produces
+### "li" files while 64b builds produces "lx" files.
 %{_datadir}/applications/base*.desktop.ooo
 %{_mandir}/man1/oobase%{mdvsuffix}.1*
 
-%files calc
+%files calc -f build/calc_list.txt
 %{_bindir}/oocalc%{mdvsuffix}
-%{ooodir}/program/libanalysis680l?.so
-%{ooodir}/program/libcalc680l?.so
-%{ooodir}/program/libdate680l?.so
-%{ooodir}/program/libsc680l?.so
-%{ooodir}/program/libscd680l?.so
-%{ooodir}/program/libscui680l?.so
-%{ooodir}/program/libvbaobj680l?.uno.so
-%{ooodir}/program/scalc
-%{ooodir}/share/registry/data/org/openoffice/Office/UI/CalcCommands.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/UI/CalcWindowState.xcu
-%{ooodir}/share/registry/modules/org/openoffice/Office/Common/Common-calc.xcu
-%{ooodir}/share/registry/modules/org/openoffice/Office/Embedding/Embedding-calc.xcu
-%{ooodir}/share/registry/modules/org/openoffice/Setup/Setup-calc.xcu
-%{ooodir}/share/registry/modules/org/openoffice/TypeDetection/Filter/fcfg_calc_filters.xcu
-%{ooodir}/share/registry/modules/org/openoffice/TypeDetection/Types/fcfg_calc_types.xcu
-%{ooodir}/share/registry/schema/org/openoffice/Office/UI/CalcCommands.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/UI/CalcWindowState.xcs
-%{ooodir}/share/xdg/calc*.desktop
 %{_datadir}/applications/calc*.desktop.ooo
 %{_mandir}/man1/oocalc%{mdvsuffix}.1*
 
-%files common
+%files common -f build/common_list_fixed.txt
 %{_sysconfdir}/bash_completion.d/ooffice%{mdvsuffix}.sh
 %{_sysconfdir}/profile.d/openoffice.org%{mdvsuffix}.*
 %{_bindir}/ooconfig%{mdvsuffix}
 %{_bindir}/ooffice%{mdvsuffix}
 %{_bindir}/oofromtemplate%{mdvsuffix}
 %{_bindir}/ootool%{mdvsuffix}
-%{ooodir}/LICENSE
-%{ooodir}/LICENSE.html
-%{ooodir}/README
-%{ooodir}/README.html
-%{ooodir}/THIRDPARTYLICENSEREADME.html
-%dir %{ooodir}/help
-%{ooodir}/help/main_transform.xsl
-%{ooodir}/help/en
-%{ooodir}/install-dict
-%dir %{ooodir}/licenses
-%{ooodir}/licenses/*_en-US*
-%{ooodir}/presets/Scripts
-%{ooodir}/presets/autocorr
-%{ooodir}/presets/autotext
-%{ooodir}/presets/backup
-%{ooodir}/presets/basic/Standard/Module1.xba
-%{ooodir}/presets/basic/Standard/dialog.xlb
-%{ooodir}/presets/basic/Standard/script.xlb
-%{ooodir}/presets/basic/dialog.xlc
-%{ooodir}/presets/basic/script.xlc
-%dir %{ooodir}/presets/config
-%{ooodir}/presets/config/*_en-US.so*
-%{ooodir}/presets/config/autotbl.fmt
-%{ooodir}/presets/config/cmyk.soc
-%{ooodir}/presets/config/gallery.soc
-%{ooodir}/presets/config/html.soc
-%{ooodir}/presets/config/standard.sob
-%{ooodir}/presets/config/standard.soc
-%{ooodir}/presets/config/standard.sod
-%{ooodir}/presets/config/standard.soe
-%{ooodir}/presets/config/standard.sog
-%{ooodir}/presets/config/standard.soh
-%{ooodir}/presets/config/sun-color.soc
-%{ooodir}/presets/config/web.soc
-%{ooodir}/presets/database
-%{ooodir}/presets/gallery
-%{ooodir}/presets/psprint
-%{ooodir}/presets/store
-%{ooodir}/presets/temp
-%{ooodir}/presets/template
-%{ooodir}/presets/uno_packages
-%{ooodir}/presets/wordbook
-#%{ooodir}/program/about.bmp
-%{ooodir}/program/addin
-%{ooodir}/program/bootstraprc.ooo
-%{ooodir}/program/cde-open-url
-%{ooodir}/program/configimport
-%{ooodir}/program/configmgrrc
-%{ooodir}/program/gnome-open-url
-%{ooodir}/program/hid.lst
-#%{ooodir}/program/intro.bmp
-%{ooodir}/program/java-set-classpath
-%{ooodir}/program/jvmfwk3rc
-%{ooodir}/program/kde-open-url
-%{ooodir}/program/libcppu.so.3
-%{ooodir}/program/libcppuhelpergcc3.so.3
-%if !%{use_systemdb}
-%{ooodir}/program/libdb-4.2.so
-%{ooodir}/program/libdb_java-4.2.so
-%endif
-%{ooodir}/program/libnpsoplugin.so
-%{ooodir}/program/libpyuno.so
-%{ooodir}/program/libsal.so.3
-%{ooodir}/program/libsalhelpergcc3.so.3
-%{ooodir}/program/libstlport_gcc.so
-%{ooodir}/program/libt602filter680l?.so
-%{ooodir}/program/libwpgimport680l?.so
-%{ooodir}/program/mailmerge.py
-%{ooodir}/program/msfontextract
-%{ooodir}/program/nsplugin
-%{ooodir}/program/officehelper.py
-%{ooodir}/program/open-url
-%{ooodir}/program/openabout_mandriva*.bmp
-%{ooodir}/program/openintro_mandriva*.bmp
-%{ooodir}/program/pagein-calc
-%{ooodir}/program/pagein-common
-%{ooodir}/program/pagein-draw
-%{ooodir}/program/pagein-impress
-%{ooodir}/program/pagein-writer
-%{ooodir}/program/pkgchk
-%{ooodir}/program/plugin
-%{ooodir}/program/pythonloader.py
-%{ooodir}/program/pythonloader.uno.so
-%{ooodir}/program/pythonloader.unorc
-%{ooodir}/program/pythonscript.py
-%{ooodir}/program/pyuno.so
-%dir %{ooodir}/program/resource
-%{ooodir}/program/resource/*-US.res
-%{ooodir}/program/root3.dat
-%{ooodir}/program/root4.dat
-%{ooodir}/program/root5.dat
-%{ooodir}/program/senddoc
-%{ooodir}/program/setofficelang
-%{ooodir}/program/setuprc
-%{ooodir}/program/soffice
-%{ooodir}/program/sofficerc
-%{ooodir}/program/spadmin
-%{ooodir}/program/uno
-%{ooodir}/program/uno.py
-%{ooodir}/program/unohelper.py
-%{ooodir}/program/unopkg
-%{ooodir}/program/unorc
-%{ooodir}/program/versionrc.ooo
-%{ooodir}/program/viewdoc
-%{ooodir}/readmes/README_en-US
-%{ooodir}/readmes/README_en-US.html
-%{ooodir}/share/Scripts/beanshell
-%{ooodir}/share/Scripts/javascript
-%{ooodir}/share/Scripts/python
-%dir %{ooodir}/share/autocorr
-# FIXME: Should be l10n
-%{ooodir}/share/autocorr/*
-%dir %{ooodir}/share/autotext
-%{ooodir}/share/autotext/en-US
-%{ooodir}/share/basic
-%{ooodir}/share/config/javasettingsunopkginstall.xml
-%{ooodir}/share/config/javavendors.xml
-%{ooodir}/share/config/psetup.xpm
-%{ooodir}/share/config/psetupl.xpm
-%{ooodir}/share/config/soffice.cfg/global
-%{ooodir}/share/config/soffice.cfg/modules
-%{ooodir}/share/config/symbol
-%{ooodir}/share/config/webcast
-%{ooodir}/share/config/wizard
-# FIXME: Fix hyph in l10n packages
 %dir %{ooodir}/share/dict
 # FIXME: Wrong place?
 %{ooodir}/share/dict/*.sxw
-# FIXME: Should be l10n!!
-%{ooodir}/share/dict/ooo
-%{ooodir}/share/extension
-%{ooodir}/share/fingerprint/
-%{ooodir}/share/fonts
-%{ooodir}/share/psprint
-%dir %{ooodir}/share/readme
-%{ooodir}/share/readme/*_en-US*
-%{ooodir}/share/registry/data/org/openoffice/FirstStartWizard.xcu
-%{ooodir}/share/registry/data/org/openoffice/Inet.xcu
-%{ooodir}/share/registry/data/org/openoffice/LDAP.xcu.sample
-%{ooodir}/share/registry/data/org/openoffice/Office/Calc.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/Common.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/Compatibility.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/DataAccess.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/Embedding.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/ExtendedColorScheme.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/ExtensionManager.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/FormWizard.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/Impress.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/Jobs.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/Labels.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/Logging.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/Math.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/Paths.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/ProtocolHandler.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/SFX.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/Scripting.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/Security.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/TableWizard.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/UI.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/UI/BaseWindowState.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/UI/BasicIDECommands.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/UI/BasicIDEWindowState.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/UI/BibliographyCommands.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/UI/ChartCommands.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/UI/ChartWindowState.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/UI/Controller.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/UI/DbBrowserWindowState.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/UI/DbQueryWindowState.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/UI/DbRelationWindowState.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/UI/DbReportWindowState.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/UI/DbTableWindowState.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/UI/DbuCommands.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/UI/DrawImpressCommands.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/UI/Factories.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/UI/GenericCategories.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/UI/GenericCommands.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/UI/ReportCommands.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/UI/StartModuleCommands.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/UI/StartModuleWindowState.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/UI/WriterFormWindowState.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/UI/WriterReportWindowState.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/UI/XFormsWindowState.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/Views.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/WebWizard.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/Writer.xcu
-%{ooodir}/share/registry/data/org/openoffice/Setup.xcu.ooo
-%{ooodir}/share/registry/data/org/openoffice/TypeDetection
-%{ooodir}/share/registry/data/org/openoffice/UserProfile.xcu
-%{ooodir}/share/registry/data/org/openoffice/VCL.xcu
-%{ooodir}/share/registry/data/org/openoffice/ucb
-%{ooodir}/share/registry/ldap
-%{ooodir}/share/registry/modules/org/openoffice/Office/Common/Common-UseOOoFileDialogs.xcu
-%{ooodir}/share/registry/modules/org/openoffice/Office/Common/Common-unx.xcu
-%{ooodir}/share/registry/modules/org/openoffice/Office/Embedding/Embedding-chart.xcu
-%{ooodir}/share/registry/modules/org/openoffice/Office/Embedding/Embedding-report.xcu
-%{ooodir}/share/registry/modules/org/openoffice/Office/Scripting
-%{ooodir}/share/registry/modules/org/openoffice/Office/Writer/Writer-javamail.xcu
-%{ooodir}/share/registry/modules/org/openoffice/Setup/Langpack-en-US.xcu
-%{ooodir}/share/registry/modules/org/openoffice/Setup/Setup-report.xcu
-%{ooodir}/share/registry/modules/org/openoffice/TypeDetection/Filter/fcfg_base_filters.xcu
-%{ooodir}/share/registry/modules/org/openoffice/TypeDetection/Filter/fcfg_chart_filters.xcu
-%{ooodir}/share/registry/modules/org/openoffice/TypeDetection/Filter/fcfg_xslt_filters.xcu
-%{ooodir}/share/registry/modules/org/openoffice/TypeDetection/GraphicFilter
-%{ooodir}/share/registry/modules/org/openoffice/TypeDetection/Misc/fcfg_base_others.xcu
-%{ooodir}/share/registry/modules/org/openoffice/TypeDetection/Misc/fcfg_chart_others.xcu
-%{ooodir}/share/registry/modules/org/openoffice/TypeDetection/Types/fcfg_base_types.xcu
-%{ooodir}/share/registry/modules/org/openoffice/TypeDetection/Types/fcfg_chart_types.xcu
-%{ooodir}/share/registry/modules/org/openoffice/TypeDetection/Types/fcfg_internalgraphics_types.xcu
-%{ooodir}/share/registry/modules/org/openoffice/TypeDetection/Types/fcfg_xslt_types.xcu
-%{ooodir}/share/registry/modules/org/openoffice/TypeDetection/UISort
-%dir %{ooodir}/share/registry/res
-%{ooodir}/share/registry/res/en-US
-%{ooodir}/share/registry/schema/org/openoffice/FirstStartWizard.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Inet.xcs
-%{ooodir}/share/registry/schema/org/openoffice/LDAP.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/Addons.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/Calc.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/CalcAddIns.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/Chart.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/Commands.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/Common.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/Compatibility.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/DataAccess.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/Draw.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/Embedding.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/Events.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/ExtendedColorScheme.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/ExtensionManager.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/FormWizard.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/Impress.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/Java.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/Jobs.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/Labels.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/Linguistic.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/Logging.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/Math.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/OptionsDialog.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/Paths.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/ProtocolHandler.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/Recovery.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/ReportDesign.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/SFX.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/Scripting.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/Security.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/Substitution.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/TabBrowse.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/TableWizard.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/TypeDetection.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/UI.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/UI/BaseWindowState.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/UI/BasicIDECommands.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/UI/BasicIDEWindowState.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/UI/BibliographyCommands.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/UI/BibliographyWindowState.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/UI/Category.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/UI/ChartCommands.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/UI/ChartWindowState.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/UI/Commands.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/UI/Controller.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/UI/DbBrowserWindowState.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/UI/DbQueryWindowState.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/UI/DbRelationWindowState.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/UI/DbReportWindowState.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/UI/DbTableWindowState.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/UI/DbuCommands.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/UI/DrawImpressCommands.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/UI/Factories.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/UI/GenericCategories.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/UI/GenericCommands.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/UI/GlobalSettings.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/UI/MathWindowState.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/UI/ReportCommands.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/UI/StartModuleCommands.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/UI/StartModuleWindowState.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/UI/WindowState.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/UI/WriterFormWindowState.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/UI/WriterReportWindowState.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/UI/XFormsWindowState.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/Views.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/WebWizard.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/Writer.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/WriterWeb.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Setup.xcs
-%{ooodir}/share/registry/schema/org/openoffice/System.xcs
-%{ooodir}/share/registry/schema/org/openoffice/TypeDetection
-%{ooodir}/share/registry/schema/org/openoffice/UserProfile.xcs
-%{ooodir}/share/registry/schema/org/openoffice/VCL.xcs
-%{ooodir}/share/registry/schema/org/openoffice/ucb
-%dir %{ooodir}/share/samples
-%dir %{ooodir}/share/template
-%{ooodir}/share/template/en-US
-%{ooodir}/share/uno_packages
-%dir %{ooodir}/share/wordbook
-%{ooodir}/share/wordbook/en-US
-%{ooodir}/share/xdg/extension*.desktop
-%{ooodir}/share/xdg/printeradmin*.desktop
-%{ooodir}/share/xslt
 %{_datadir}/applications/template*.desktop.ooo
 %{_datadir}/icons/hicolor/*/apps/ooo-base%{mdvsuffix}.*
 %{_datadir}/icons/hicolor/*/apps/ooo-calc%{mdvsuffix}.*
@@ -2479,435 +2141,47 @@ fi
 %{_mandir}/man1/openoffice%{mdvsuffix}.1*
 %{_datadir}/mime
 
-%files core
-%{ooodir}/program/acceptor.uno.so
-%{ooodir}/program/basprov680l?.uno.so
-%{ooodir}/program/behelper.uno.so
-%{ooodir}/program/bridgefac.uno.so
-%ifnarch x86_64
-%{ooodir}/program/cairocanvas.uno.so
-%endif
-%{ooodir}/program/canvasfactory.uno.so
-%{ooodir}/program/cmdmail.uno.so
-%{ooodir}/program/configimport.bin
-%{ooodir}/program/configmgr2.uno.so
-%{ooodir}/program/connector.uno.so
-%{ooodir}/program/deployment680l?.uno.so
-%{ooodir}/program/deploymentgui680l?.uno.so
-%{ooodir}/program/desktopbe1.uno.so
-%{ooodir}/program/dlgprov680l?.uno.so
-%{ooodir}/program/fastsax.uno.so
-%{ooodir}/program/fpicker.uno.so
-%{ooodir}/program/fps_office.uno.so
-%{ooodir}/program/fsstorage.uno.so
-%{ooodir}/program/hatchwindowfactory.uno.so
-%{ooodir}/program/i18npool.uno.so
-%{ooodir}/program/i18nsearch.uno.so
-%{ooodir}/program/implreg.uno.so
-%{ooodir}/program/introspection.uno.so
-%{ooodir}/program/invocadapt.uno.so
-%{ooodir}/program/invocation.uno.so
-%{ooodir}/program/javaldx
-%{ooodir}/program/javaloader.uno.so
-%{ooodir}/program/javavm.uno.so
-%{ooodir}/program/ldapbe2.uno.so
-%{ooodir}/program/libacc680l?.so
-%{ooodir}/program/libaffine_uno_uno.so
-%{ooodir}/program/libavmedia680l?.so
-%{ooodir}/program/libavmediagst.so
-%{ooodir}/program/libbasctl680l?.so
-%{ooodir}/program/libbasebmp680l?.so
-%{ooodir}/program/libbasegfx680l?.so
-%{ooodir}/program/libbf_sb680l?.so
-%{ooodir}/program/libbib680l?.so
-%{ooodir}/program/libcached1.so
-%{ooodir}/program/libcanvastools680l?.so
-%{ooodir}/program/libchartcontroller680l?.so
-%{ooodir}/program/libchartmodel680l?.so
-%{ooodir}/program/libcharttools680l?.so
-%{ooodir}/program/libchartview680l?.so
-%{ooodir}/program/libcollator_data.so
-%{ooodir}/program/libcomphelp4gcc3.so
-%{ooodir}/program/libcppcanvas680l?.so
-%{ooodir}/program/libctl680l?.so
-%{ooodir}/program/libcui680l?.so
-%{ooodir}/program/libdba680l?.so
-%{ooodir}/program/libdbtools680l?.so
-%{ooodir}/program/libdeploymentmisc680l?.so
-%{ooodir}/program/libdict_ja.so
-%{ooodir}/program/libdict_zh.so
-%{ooodir}/program/libdtransX11680l?.so
-%{ooodir}/program/libegi680l?.so
-%{ooodir}/program/libembobj.so
-%{ooodir}/program/libemboleobj.so
-%{ooodir}/program/libeme680l?.so
-%{ooodir}/program/libemp680l?.so
-%{ooodir}/program/libepb680l?.so
-%{ooodir}/program/libepg680l?.so
-%{ooodir}/program/libepp680l?.so
-%{ooodir}/program/libeps680l?.so
-%{ooodir}/program/libept680l?.so
-%{ooodir}/program/libera680l?.so
-%{ooodir}/program/libeti680l?.so
-%{ooodir}/program/libevoab1.so
-%{ooodir}/program/libevtatt.so
-%{ooodir}/program/libexlink680l?.so
-%{ooodir}/program/libexp680l?.so
-%{ooodir}/program/libfile680l?.so
-%{ooodir}/program/libfileacc.so
-%{ooodir}/program/libfilterconfig1.so
-%{ooodir}/program/libfrm680l?.so
-%{ooodir}/program/libfwe680l?.so
-%{ooodir}/program/libfwi680l?.so
-%{ooodir}/program/libfwk680l?.so
-%{ooodir}/program/libfwl680l?.so
-%{ooodir}/program/libfwm680l?.so
-%{ooodir}/program/libgcc3_uno.so
-%{ooodir}/program/libgo680l?.so
-%{ooodir}/program/libguesslang680l?.so
-%{ooodir}/program/libhunspell.so
-%{ooodir}/program/libhyphen680l?.so
-%{ooodir}/program/libi18nisolang1gcc3.so
-%{ooodir}/program/libi18nregexpgcc3.so
-%{ooodir}/program/libi18nutilgcc3.so
-%{ooodir}/program/libicd680l?.so
-%{ooodir}/program/libicg680l?.so
-%{ooodir}/program/libidx680l?.so
-%{ooodir}/program/libime680l?.so
-%{ooodir}/program/libindex_data.so
-%{ooodir}/program/libipb680l?.so
-%{ooodir}/program/libipd680l?.so
-%{ooodir}/program/libips680l?.so
-%{ooodir}/program/libipt680l?.so
-%{ooodir}/program/libipx680l?.so
-%{ooodir}/program/libira680l?.so
-%{ooodir}/program/libitg680l?.so
-%{ooodir}/program/libiti680l?.so
-%{ooodir}/program/libj680l?_g.so
-%{ooodir}/program/libjava_uno.so
-%{ooodir}/program/libjpipe.so
-%{ooodir}/program/libjuh.so
-%{ooodir}/program/libjuhx.so
-%{ooodir}/program/libjvmaccessgcc3.so.3
-%{ooodir}/program/libjvmfwk.so.3
-%{ooodir}/program/liblng680l?.so
-%{ooodir}/program/liblnth680l?.so
-%{ooodir}/program/liblocaledata_en.so
-%{ooodir}/program/liblocaledata_es.so
-%{ooodir}/program/liblocaledata_euro.so
-%{ooodir}/program/liblocaledata_others.so
-%{ooodir}/program/liblog680l?.so
-%{ooodir}/program/libmcnttype.so
-%{ooodir}/program/liboffacc680l?.so
-%{ooodir}/program/liboox680l?.so
-%{ooodir}/program/libpackage2.so
-%{ooodir}/program/libpcr680l?.so
-%{ooodir}/program/libpdffilter680l?.so
-%{ooodir}/program/libpl680l?.so
-%{ooodir}/program/libpreload680l?.so
-%{ooodir}/program/libprotocolhandler680l?.so
-%{ooodir}/program/libpsp680l?.so
-%{ooodir}/program/librecentfile.so
-%{ooodir}/program/libreg.so.3
-%{ooodir}/program/libres680l?.so
-%{ooodir}/program/librmcxt.so.3
-%{ooodir}/program/libsax680l?.so
-%{ooodir}/program/libsb680l?.so
-%{ooodir}/program/libscn680l?.so
-%{ooodir}/program/libscriptframe.so
-%{ooodir}/program/libsdbt680l?.so
-%{ooodir}/program/libsfx680l?.so
-%{ooodir}/program/libso680l?.so
-%{ooodir}/program/libsot680l?.so
-%{ooodir}/program/libspa680l?.so
-%{ooodir}/program/libspell680l?.so
-%{ooodir}/program/libspl680l?.so
-%{ooodir}/program/libspl_unx680l?.so
-%{ooodir}/program/libsrtrs1.so
-%{ooodir}/program/libstore.so.3
-%{ooodir}/program/libsts680l?.so
-%{ooodir}/program/libsvl680l?.so
-%{ooodir}/program/libsvt680l?.so
-%{ooodir}/program/libsvx680l?.so
-%{ooodir}/program/libtextcat.so
-%{ooodir}/program/libtextconv_dict.so
-%{ooodir}/program/libtextconversiondlgs680l?.so
-%{ooodir}/program/libtfu680l?.so
-%{ooodir}/program/libtk680l?.so
-%{ooodir}/program/libtl680l?.so
-%{ooodir}/program/libtvhlp1.so
-%{ooodir}/program/libucb1.so
-%{ooodir}/program/libucbhelper4gcc3.so
-%{ooodir}/program/libucpchelp1.so
-%{ooodir}/program/libucpdav1.so
-%{ooodir}/program/libucpfile1.so
-%{ooodir}/program/libucpftp1.so
-%{ooodir}/program/libucphier1.so
-%{ooodir}/program/libucppkg1.so
-%{ooodir}/program/libuno_cppu.so.3
-%{ooodir}/program/libuno_cppuhelpergcc3.so.3
-%{ooodir}/program/libuno_purpenvhelpergcc3.so.3
-%{ooodir}/program/libuno_sal.so.3
-%{ooodir}/program/libuno_salhelpergcc3.so.3
-%{ooodir}/program/libunoxml680l?.so
-%{ooodir}/program/libunsafe_uno_uno.so
-%{ooodir}/program/libupdchk680l?.so
-%{ooodir}/program/liburp_uno.so
-%{ooodir}/program/libutl680l?.so
-%{ooodir}/program/libuui680l?.so
-%{ooodir}/program/libvcl680l?.so
-%{ooodir}/program/libvclplug_gen680l?.so
-%{ooodir}/program/libvclplug_svp680l?.so
-%{ooodir}/program/libvos3gcc3.so
-%{ooodir}/program/libwriterfilter680l?.so
-%{ooodir}/program/libxcr680l?.so
-%{ooodir}/program/libxmlfa680l?.so
-%{ooodir}/program/libxmlfd680l?.so
-%{ooodir}/program/libxmlsec1-nss.so*
-%{ooodir}/program/libxmlsec1.so*
-%{ooodir}/program/libxmlsecurity.so
-%{ooodir}/program/libxmx680l?.so
-%{ooodir}/program/libxo680l?.so
-%{ooodir}/program/libxof680l?.so
-%{ooodir}/program/libxsec_fw.so
-%{ooodir}/program/libxsec_xmlsec.so
-%{ooodir}/program/libxsltdlg680l?.so
-%{ooodir}/program/libxsltfilter680l?.so
-%{ooodir}/program/libxstor.so
-%{ooodir}/program/localebe1.uno.so
-%{ooodir}/program/migrationoo2.uno.so
-%{ooodir}/program/namingservice.uno.so
-%{ooodir}/program/nestedreg.uno.so
-%{ooodir}/program/oosplash.bin
-%{ooodir}/program/oovbaapi.rdb
-%{ooodir}/program/pagein
-%{ooodir}/program/passwordcontainer.uno.so
-%{ooodir}/program/pkgchk.bin
-%{ooodir}/program/pluginapp.bin
-%{ooodir}/program/productregistration.uno.so
-%{ooodir}/program/proxyfac.uno.so
-%{ooodir}/program/reflection.uno.so
-%{ooodir}/program/regtypeprov.uno.so
-%{ooodir}/program/remotebridge.uno.so
-%{ooodir}/program/sax.uno.so
-%{ooodir}/program/security.uno.so
-%{ooodir}/program/servicemgr.uno.so
-%{ooodir}/program/services.rdb
-%{ooodir}/program/setofficelang.bin
-%{ooodir}/program/shlibloader.uno.so
-%{ooodir}/program/simplecanvas.uno.so
-%{ooodir}/program/simplereg.uno.so
-%{ooodir}/program/soffice.bin
-%{ooodir}/program/spadmin.bin
-%{ooodir}/program/streams.uno.so
-%{ooodir}/program/stringresource680l?.uno.so
-%{ooodir}/program/sunjavaplugin.so
-%{ooodir}/program/svtmisc.uno.so
-%{ooodir}/program/sysmgr1.uno.so
-%{ooodir}/program/syssh.uno.so
-%{ooodir}/program/textinstream.uno.so
-%{ooodir}/program/textoutstream.uno.so
-%{ooodir}/program/typeconverter.uno.so
-%{ooodir}/program/typemgr.uno.so
-%{ooodir}/program/types.rdb
-%{ooodir}/program/ucpexpand1.uno.so
-%{ooodir}/program/ucptdoc1.uno.so
-%{ooodir}/program/uno.bin
-%{ooodir}/program/unopkg.bin
-%{ooodir}/program/updatefeed.uno.so
-%{ooodir}/program/uri-encode
-%{ooodir}/program/uriproc.uno.so
-%{ooodir}/program/uuresolver.uno.so
-%{ooodir}/program/vbaevents680l?.uno.so
-%{ooodir}/program/vclcanvas.uno.so
+%files core -f build/core_list.txt
 
-%files devel
-#%{_includedir}/*
-%{ooodir}/program/gengal
-%{ooodir}/program/gengal.bin
-%{ooodir}/program/libcppu.so
-%{ooodir}/program/libcppuhelper3gcc3.so
-%{ooodir}/program/libcppuhelpergcc3.so
-%{ooodir}/program/libjvmaccessgcc3.so
-%{ooodir}/program/libjvmfwk.so
-%{ooodir}/program/libreg.so
-%{ooodir}/program/librmcxt.so
-%{ooodir}/program/libsal.so
-%{ooodir}/program/libsalhelper3gcc3.so
-%{ooodir}/program/libsalhelpergcc3.so
-%{ooodir}/program/libstore.so
-%{ooodir}/program/libuno_cppu.so
-%{ooodir}/program/libuno_cppuhelpergcc3.so
-%{ooodir}/program/libuno_sal.so
-%{ooodir}/program/libuno_salhelpergcc3.so
-#%{ooodir}/sdk/classes
-#%{ooodir}/sdk/config.guess
-#%{ooodir}/sdk/config.sub
-#%{ooodir}/sdk/configure.pl
-#%{ooodir}/sdk/idl
-#%{ooodir}/sdk/include
-#%{ooodir}/sdk/linux
-#%{ooodir}/sdk/setsdkenv_unix
-#%{ooodir}/sdk/setsdkenv_unix.csh
-#%{ooodir}/sdk/setsdkenv_unix.csh.in
-#%{ooodir}/sdk/setsdkenv_unix.sh
-#%{ooodir}/sdk/setsdkenv_unix.sh.in
-#%{ooodir}/sdk/settings
-#%{ooodir}/sdk/xml
-#%{_datadir}/idl
-#%{_datadir}/xml/ooo-%{mdvsuffix}
+%files devel -f build/sdk_list_fixed.txt
 
-%files devel-doc
-#%{_docdir}/packages/ooo-%{mdvsuffix}
-#%{ooodir}/sdk/docs
-#%{ooodir}/sdk/examples
-#%{ooodir}/sdk/index.html
+%files devel-doc -f build/sdk_doc_list.txt
 
-%files draw
+%files draw -f build/draw_list.txt
 %{_bindir}/oodraw%{mdvsuffix}
-%{ooodir}/program/libflash680l?.so
-%{ooodir}/program/libsd680l?.so
-%{ooodir}/program/libsdd680l?.so
-%{ooodir}/program/libsdui680l?.so
-%{ooodir}/program/libsvgfilter680l?.so
-%{ooodir}/program/sdraw
-%{ooodir}/share/registry/data/org/openoffice/Office/UI/DrawWindowState.xcu
-%{ooodir}/share/registry/modules/org/openoffice/Office/Common/Common-draw.xcu
-%{ooodir}/share/registry/modules/org/openoffice/Office/Embedding/Embedding-draw.xcu
-%{ooodir}/share/registry/modules/org/openoffice/Setup/Setup-draw.xcu
-%{ooodir}/share/registry/modules/org/openoffice/TypeDetection/Filter/fcfg_draw_filters.xcu
-%{ooodir}/share/registry/modules/org/openoffice/TypeDetection/Filter/fcfg_drawgraphics_filters.xcu
-%{ooodir}/share/registry/modules/org/openoffice/TypeDetection/Types/fcfg_draw_types.xcu
-%{ooodir}/share/registry/modules/org/openoffice/TypeDetection/Types/fcfg_drawgraphics_types.xcu
-%{ooodir}/share/registry/schema/org/openoffice/Office/UI/DrawWindowState.xcs
-%{ooodir}/share/xdg/draw*.desktop
 %{_datadir}/applications/draw*.desktop.ooo
 %{_mandir}/man1/oodraw%{mdvsuffix}.1*
 
-%files dtd-officedocument1.0
-%{ooodir}/share/dtd/officedocument
+%files dtd-officedocument1.0 -f build/dtd_list.txt
 
-%files evolution
-%{ooodir}/program/libevoab2.so
+%files filter-binfilter -f build/filter-binfilter_list.txt
 
-%files filter-binfilter
-%{ooodir}/program/legacy_binfilters.rdb
-%{ooodir}/program/libbf_frm680l?.so
-%{ooodir}/program/libbf_go680l?.so
-%{ooodir}/program/libbf_migratefilter680l?.so
-%{ooodir}/program/libbf_ofa680l?.so
-%{ooodir}/program/libbf_sc680l?.so
-%{ooodir}/program/libbf_sch680l?.so
-%{ooodir}/program/libbf_sd680l?.so
-%{ooodir}/program/libbf_sm680l?.so
-%{ooodir}/program/libbf_svx680l?.so
-%{ooodir}/program/libbf_sw680l?.so
-%{ooodir}/program/libbf_wrapper680l?.so
-%{ooodir}/program/libbf_xo680l?.so
-%{ooodir}/program/libbindet680l?.so
-%{ooodir}/program/liblegacy_binfilters680l?.so
+%files gnome -f build/gnome_list.txt
 
-%files filter-mobiledev
-%{ooodir}/share/registry/modules/org/openoffice/TypeDetection/Filter/fcfg_palm_filters.xcu
-%{ooodir}/share/registry/modules/org/openoffice/TypeDetection/Filter/fcfg_pocketexcel_filters.xcu
-%{ooodir}/share/registry/modules/org/openoffice/TypeDetection/Filter/fcfg_pocketword_filters.xcu
-%{ooodir}/share/registry/modules/org/openoffice/TypeDetection/Types/fcfg_palm_types.xcu
-%{ooodir}/share/registry/modules/org/openoffice/TypeDetection/Types/fcfg_pocketexcel_types.xcu
-%{ooodir}/share/registry/modules/org/openoffice/TypeDetection/Types/fcfg_pocketword_types.xcu
-
-%files gnome
-%{ooodir}/program/gnome-set-default-application
-%{ooodir}/program/ucpgvfs1.uno.so
-
-%files gtk
-%{ooodir}/program/fps_gnome.uno.so
-%{ooodir}/program/gconfbe1.uno.so
-%{ooodir}/program/gnome-open-url.bin
-%{ooodir}/program/libeggtray680l?.so
-%{ooodir}/program/libqstart_gtk680l?.so
-%{ooodir}/program/libvclplug_gtk680l?.so
-%{ooodir}/share/xdg/qstart*.desktop
-
-%files impress
+%files impress -f build/impress_list.txt
 %{_bindir}/ooimpress%{mdvsuffix}
-%{ooodir}/program/libanimcore.so
-%{ooodir}/program/libplacewarel?.so
-%{ooodir}/program/simpress
-%{ooodir}/program/slideshow.uno.so
-%{ooodir}/share/config/soffice.cfg/simpress
-%{ooodir}/share/registry/data/org/openoffice/Office/UI/Effects.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/UI/ImpressWindowState.xcu
-%{ooodir}/share/registry/modules/org/openoffice/Office/Common/Common-impress.xcu
-%{ooodir}/share/registry/modules/org/openoffice/Office/Embedding/Embedding-impress.xcu
-%{ooodir}/share/registry/modules/org/openoffice/Setup/Setup-impress.xcu
-%{ooodir}/share/registry/modules/org/openoffice/TypeDetection/Filter/fcfg_impress_filters.xcu
-%{ooodir}/share/registry/modules/org/openoffice/TypeDetection/Filter/fcfg_impressgraphics_filters.xcu
-%{ooodir}/share/registry/modules/org/openoffice/TypeDetection/Types/fcfg_impress_types.xcu
-%{ooodir}/share/registry/modules/org/openoffice/TypeDetection/Types/fcfg_impressgraphics_types.xcu
-%{ooodir}/share/registry/schema/org/openoffice/Office/UI/Effects.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/UI/ImpressWindowState.xcs
-%{ooodir}/share/xdg/impress*.desktop
 %{_datadir}/applications/impress*.desktop.ooo
 %{_mandir}/man1/ooimpress%{mdvsuffix}.1*
 
-%files java-common
-%{ooodir}/program/JREProperties.class
-%{ooodir}/program/classes
-%{ooodir}/program/libofficebean.so
-%{ooodir}/share/Scripts/java
+%files java-common -f build/java_common_list.txt
 
-%files kde
-%{ooodir}/program/fps_kde.uno.so
-%{ooodir}/program/kdebe1.uno.so
-%{ooodir}/program/kdefilepicker
-%{ooodir}/program/libkab1.so
-%{ooodir}/program/libkabdrv1.so
-%{ooodir}/program/libvclplug_kde680l?.so
+%files kde -f build/kde_list.txt
 
-%files math
+%files math -f build/math_list.txt
 %{_bindir}/oomath%{mdvsuffix}
-%{ooodir}/program/libsm680l?.so
-%{ooodir}/program/libsmd680l?.so
-%{ooodir}/program/smath
-%{ooodir}/share/dtd/math/1_01
-%{ooodir}/share/registry/data/org/openoffice/Office/UI/MathCommands.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/UI/MathWindowState.xcu
-%{ooodir}/share/registry/modules/org/openoffice/Office/Common/Common-math.xcu
-%{ooodir}/share/registry/modules/org/openoffice/Office/Embedding/Embedding-math.xcu
-%{ooodir}/share/registry/modules/org/openoffice/Setup/Setup-math.xcu
-%{ooodir}/share/registry/modules/org/openoffice/TypeDetection/Filter/fcfg_math_filters.xcu
-%{ooodir}/share/registry/modules/org/openoffice/TypeDetection/Types/fcfg_math_types.xcu
-%{ooodir}/share/registry/schema/org/openoffice/Office/UI/MathCommands.xcs
-%{ooodir}/share/xdg/math*.desktop
 %{_datadir}/applications/math*.desktop.ooo
 %{_mandir}/man1/oomath%{mdvsuffix}.1*
 
-%files openclipart
-%{ooodir}/share/gallery
+%files openclipart -f build/gallery_list.txt
+
+%files pyuno -f build/pyuno_list.txt
 
 %files
 
 #%files qa-api-tests
 #%{ooodir}/qadevOOo
 
-#%files qa-tools
-#%{_bindir}/oosmoketest
-#%{_bindir}/ootestapi
-#%{_bindir}/ootesttool
-#%{ooodir}/presets/basic/Standard/Global.xba
-#%{ooodir}/presets/basic/Standard/Test_10er.xba
-#%{ooodir}/presets/basic/Standard/Test_DB.xba
-#%{ooodir}/presets/basic/Standard/Test_Ext.xba
-#%{ooodir}/program/libcommuni680l?.so
-#%{ooodir}/program/libsimplecm680l?.so
-#%{ooodir}/program/testtool.bin
-#%{ooodir}/program/testtoolrc
-#%{ooodir}/qatesttool
-#%{ooodir}/smoketest
-#%{_datadir}/doc/openoffice.org-core/README.qa
-#%{_datadir}/doc/openoffice.org-qa-tools
-#%{_datadir}/java/openoffice/OOoRunnerLight.jar
-#%{_datadir}/lintian/overrides/openoffice.org-qa-tools
+%files testtool -f build/testtool_list.txt
 
 %files style-andromeda
 %{ooodir}/share/config/images.zip
@@ -2924,54 +2198,21 @@ fi
 %files style-tango
 %{ooodir}/share/config/images_tango.zip
 
-%files writer
+%files writer -f build/writer_list.txt
 %{_bindir}/ooweb%{mdvsuffix}
 %{_bindir}/oowriter%{mdvsuffix}
-%{ooodir}/program/libhwp.so
-%{ooodir}/program/liblwpft680l?.so
-%{ooodir}/program/libmsworks680l?.so
-%{ooodir}/program/libsw680l?.so
-%{ooodir}/program/libswd680l?.so
-%{ooodir}/program/libswui680l?.so
-%{ooodir}/program/libwpft680l?.so
-%{ooodir}/program/swriter
-%{ooodir}/share/registry/data/org/openoffice/Office/UI/WriterCommands.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/UI/WriterGlobalWindowState.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/UI/WriterWebWindowState.xcu
-%{ooodir}/share/registry/data/org/openoffice/Office/UI/WriterWindowState.xcu
-%{ooodir}/share/registry/modules/org/openoffice/Office/Common/Common-dicooo.xcu
-%{ooodir}/share/registry/modules/org/openoffice/Office/Common/Common-writer.xcu
-%{ooodir}/share/registry/modules/org/openoffice/Office/Embedding/Embedding-writer.xcu
-%{ooodir}/share/registry/modules/org/openoffice/Setup/Setup-writer.xcu
-%{ooodir}/share/registry/modules/org/openoffice/TypeDetection/Filter/fcfg_global_filters.xcu
-%{ooodir}/share/registry/modules/org/openoffice/TypeDetection/Filter/fcfg_web_filters.xcu
-%{ooodir}/share/registry/modules/org/openoffice/TypeDetection/Filter/fcfg_writer_filters.xcu
-%{ooodir}/share/registry/modules/org/openoffice/TypeDetection/Types/fcfg_global_types.xcu
-%{ooodir}/share/registry/modules/org/openoffice/TypeDetection/Types/fcfg_web_types.xcu
-%{ooodir}/share/registry/modules/org/openoffice/TypeDetection/Types/fcfg_writer_types.xcu
-%{ooodir}/share/registry/schema/org/openoffice/Office/UI/WriterCommands.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/UI/WriterGlobalWindowState.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/UI/WriterWebWindowState.xcs
-%{ooodir}/share/registry/schema/org/openoffice/Office/UI/WriterWindowState.xcs
-%{ooodir}/share/xdg/writer*.desktop
 %{_datadir}/applications/writer*.desktop.ooo
 %{_datadir}/applications/web*.desktop.ooo
 %{_mandir}/man1/ooweb%{mdvsuffix}.1*
 %{_mandir}/man1/oowriter%{mdvsuffix}.1*
 
-############################
-############################
-############################
-############################
-############################
-############################
-
 %if %{use_mono}
 %files mono -f build/mono_list.txt
 %defattr(-,root,root)
-%{_libdir}/pkgconfig/mono-ooo%{mdvsuffix}-2.2.pc
+%{_libdir}/pkgconfig/mono-ooo%{mdvsuffix}-2.3.pc
 %endif
 
+%if %l10n
 %files l10n-it -f build/lang_it_list.txt
 %defattr(-,root,root)
 
@@ -3096,3 +2337,4 @@ fi
 
 %files l10n-zu -f build/lang_zu_list.txt
 %defattr(-,root,root)
+%endif
