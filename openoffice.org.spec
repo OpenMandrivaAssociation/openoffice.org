@@ -98,7 +98,7 @@
 # building process)
 %define optsafe	""
 
-%define _requires_exceptions libjawt.so\\|libmyspell.so\\|libstlport_gcc.so
+%define _requires_exceptions libjawt.so\\|libmyspell.so\\|libstlport_gcc.so\\|libjpeg.so
 %define _provides_exceptions libsndfile.so\\|libportaudio.so\\|libdb-4.2.so\\|libdb_java-4.2.so\\|libmyspell.so\\|libstlport_gcc.so
 
 Summary:	Open source office suite (ooo-build)
@@ -1955,6 +1955,7 @@ function bro() {
   exp="$1"
   f="$2"
   mv "$f" "$f.ooo"
+  echo -n > "$f"
 %if %l10n
   sed "$exp" "$f.ooo" > "$f.bro"
 %endif
@@ -2004,6 +2005,24 @@ rm -rf %{buildroot}
 [ -e %{_bindir}/ooffice ] || /usr/sbin/update-alternatives --auto ooffice
 
 # BrOffice support %post
+for i in \
+    %{ooodir}/program/bootstraprc \
+    %{ooodir}/program/versionrc \
+    %{ooodir}/share/registry/data/org/openoffice/Setup.xcu \
+    %{_datadir}/applications/base.desktop \
+    %{_datadir}/applications/calc.desktop \
+    %{_datadir}/applications/draw.desktop \
+    %{_datadir}/applications/impress.desktop \
+    %{_datadir}/applications/math.desktop \
+    %{_datadir}/applications/template.desktop \
+    %{_datadir}/applications/web.desktop \
+    %{_datadir}/applications/writer.desktop
+do
+    if [ -f "$i" ]; then
+	rm -f "$i"
+    fi
+done
+
 # alternatives names follows oobr_<filename> mark, making it explicit.
 /usr/sbin/update-alternatives \
         --install %{ooodir}/program/bootstraprc oobr_bootstraprc \
@@ -2140,6 +2159,18 @@ fi
 %{_mandir}/man1/oofromtemplate%{mdvsuffix}.1*
 %{_mandir}/man1/openoffice%{mdvsuffix}.1*
 %{_datadir}/mime
+# Due to alternatives upgrade from 2.3.0.5-1mdv to -2mdv
+%ghost %{ooodir}/program/bootstraprc
+%ghost %{ooodir}/program/versionrc
+%ghost %{ooodir}/share/registry/data/org/openoffice/Setup.xcu
+%ghost %{_datadir}/applications/base.desktop
+%ghost %{_datadir}/applications/calc.desktop
+%ghost %{_datadir}/applications/draw.desktop
+%ghost %{_datadir}/applications/impress.desktop
+%ghost %{_datadir}/applications/math.desktop
+%ghost %{_datadir}/applications/template.desktop
+%ghost %{_datadir}/applications/web.desktop
+%ghost %{_datadir}/applications/writer.desktop
 
 %files core -f build/core_list.txt
 
