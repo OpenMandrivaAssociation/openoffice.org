@@ -18,11 +18,11 @@
 %define _binary_payload w9.bzdio
 #define _source_payload w9.bzdio
 
-%define version		2.3.0.5
-%define release		%mkrel 2
+%define version		2.3.1
+%define release		%mkrel 1
 
-%define oootagver	oog680-m7
-%define ooobuildver	2.3.0.5.20071122mdv
+%define oootagver	oog680-m9
+%define ooobuildver	2.3.1.20071211mdv
 %define jdkver		1_5_0_11
 %ifarch x86_64
 %define mdvsuffix	2.3_64
@@ -1681,7 +1681,8 @@ fi
 
 %if !%{use_icecream}
 # sbin due to icu stuff there
-PATH=/bin:/usr/bin:/usr/X11R6/bin:$QTPATH:/usr/sbin
+#PATH=/bin:/usr/bin:/usr/X11R6/bin:$QTPATH:/usr/sbin:$PATH
+PATH=$PATH:/usr/sbin
 export PATH
 %endif
 
@@ -2125,7 +2126,7 @@ fi
 %{_datadir}/applications/calc*.desktop.ooo
 %{_mandir}/man1/oocalc%{mdvsuffix}.1*
 
-%files common -f build/common_list_fixed.txt
+%files common -f build/common_list.txt
 %{_sysconfdir}/bash_completion.d/ooffice%{mdvsuffix}.sh
 %{_sysconfdir}/profile.d/openoffice.org%{mdvsuffix}.*
 %{_bindir}/ooconfig%{mdvsuffix}
@@ -2163,14 +2164,14 @@ fi
 %ghost %{ooodir}/program/bootstraprc
 %ghost %{ooodir}/program/versionrc
 %ghost %{ooodir}/share/registry/data/org/openoffice/Setup.xcu
-%ghost %{_datadir}/applications/base.desktop
-%ghost %{_datadir}/applications/calc.desktop
-%ghost %{_datadir}/applications/draw.desktop
-%ghost %{_datadir}/applications/impress.desktop
-%ghost %{_datadir}/applications/math.desktop
-%ghost %{_datadir}/applications/template.desktop
-%ghost %{_datadir}/applications/web.desktop
-%ghost %{_datadir}/applications/writer.desktop
+%ghost %{_datadir}/applications/base*.desktop
+%ghost %{_datadir}/applications/calc*.desktop
+%ghost %{_datadir}/applications/draw*.desktop
+%ghost %{_datadir}/applications/impress*.desktop
+%ghost %{_datadir}/applications/math*.desktop
+%ghost %{_datadir}/applications/template*.desktop
+%ghost %{_datadir}/applications/web*.desktop
+%ghost %{_datadir}/applications/writer*.desktop
 
 %files core -f build/core_list.txt
 
