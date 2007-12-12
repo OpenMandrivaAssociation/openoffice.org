@@ -1929,13 +1929,13 @@ sort -u build/sdk_list.txt > build/sdk_list_fixed.txt
 # Versionify bash_completion (ooo-wrapper.sh)
 if [ -f %{buildroot}%{_sysconfdir}/bash_completion.d/ooo-wrapper.sh ]; then
  mv %{buildroot}%{_sysconfdir}/bash_completion.d/ooo-wrapper.sh \
- 	%{buildroot}%{_sysconfdir}/bash_completion.d/ooo-wrapper%{mdvsuffix}.sh
+ 	%{buildroot}%{_sysconfdir}/bash_completion.d/ooo-wrapper%{mdvsuffix}
 fi
 
 # Versionify bash_completion (ooffice.sh)
 if [ -f %{buildroot}%{_sysconfdir}/bash_completion.d/ooffice.sh ]; then
  mv %{buildroot}%{_sysconfdir}/bash_completion.d/ooffice.sh \
- 	%{buildroot}%{_sysconfdir}/bash_completion.d/ooffice%{mdvsuffix}.sh
+ 	%{buildroot}%{_sysconfdir}/bash_completion.d/ooffice%{mdvsuffix}
 fi
 
 # Versionify mono-ooo.pc
@@ -2127,7 +2127,7 @@ fi
 %{_mandir}/man1/oocalc%{mdvsuffix}.1*
 
 %files common -f build/common_list.txt
-%{_sysconfdir}/bash_completion.d/ooffice%{mdvsuffix}.sh
+%{_sysconfdir}/bash_completion.d/ooffice%{mdvsuffix}
 %{_sysconfdir}/profile.d/openoffice.org%{mdvsuffix}.*
 %{_bindir}/ooconfig%{mdvsuffix}
 %{_bindir}/ooffice%{mdvsuffix}
