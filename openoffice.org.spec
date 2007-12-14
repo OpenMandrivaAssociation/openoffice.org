@@ -1971,7 +1971,7 @@ bro "s/OpenO/BrO/" share/registry/data/org/openoffice/Setup.xcu
 cd -
 
 # Change the suite name in .desktop files for pt_BR locale
-sed -i '/pt_BR/{s/OpenO/BrO/}' %{buildroot}%{_datadir}/*.desktop
+sed -i '/pt_BR/{s/OpenO/BrO/}' %{buildroot}%{_datadir}/applications/*.desktop
 
 # Place symlinks br<app> -> oo<app>
 %if %l10n
