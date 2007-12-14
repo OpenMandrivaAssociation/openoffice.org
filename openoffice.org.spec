@@ -1933,8 +1933,8 @@ if [ -f %{buildroot}%{_sysconfdir}/bash_completion.d/ooo-wrapper.sh ]; then
 fi
 
 # Versionify bash_completion (ooffice.sh)
-if [ -f %{buildroot}%{_sysconfdir}/bash_completion.d/ooffice.sh ]; then
- mv %{buildroot}%{_sysconfdir}/bash_completion.d/ooffice.sh \
+if [ -f %{buildroot}%{_sysconfdir}/bash_completion.d/ooffice*.sh ]; then
+ mv %{buildroot}%{_sysconfdir}/bash_completion.d/ooffice*.sh \
  	%{buildroot}%{_sysconfdir}/bash_completion.d/ooffice%{mdvsuffix}
 fi
 
@@ -1970,13 +1970,8 @@ bro "s/en-US/pt-BR/;s/openo/bro/" program/versionrc
 bro "s/OpenO/BrO/" share/registry/data/org/openoffice/Setup.xcu
 cd -
 
-# Change the suite name in .desktop files
-# Use paths this way to /usr/lib/ooo/xdg/ don't get changed too
-cd %{buildroot}%{_datadir}/
-for i in applications/*.desktop; do
-  bro "s/OpenO/BrO/" "$i"
-done
-cd -
+# Change the suite name in .desktop files for pt_BR locale
+sed -i '/pt_BR/{s/OpenO/BrO/}' %{buildroot}%{_datadir}/*.desktop
 
 # Place symlinks br<app> -> oo<app>
 %if %l10n
@@ -2009,15 +2004,7 @@ rm -rf %{buildroot}
 for i in \
     %{ooodir}/program/bootstraprc \
     %{ooodir}/program/versionrc \
-    %{ooodir}/share/registry/data/org/openoffice/Setup.xcu \
-    %{_datadir}/applications/base.desktop \
-    %{_datadir}/applications/calc.desktop \
-    %{_datadir}/applications/draw.desktop \
-    %{_datadir}/applications/impress.desktop \
-    %{_datadir}/applications/math.desktop \
-    %{_datadir}/applications/template.desktop \
-    %{_datadir}/applications/web.desktop \
-    %{_datadir}/applications/writer.desktop
+    %{ooodir}/share/registry/data/org/openoffice/Setup.xcu
 do
     if [ -f "$i" ]; then
 	rm -f "$i"
@@ -2031,28 +2018,11 @@ done
         --slave %{ooodir}/program/versionrc oobr_versionrc \
 		%{ooodir}/program/versionrc.ooo \
         --slave %{ooodir}/share/registry/data/org/openoffice/Setup.xcu oobr_Setup.xcu \
-		%{ooodir}/share/registry/data/org/openoffice/Setup.xcu.ooo \
-	--slave %{_datadir}/applications/base.desktop oobr_base.desktop \
-		%{_datadir}/applications/base.desktop.ooo \
-	--slave %{_datadir}/applications/calc.desktop oobr_calc.desktop \
-		%{_datadir}/applications/calc.desktop.ooo \
-	--slave %{_datadir}/applications/draw.desktop oobr_draw.desktop \
-		%{_datadir}/applications/draw.desktop.ooo \
-	--slave %{_datadir}/applications/impress.desktop oobr_impress.desktop \
-		%{_datadir}/applications/impress.desktop.ooo \
-	--slave %{_datadir}/applications/math.desktop oobr_math.desktop \
-		%{_datadir}/applications/math.desktop.ooo \
-	--slave %{_datadir}/applications/template.desktop oobr_template.desktop \
-		%{_datadir}/applications/template.desktop.ooo \
-	--slave %{_datadir}/applications/web.desktop oobr_web.desktop \
-		%{_datadir}/applications/web.desktop.ooo \
-	--slave %{_datadir}/applications/writer.desktop oobr_writer.desktop \
-		%{_datadir}/applications/writer.desktop.ooo
+		%{ooodir}/share/registry/data/org/openoffice/Setup.xcu.ooo
 # Always do this configuration, as the switch should be transparent.
 /usr/sbin/update-alternatives --auto oobr_bootstraprc
 # End of BrOffice support %post
 
-# This must be after alterantives setup.
 %{update_desktop_database}
 
 %postun common
@@ -2066,7 +2036,6 @@ if [ ! -e "%{ooodir}/program/bootstraprc.ooo" ]; then
 fi
 # End of BrOffice support %postun common
 
-# This must be after alterantives setup.
 %{clean_desktop_database}
 
 %if %l10n
@@ -2079,28 +2048,11 @@ fi
         --slave %{ooodir}/program/versionrc oobr_versionrc \
 		%{ooodir}/program/versionrc.bro \
         --slave %{ooodir}/share/registry/data/org/openoffice/Setup.xcu oobr_Setup.xcu \
-		%{ooodir}/share/registry/data/org/openoffice/Setup.xcu.bro \
-	--slave %{_datadir}/applications/base.desktop oobr_base.desktop \
-		%{_datadir}/applications/base.desktop.bro \
-	--slave %{_datadir}/applications/calc.desktop oobr_calc.desktop \
-		%{_datadir}/applications/calc.desktop.bro \
-	--slave %{_datadir}/applications/draw.desktop oobr_draw.desktop \
-		%{_datadir}/applications/draw.desktop.bro \
-	--slave %{_datadir}/applications/impress.desktop oobr_impress.desktop \
-		%{_datadir}/applications/impress.desktop.bro \
-	--slave %{_datadir}/applications/math.desktop oobr_math.desktop \
-		%{_datadir}/applications/math.desktop.bro \
-	--slave %{_datadir}/applications/template.desktop oobr_template.desktop \
-		%{_datadir}/applications/template.desktop.bro \
-	--slave %{_datadir}/applications/web.desktop oobr_web.desktop \
-		%{_datadir}/applications/web.desktop.bro \
-	--slave %{_datadir}/applications/writer.desktop oobr_writer.desktop \
-		%{_datadir}/applications/writer.desktop.bro
+		%{ooodir}/share/registry/data/org/openoffice/Setup.xcu.bro
 # Always do this configuration, as the switch should be transparent.
 /usr/sbin/update-alternatives --auto oobr_bootstraprc
 # End of BrOffice support %post l10n-pt_BR
 
-# This must be after alterantives setup.
 %{update_desktop_database}
 
 %postun l10n-pt_BR
@@ -2110,20 +2062,44 @@ if [ ! -e "%{ooodir}/program/bootstraprc.bro" ]; then
 fi
 # End of BrOffice support %postun l10n-pt_BR
 
-# This must be after alterantives setup.
 %{clean_desktop_database}
 %endif
+
+%post base
+%{update_desktop_database}
+%postun base
+%{clean_desktop_database}
+%post calc
+%{update_desktop_database}
+%postun calc
+%{clean_desktop_database}
+%post draw
+%{update_desktop_database}
+%postun draw
+%{clean_desktop_database}
+%post impress
+%{update_desktop_database}
+%postun impress
+%{clean_desktop_database}
+%post math
+%{update_desktop_database}
+%postun math
+%{clean_desktop_database}
+%post writer
+%{update_desktop_database}
+%postun writer
+%{clean_desktop_database}
 
 %files base -f build/base_list.txt
 %{_bindir}/oobase%{mdvsuffix}
 ### <mrl> Please note ? at filenames. They are needed because 32b builds produces
 ### "li" files while 64b builds produces "lx" files.
-%{_datadir}/applications/base*.desktop.ooo
+%{_datadir}/applications/base*.desktop
 %{_mandir}/man1/oobase%{mdvsuffix}.1*
 
 %files calc -f build/calc_list.txt
 %{_bindir}/oocalc%{mdvsuffix}
-%{_datadir}/applications/calc*.desktop.ooo
+%{_datadir}/applications/calc*.desktop
 %{_mandir}/man1/oocalc%{mdvsuffix}.1*
 
 %files common -f build/common_list.txt
@@ -2136,7 +2112,7 @@ fi
 %dir %{ooodir}/share/dict
 # FIXME: Wrong place?
 %{ooodir}/share/dict/*.sxw
-%{_datadir}/applications/template*.desktop.ooo
+%{_datadir}/applications/template*.desktop
 %{_datadir}/icons/hicolor/*/apps/ooo-base%{mdvsuffix}.*
 %{_datadir}/icons/hicolor/*/apps/ooo-calc%{mdvsuffix}.*
 %{_datadir}/icons/hicolor/*/apps/ooo-draw%{mdvsuffix}.*
@@ -2181,7 +2157,7 @@ fi
 
 %files draw -f build/draw_list.txt
 %{_bindir}/oodraw%{mdvsuffix}
-%{_datadir}/applications/draw*.desktop.ooo
+%{_datadir}/applications/draw*.desktop
 %{_mandir}/man1/oodraw%{mdvsuffix}.1*
 
 %files dtd-officedocument1.0 -f build/dtd_list.txt
@@ -2192,7 +2168,7 @@ fi
 
 %files impress -f build/impress_list.txt
 %{_bindir}/ooimpress%{mdvsuffix}
-%{_datadir}/applications/impress*.desktop.ooo
+%{_datadir}/applications/impress*.desktop
 %{_mandir}/man1/ooimpress%{mdvsuffix}.1*
 
 %files java-common -f build/java_common_list.txt
@@ -2201,7 +2177,7 @@ fi
 
 %files math -f build/math_list.txt
 %{_bindir}/oomath%{mdvsuffix}
-%{_datadir}/applications/math*.desktop.ooo
+%{_datadir}/applications/math*.desktop
 %{_mandir}/man1/oomath%{mdvsuffix}.1*
 
 %files openclipart -f build/gallery_list.txt
@@ -2233,8 +2209,8 @@ fi
 %files writer -f build/writer_list.txt
 %{_bindir}/ooweb%{mdvsuffix}
 %{_bindir}/oowriter%{mdvsuffix}
-%{_datadir}/applications/writer*.desktop.ooo
-%{_datadir}/applications/web*.desktop.ooo
+%{_datadir}/applications/writer*.desktop
+%{_datadir}/applications/web*.desktop
 %{_mandir}/man1/ooweb%{mdvsuffix}.1*
 %{_mandir}/man1/oowriter%{mdvsuffix}.1*
 
@@ -2338,7 +2314,6 @@ fi
 # Yes, by this way there will be broken symlinks if you don't make a full suite
 # installation.
 %{_bindir}/br*
-%{_datadir}/applications/*.desktop.bro
 %{ooodir}/program/bootstraprc.bro
 %{ooodir}/program/versionrc.bro
 %{ooodir}/share/registry/data/org/openoffice/Setup.xcu.bro
