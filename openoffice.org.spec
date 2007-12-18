@@ -72,7 +72,7 @@
 %{?_with_smp: %global use_smp 1}
 %{?_without_smp: %global use_smp 0}
 
-%define use_mono	1
+%define use_mono	0
 %{?_with_mono: %global use_mono 1}
 %{?_without_mono: %global use_mono 0}
 
@@ -227,8 +227,7 @@ BuildConflicts: java-kaffe
 %endif
 BuildConflicts:	STLport-devel
 
-# <mrl> Not yet, must check java stuff first.
-#BuildRequires:	hsqldb
+BuildRequires:	hsqldb
 # <mrl> not working as external yet
 #BuildRequires:	bsh
 #BuildRequires:	libsablotron0-devel
@@ -307,6 +306,9 @@ Group: Office
 Summary: OpenOffice.org office suite - database
 Requires: %{name}-common = %{version}
 Requires: %{name}-core = %{version}
+# Heavy java deps
+Requires: hsqldb
+Requires: %{name}-java-common = %{version}
 # Due to the split
 Conflicts: %{name} = 2.2.1
 Conflicts: %{name}-common <= 2.3.0.5-1mdv
@@ -1704,8 +1706,9 @@ ln -sf %{SOURCE19} src/
 %if %{use_mono}
 ln -sf %{SOURCE20} src/
 ln -sf %{SOURCE21} src/
-ln -sf %{SOURCE26} src/
 %endif
+# ooo-build requests this even with mono off
+ln -sf %{SOURCE26} src/
 ln -sf %{SOURCE23} src/
 ln -sf %{SOURCE24} src/
 ln -sf %{SOURCE25} src/
@@ -1748,7 +1751,7 @@ CXXFLAGS="%{optflags} %{optsafe} -fno-omit-frame-pointer -fno-strict-aliasing -f
 	--with-firefox \
 	--with-system-mozilla=firefox \
 	--with-system-libs \
-	--without-system-hsqldb \
+	--with-system-hsqldb \
 	--without-system-beanshell \
 	--without-system-xml-apis \
 	--without-system-xerces \
@@ -1937,16 +1940,18 @@ if [ -f %{buildroot}%{_sysconfdir}/bash_completion.d/ooffice*.sh ]; then
  	%{buildroot}%{_sysconfdir}/bash_completion.d/ooffice%{mdvsuffix}
 fi
 
+%if %{use_mono}
 # Versionify mono-ooo.pc
 mv %{buildroot}%{_libdir}/pkgconfig/mono-ooo-%{mdvsuffix}.pc \
    %{buildroot}%{_libdir}/pkgconfig/mono-ooo%{mdvsuffix}-2.3.pc
+%endif
 
 # Install versioned profile.d/ files (#33475)
 mkdir -p %{buildroot}%{_sysconfdir}/profile.d
-sed 's/@VERSION@/%{mdvsuffix}/g' \
+sed 's@%%{ooodir}@%{ooodir}@g' \
 	%{_sourcedir}/openoffice.org.csh > \
 	%{buildroot}%{_sysconfdir}/profile.d/openoffice.org%{mdvsuffix}.csh
-sed 's/@VERSION@/%{mdvsuffix}/g' \
+sed 's@%%{ooodir}@%{ooodir}@g' \
 	%{_sourcedir}/openoffice.org.sh > \
 	%{buildroot}%{_sysconfdir}/profile.d/openoffice.org%{mdvsuffix}.sh
 
