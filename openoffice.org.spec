@@ -2017,11 +2017,11 @@ done
 
 # alternatives names follows oobr_<filename> mark, making it explicit.
 /usr/sbin/update-alternatives \
-        --install %{ooodir}/program/bootstraprc oobr_bootstraprc \
+        --install %{ooodir}/program/bootstraprc oobr_bootstraprc%{mdvsuffix} \
 		%{ooodir}/program/bootstraprc.ooo 1 \
-        --slave %{ooodir}/program/versionrc oobr_versionrc \
+        --slave %{ooodir}/program/versionrc oobr_versionrc%{mdvsuffix} \
 		%{ooodir}/program/versionrc.ooo \
-        --slave %{ooodir}/share/registry/data/org/openoffice/Setup.xcu oobr_Setup.xcu \
+        --slave %{ooodir}/share/registry/data/org/openoffice/Setup.xcu oobr_Setup.xcu%{mdvsuffix} \
 		%{ooodir}/share/registry/data/org/openoffice/Setup.xcu.ooo
 # Always do this configuration, as the switch should be transparent.
 /usr/sbin/update-alternatives --auto oobr_bootstraprc
@@ -2036,7 +2036,7 @@ fi
 
 # BrOffice support %postun common
 if [ ! -e "%{ooodir}/program/bootstraprc.ooo" ]; then
-        /usr/sbin/update-alternatives --remove oobr_bootstraprc %{ooodir}/program/bootstraprc.ooo
+        /usr/sbin/update-alternatives --remove oobr_bootstraprc%{mdvsuffix} %{ooodir}/program/bootstraprc.ooo
 fi
 # End of BrOffice support %postun common
 
@@ -2047,11 +2047,11 @@ fi
 # BrOffice support %post l10n-pt_BR
 # alternatives names follows oobr_<filename> mark, making it explicit.
 /usr/sbin/update-alternatives \
-        --install %{ooodir}/program/bootstraprc oobr_bootstraprc \
+        --install %{ooodir}/program/bootstraprc oobr_bootstraprc%{mdvsuffix} \
 		%{ooodir}/program/bootstraprc.bro 2 \
-        --slave %{ooodir}/program/versionrc oobr_versionrc \
+        --slave %{ooodir}/program/versionrc oobr_versionrc%{mdvsuffix} \
 		%{ooodir}/program/versionrc.bro \
-        --slave %{ooodir}/share/registry/data/org/openoffice/Setup.xcu oobr_Setup.xcu \
+        --slave %{ooodir}/share/registry/data/org/openoffice/Setup.xcu oobr_Setup.xcu%{mdvsuffix} \
 		%{ooodir}/share/registry/data/org/openoffice/Setup.xcu.bro
 # Always do this configuration, as the switch should be transparent.
 /usr/sbin/update-alternatives --auto oobr_bootstraprc
@@ -2062,7 +2062,7 @@ fi
 %postun l10n-pt_BR
 # BrOffice support %postun l10n-pt_BR
 if [ ! -e "%{ooodir}/program/bootstraprc.bro" ]; then
-        /usr/sbin/update-alternatives --remove oobr_bootstraprc %{ooodir}/program/bootstraprc.bro
+        /usr/sbin/update-alternatives --remove oobr_bootstraprc%{mdvsuffix} %{ooodir}/program/bootstraprc.bro
 fi
 # End of BrOffice support %postun l10n-pt_BR
 
