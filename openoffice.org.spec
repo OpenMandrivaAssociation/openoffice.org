@@ -108,6 +108,7 @@ Release:	%{release}
 URL:		http://www.go-ooo.org
 License:	LGPL
 Group:		Office
+BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 # Requres to all our packages
 Requires:	%{name}-base = %{version}
 Requires:	%{name}-calc = %{version}
