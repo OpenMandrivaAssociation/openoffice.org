@@ -500,6 +500,7 @@ Obsoletes: %{name}-gtk <= 2.3.0.5
 Conflicts: %{name}-gtk <= 2.3.0.5
 Obsoletes: %{name}-evolution <= 2.3.0.5
 Conflicts: %{name}-evolution <= 2.3.0.5
+Suggests: %{name}-style-tango = %{version}
 
 %description gnome
 OpenOffice.org is a full-featured office productivity suite that provides a
