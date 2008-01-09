@@ -15,7 +15,8 @@
 %endif
 
 #define _binary_payload w1.gzdio
-%define _binary_payload w9.bzdio
+#define _binary_payload w9.bzdio
+%define _binary_payload w9.lzdio
 #define _source_payload w9.bzdio
 
 %define version		2.3.1
