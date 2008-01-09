@@ -2001,6 +2001,7 @@ rm -rf %{buildroot}
         --install %{_bindir}/soffice ooffice   %{_bindir}/ooffice%{mdvsuffix} %{oooaltpri} \
 	--slave %{_bindir}/oowriter  oowriter  %{_bindir}/oowriter%{mdvsuffix} \
 	--slave %{_bindir}/oobase    oobase    %{_bindir}/oobase%{mdvsuffix} \
+	--slave %{_bindir}/oodraw    oodraw    %{_bindir}/oodraw%{mdvsuffix} \
 	--slave %{_bindir}/ooimpress ooimpress %{_bindir}/ooimpress%{mdvsuffix} \
 	--slave %{_bindir}/oocalc    oocalc    %{_bindir}/oocalc%{mdvsuffix} \
         --slave %{_bindir}/ootool    ootool    %{_bindir}/ootool%{mdvsuffix} \
