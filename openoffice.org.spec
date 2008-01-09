@@ -900,11 +900,9 @@ Requires:	locales-cs
 Requires:	urw-fonts
 Requires:	myspell-cs
 Requires:	myspell-hyph-cs
-Obsoletes:	OpenOffice.org-l10n-cs
-Obsoletes:	OpenOffice.org-help-cs
-Provides:	OpenOffice.org-l10n-cs
-Provides:	OpenOffice.org-help-cs
 Obsoletes:	%{ooname}-go-ooo-l10n-cs <= %{version}
+Obsoletes:	OpenOffice.org-l10n-cs
+Provides:	OpenOffice.org-l10n-cs
 
 %description l10n-cs
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -971,11 +969,9 @@ Requires:	fonts-ttf-dejavu
 Requires:	urw-fonts
 Requires:	myspell-de
 Requires:	myspell-hyph-de
-Obsoletes:	OpenOffice.org-l10n-de
-Obsoletes:	OpenOffice.org-help-de
-Provides:	OpenOffice.org-l10n-de
-Provides:	OpenOffice.org-help-de
 Obsoletes:	%{ooname}-go-ooo-l10n-de <= %{version}
+Obsoletes:	OpenOffice.org-l10n-de
+Provides:	OpenOffice.org-l10n-de
 
 %description l10n-de
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1041,11 +1037,9 @@ Requires:	fonts-ttf-dejavu
 Requires:	urw-fonts
 Requires:	myspell-es
 Requires:	myspell-hyph-es
-Obsoletes:	OpenOffice.org-l10n-es
-Obsoletes:	OpenOffice.org-help-es
-Provides:	OpenOffice.org-l10n-es
-Provides:	OpenOffice.org-help-es
 Obsoletes:	%{ooname}-go-ooo-l10n-es <= %{version}
+Obsoletes:	OpenOffice.org-l10n-es
+Provides:	OpenOffice.org-l10n-es
 
 %description l10n-es
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1090,9 +1084,7 @@ Requires:	locales-eu
 Requires:	fonts-ttf-dejavu
 Requires:	urw-fonts
 Obsoletes:	OpenOffice.org-l10n-eu
-Obsoletes:	OpenOffice.org-help-eu
 Provides:	OpenOffice.org-l10n-eu
-Provides:	OpenOffice.org-help-eu
 Obsoletes:	%{ooname}-go-ooo-l10n-eu <= %{version}
 
 %description l10n-eu
@@ -1115,9 +1107,7 @@ Requires:	fonts-ttf-dejavu
 Requires:	urw-fonts
 Requires:	%{ooname}-voikko
 Obsoletes:	OpenOffice.org-l10n-fi
-Obsoletes:	OpenOffice.org-help-fi
 Provides:	OpenOffice.org-l10n-fi
-Provides:	OpenOffice.org-help-fi
 Obsoletes:	%{ooname}-go-ooo-l10n-fi <= %{version}
 
 %description l10n-fi
@@ -1141,9 +1131,7 @@ Requires:	urw-fonts
 Requires:	myspell-fr
 Requires:	myspell-hyph-fr
 Obsoletes:	OpenOffice.org-l10n-fr
-Obsoletes:	OpenOffice.org-help-fr
 Provides:	OpenOffice.org-l10n-fr
-Provides:	OpenOffice.org-help-fr
 Obsoletes:	%{ooname}-go-ooo-l10n-fr <= %{version}
 
 %description l10n-fr
@@ -1229,9 +1217,7 @@ Requires:	%{ooname}-common = %{version}
 Requires:	locales-ja
 Requires:	fonts-ttf-japanese >= 0.20020727-1mdk
 Obsoletes:	OpenOffice.org-l10n-ja
-Obsoletes:	OpenOffice.org-help-ja
 Provides:	OpenOffice.org-l10n-ja
-Provides:	OpenOffice.org-help-ja
 Obsoletes:	%{ooname}-go-ooo-l10n-ja <= %{version}
 
 %description l10n-ja
@@ -1252,9 +1238,7 @@ Requires:	%{ooname}-common = %{version}
 Requires:	locales-ko
 Requires:	fonts-ttf-korean >= 2.1
 Obsoletes:	OpenOffice.org-l10n-ko
-Obsoletes:	OpenOffice.org-help-ko
 Provides:	OpenOffice.org-l10n-ko
-Provides:	OpenOffice.org-help-ko
 Obsoletes:	%{ooname}-go-ooo-l10n-ko <= %{version}
 
 %description l10n-ko
@@ -1317,9 +1301,7 @@ Requires:	urw-fonts
 Requires:	myspell-nl
 Requires:	myspell-hyph-nl
 Obsoletes:	OpenOffice.org-l10n-nl
-Obsoletes:	OpenOffice.org-help-nl
 Provides:	OpenOffice.org-l10n-nl
-Provides:	OpenOffice.org-help-nl
 Obsoletes:	%{ooname}-go-ooo-l10n-nl <= %{version}
 
 %description l10n-nl
@@ -1409,9 +1391,7 @@ Requires:	locales-pt
 Requires:	urw-fonts
 Requires:	myspell-pt_BR
 Obsoletes:	OpenOffice.org-l10n_pt_BR
-Obsoletes:	OpenOffice.org-help-pt_BR
 Provides:	OpenOffice.org-l10n_pt_BR
-Provides:	OpenOffice.org-help-pt_BR
 Obsoletes:	%{ooname}-go-ooo-l10n-pt_BR <= %{version}
 
 %description l10n-pt_BR
@@ -1434,9 +1414,7 @@ Requires:	urw-fonts >= 2.0-6mdk
 Requires:	myspell-ru
 Requires:	myspell-hyph-ru
 Obsoletes:	OpenOffice.org-l10n-ru
-Obsoletes:	OpenOffice.org-help-ru
 Provides:	OpenOffice.org-l10n-ru
-Provides:	OpenOffice.org-help-ru
 Obsoletes:	%{ooname}-go-ooo-l10n-ru <= %{version}
 
 %description l10n-ru
@@ -1459,9 +1437,7 @@ Requires:	urw-fonts
 Requires:	myspell-sk
 Requires:	myspell-hyph-sk
 Obsoletes:	OpenOffice.org-l10n-sk
-Obsoletes:	OpenOffice.org-help-sk
 Provides:	OpenOffice.org-l10n-sk
-Provides:	OpenOffice.org-help-sk
 Obsoletes:	%{ooname}-go-ooo-l10n-su <= %{version}
 
 %description l10n-sk
@@ -1483,9 +1459,7 @@ Requires:	locales-sl
 Requires:	urw-fonts
 Requires:	myspell-sl, myspell-hyph-sl
 Obsoletes:	OpenOffice.org-l10n-sl
-Obsoletes:	OpenOffice.org-help-sl
 Provides:	OpenOffice.org-l10n-sl
-Provides:	OpenOffice.org-help-sl
 Obsoletes:	%{ooname}-go-ooo-l10n-sl <= %{version}
 
 %description l10n-sl
@@ -1509,9 +1483,7 @@ Requires:	urw-fonts
 Requires:	myspell-sv
 Requires:	myspell-hyph-sv
 Obsoletes:	OpenOffice.org-l10n-sv
-Obsoletes:	OpenOffice.org-help-sv
 Provides:	OpenOffice.org-l10n-sv
-Provides:	OpenOffice.org-help-sv
 Obsoletes:	%{ooname}-go-ooo-l10n-sv <= %{version}
 
 %description l10n-sv
@@ -1553,9 +1525,7 @@ Requires:	%{ooname}-common = %{version}
 Requires:	locales-tr
 Requires:	urw-fonts
 Obsoletes:	OpenOffice.org-l10n-tr
-Obsoletes:	OpenOffice.org-help-tr
 Provides:	OpenOffice.org-l10n-tr
-Provides:	OpenOffice.org-help-tr
 Obsoletes:	%{ooname}-go-ooo-l10n-tr <= %{version}
 
 %description l10n-tr
@@ -1576,9 +1546,7 @@ Requires:	%{ooname}-common = %{version}
 Requires:	locales-zh
 Requires:	fonts-ttf-chinese
 Obsoletes:	OpenOffice.org-l10n-zh_CN
-Obsoletes:	OpenOffice.org-help-zh_CN
 Provides:	OpenOffice.org-l10n-zh_CN
-Provides:	OpenOffice.org-help-zh_CN
 Obsoletes:	%{ooname}-go-ooo-l10n-zh_CN <= %{version}
 
 %description l10n-zh_CN
@@ -1599,9 +1567,7 @@ Requires:	%{ooname}-common = %{version}
 Requires:	locales-zh
 Requires:	fonts-ttf-chinese
 Obsoletes:	OpenOffice.org-l10n-zh_TW
-Obsoletes:	OpenOffice.org-help-zh_TW
 Provides:	OpenOffice.org-l10n-zh_TW
-Provides:	OpenOffice.org-help-zh_TW
 Obsoletes:	%{ooname}-go-ooo-l10n-zh_TW <= %{version}
 
 %description l10n-zh_TW
@@ -1634,6 +1600,505 @@ It contains the user interface, the templates and the autotext
 features. Please note that not all of these are available for all
 possible language. You can switch user interface language using the
 standard locales system.
+
+%package help-it
+Summary:	Italian help for OpenOffice.org
+Group:		Office
+Provides:	%{ooname}-help = %{version}-%{release}
+Requires:	%{ooname}-l10n-it = %{version}
+
+%description help-it
+OpenOffice.org is an Open Source, community-developed, office suite.
+
+This package contains the localized help files of OpenOffice.org in Italian.
+
+%package help-af
+Summary:	Afrikaans help for OpenOffice.org
+Group:		Office
+Provides:	%{ooname}-help = %{version}-%{release}
+Requires:	%{ooname}-l10n-af = %{version}
+
+%description help-af
+OpenOffice.org is an Open Source, community-developed, office suite.
+
+This package contains the localized help files of OpenOffice.org in Afrikaans.
+
+
+%package help-ar
+Summary:	Arabic help for OpenOffice.org
+Group:		Office
+Provides:	%{ooname}-help = %{version}-%{release}
+Requires:	%{ooname}-l10n-ar = %{version}
+
+%description help-ar
+OpenOffice.org is an Open Source, community-developed, office suite.
+
+This package contains the localized help files of OpenOffice.org in Arabic.
+
+
+%package help-bg
+Summary:	Bulgarian help for OpenOffice.org
+Group:		Office
+Provides:	%{ooname}-help = %{version}-%{release}
+Requires:	%{ooname}-l10n-bg = %{version}
+
+%description help-bg
+OpenOffice.org is an Open Source, community-developed, office suite.
+
+This package contains the localized help files of OpenOffice.org in Bulgarian.
+
+
+%package help-br
+Summary:	Breton help for OpenOffice.org
+Group:		Office
+Provides:	%{ooname}-help = %{version}-%{release}
+Requires:	%{ooname}-l10n-br = %{version}
+
+%description help-br
+OpenOffice.org is an Open Source, community-developed, office suite.
+
+This package contains the localized help files of OpenOffice.org in Breton.
+
+
+%package help-bs
+Summary:	Bosnian help for OpenOffice.org
+Group:		Office
+Provides:	%{ooname}-help = %{version}-%{release}
+Requires:	%{ooname}-l10n-bs = %{version}
+
+%description help-bs
+OpenOffice.org is an Open Source, community-developed, office suite.
+
+This package contains the localized help files of OpenOffice.org in Bosnian.
+
+
+%package help-ca
+Summary:	Catalan help for OpenOffice.org
+Group:		Office
+Provides:	%{ooname}-help = %{version}-%{release}
+Requires:	%{ooname}-l10n-ca = %{version}
+
+%description help-ca
+OpenOffice.org is an Open Source, community-developed, office suite.
+
+This package contains the localized help files of OpenOffice.org in Catalan.
+
+
+%package help-cs
+Summary:	Czech help for OpenOffice.org
+Group:		Office
+Provides:	%{ooname}-help = %{version}-%{release}
+Requires:	%{ooname}-l10n-cs = %{version}
+Obsoletes:	OpenOffice.org-help-cs
+Provides:	OpenOffice.org-help-cs
+
+%description help-cs
+OpenOffice.org is an Open Source, community-developed, office suite.
+
+This package contains the localized help files of OpenOffice.org in Czech.
+
+
+%package help-cy
+Summary:	Welsh help for OpenOffice.org
+Group:		Office
+Provides:	%{ooname}-help = %{version}-%{release}
+Requires:	%{ooname}-l10n-cy = %{version}
+
+%description help-cy
+OpenOffice.org is an Open Source, community-developed, office suite.
+
+This package contains the localized help files of OpenOffice.org in Welsh.
+
+
+%package help-da
+Summary:	Danish help for OpenOffice.org
+Group:		Office
+Provides:	%{ooname}-help = %{version}-%{release}
+Requires:	%{ooname}-l10n-da = %{version}
+
+%description help-da
+OpenOffice.org is an Open Source, community-developed, office suite.
+
+This package contains the localized help files of OpenOffice.org in Danish.
+
+
+%package help-de
+Summary:	German help for OpenOffice.org
+Group:		Office
+Provides:	%{ooname}-help = %{version}-%{release}
+Requires:	%{ooname}-l10n-de = %{version}
+Obsoletes:	OpenOffice.org-help-de
+Provides:	OpenOffice.org-help-de
+
+%description help-de
+OpenOffice.org is an Open Source, community-developed, office suite.
+
+This package contains the localized help files of OpenOffice.org in German.
+
+
+%package help-el
+Summary:	Greek help for OpenOffice.org
+Group:		Office
+Provides:	%{ooname}-help = %{version}-%{release}
+Requires:	%{ooname}-l10n-el = %{version}
+
+%description help-el
+OpenOffice.org is an Open Source, community-developed, office suite.
+
+This package contains the localized help files of OpenOffice.org in Greek.
+
+
+%package help-en_GB
+Summary:	British help for OpenOffice.org
+Group:		Office
+Provides:	%{ooname}-help = %{version}-%{release}
+Requires:	%{ooname}-l10n-en_GB = %{version}
+
+%description help-en_GB
+OpenOffice.org is an Open Source, community-developed, office suite.
+
+This package contains the localized help files of OpenOffice.org in British.
+
+
+%package help-es
+Summary:	Spanish help for OpenOffice.org
+Group:		Office
+Provides:	%{ooname}-help = %{version}-%{release}
+Requires:	%{ooname}-l10n-es = %{version}
+Obsoletes:	OpenOffice.org-help-es
+Provides:	OpenOffice.org-help-es
+
+%description help-es
+OpenOffice.org is an Open Source, community-developed, office suite.
+
+This package contains the localized help files of OpenOffice.org in Spanish.
+
+
+%package help-et
+Summary:	Estonian help for OpenOffice.org
+Group:		Office
+Provides:	%{ooname}-help = %{version}-%{release}
+Requires:	%{ooname}-l10n-et = %{version}
+
+%description help-et
+OpenOffice.org is an Open Source, community-developed, office suite.
+
+This package contains the localized help files of OpenOffice.org in Estonian.
+
+
+%package help-eu
+Summary:	Basque help for OpenOffice.org
+Group:		Office
+Provides:	%{ooname}-help = %{version}-%{release}
+Requires:	%{ooname}-l10n-eu = %{version}
+Obsoletes:	OpenOffice.org-help-eu
+Provides:	OpenOffice.org-help-eu
+
+%description help-eu
+OpenOffice.org is an Open Source, community-developed, office suite.
+
+This package contains the localized help files of OpenOffice.org in Basque.
+
+
+%package help-fi
+Summary:	Finnish help for OpenOffice.org
+Group:		Office
+Provides:	%{ooname}-help = %{version}-%{release}
+Requires:	%{ooname}-l10n-fi = %{version}
+Obsoletes:	OpenOffice.org-help-fi
+Provides:	OpenOffice.org-help-fi
+
+%description help-fi
+OpenOffice.org is an Open Source, community-developed, office suite.
+
+This package contains the localized help files of OpenOffice.org in Finnish.
+
+
+%package help-fr
+Summary:	French help for OpenOffice.org
+Group:		Office
+Provides:	%{ooname}-help = %{version}-%{release}
+Requires:	%{ooname}-l10n-fr = %{version}
+Obsoletes:	OpenOffice.org-help-fr
+Provides:	OpenOffice.org-help-fr
+
+%description help-fr
+OpenOffice.org is an Open Source, community-developed, office suite.
+
+This package contains the localized help files of OpenOffice.org in French.
+
+
+%package help-he
+Summary:	Hebrew help for OpenOffice.org
+Group:		Office
+Provides:	%{ooname}-help = %{version}-%{release}
+Requires:	%{ooname}-l10n-he = %{version}
+
+%description help-he
+OpenOffice.org is an Open Source, community-developed, office suite.
+
+This package contains the localized help files of OpenOffice.org in Hebrew.
+
+
+%package help-hi
+Summary:	Hindi help for OpenOffice.org
+Group:		Office
+Provides:	%{ooname}-help = %{version}-%{release}
+Requires:	%{ooname}-l10n-hi = %{version}
+
+%description help-hi
+OpenOffice.org is an Open Source, community-developed, office suite.
+
+This package contains the localized help files of OpenOffice.org in Hindi.
+
+
+%package help-hu
+Summary:	Hungarian help for OpenOffice.org
+Group:		Office
+Provides:	%{ooname}-help = %{version}-%{release}
+Requires:	%{ooname}-l10n-hu = %{version}
+
+%description help-hu
+OpenOffice.org is an Open Source, community-developed, office suite.
+
+This package contains the localized help files of OpenOffice.org in Hungarian.
+
+
+%package help-ja
+Summary:	Japanese help for OpenOffice.org
+Group:		Office
+Provides:	%{ooname}-help = %{version}-%{release}
+Requires:	%{ooname}-l10n-ja = %{version}
+Obsoletes:	OpenOffice.org-help-ja
+Provides:	OpenOffice.org-help-ja
+
+%description help-ja
+OpenOffice.org is an Open Source, community-developed, office suite.
+
+This package contains the localized help files of OpenOffice.org in Japanese.
+
+
+%package help-ko
+Summary:	Korean help for OpenOffice.org
+Group:		Office
+Provides:	%{ooname}-help = %{version}-%{release}
+Requires:	%{ooname}-l10n-ko = %{version}
+Obsoletes:	OpenOffice.org-help-ko
+Provides:	OpenOffice.org-help-ko
+
+%description help-ko
+OpenOffice.org is an Open Source, community-developed, office suite.
+
+This package contains the localized help files of OpenOffice.org in Korean.
+
+
+%package help-mk
+Summary:	Macedonian help for OpenOffice.org
+Group:		Office
+Provides:	%{ooname}-help = %{version}-%{release}
+Requires:	%{ooname}-l10n-mk = %{version}
+
+%description help-mk
+OpenOffice.org is an Open Source, community-developed, office suite.
+
+This package contains the localized help files of OpenOffice.org in Macedonian.
+
+
+%package help-nb
+Summary:	Norwegian Bokmal help for OpenOffice.org
+Group:		Office
+Provides:	%{ooname}-help = %{version}-%{release}
+Requires:	%{ooname}-l10n-nb = %{version}
+
+%description help-nb
+OpenOffice.org is an Open Source, community-developed, office suite.
+
+This package contains the localized help files of OpenOffice.org in Norwegian Bokmal.
+
+
+%package help-nl
+Summary:	Dutch help for OpenOffice.org
+Group:		Office
+Provides:	%{ooname}-help = %{version}-%{release}
+Requires:	%{ooname}-l10n-nl = %{version}
+Obsoletes:	OpenOffice.org-help-nl
+Provides:	OpenOffice.org-help-nl
+
+%description help-nl
+OpenOffice.org is an Open Source, community-developed, office suite.
+
+This package contains the localized help files of OpenOffice.org in Dutch.
+
+
+%package help-nn
+Summary:	Norwegian Nynorsk help for OpenOffice.org
+Group:		Office
+Provides:	%{ooname}-help = %{version}-%{release}
+Requires:	%{ooname}-l10n-nn = %{version}
+
+%description help-nn
+OpenOffice.org is an Open Source, community-developed, office suite.
+
+This package contains the localized help files of OpenOffice.org in Norwegian Nynorsk.
+
+%package help-pl
+Summary:	Polish help for OpenOffice.org
+Group:		Office
+Provides:	%{ooname}-help = %{version}-%{release}
+Requires:	%{ooname}-l10n-pl = %{version}
+
+%description help-pl
+OpenOffice.org is an Open Source, community-developed, office suite.
+
+This package contains the localized help files of OpenOffice.org in Polish.
+
+
+%package help-pt
+Summary:	Portuguese help for OpenOffice.org
+Group:		Office
+Provides:	%{ooname}-help = %{version}-%{release}
+Requires:	%{ooname}-l10n-pt = %{version}
+
+%description help-pt
+OpenOffice.org is an Open Source, community-developed, office suite.
+
+This package contains the localized help files of OpenOffice.org in Portuguese.
+
+
+%package help-pt_BR
+Summary:	Portuguese Brazilian help for OpenOffice.org
+Group:		Office
+Provides:	%{ooname}-help = %{version}-%{release}
+Requires:	%{ooname}-l10n-pt_BR = %{version}
+Obsoletes:	OpenOffice.org-help-pt_BR
+Provides:	OpenOffice.org-help-pt_BR
+
+%description help-pt_BR
+OpenOffice.org is an Open Source, community-developed, office suite.
+
+This package contains the localized help files of OpenOffice.org in Portuguese Brazilian.
+
+
+%package help-ru
+Summary:	Russian help for OpenOffice.org
+Group:		Office
+Provides:	%{ooname}-help = %{version}-%{release}
+Requires:	%{ooname}-l10n-ru = %{version}
+Obsoletes:	OpenOffice.org-help-ru
+Provides:	OpenOffice.org-help-ru
+
+%description help-ru
+OpenOffice.org is an Open Source, community-developed, office suite.
+
+This package contains the localized help files of OpenOffice.org in Russian.
+
+
+%package help-sk
+Summary:	Slovak help for OpenOffice.org
+Group:		Office
+Provides:	%{ooname}-help = %{version}-%{release}
+Requires:	%{ooname}-l10n-sk = %{version}
+Obsoletes:	OpenOffice.org-help-sk
+Provides:	OpenOffice.org-help-sk
+
+%description help-sk
+OpenOffice.org is an Open Source, community-developed, office suite.
+
+This package contains the localized help files of OpenOffice.org in Slovak.
+
+
+%package help-sl
+Summary:	Slovenian help for OpenOffice.org
+Group:		Office
+Provides:	%{ooname}-help = %{version}-%{release}
+Requires:	%{ooname}-l10n-sl = %{version}
+Obsoletes:	OpenOffice.org-help-sl
+Provides:	OpenOffice.org-help-sl
+
+%description help-sl
+OpenOffice.org is an Open Source, community-developed, office suite.
+
+This package contains the localized help files of OpenOffice.org in Slovenian.
+
+
+%package help-sv
+Summary:	Swedish help for OpenOffice.org
+Group:		Office
+Provides:	%{ooname}-help = %{version}-%{release}
+Requires:	%{ooname}-l10n-sv = %{version}
+Obsoletes:	OpenOffice.org-help-sv
+Provides:	OpenOffice.org-help-sv
+
+%description help-sv
+OpenOffice.org is an Open Source, community-developed, office suite.
+
+This package contains the localized help files of OpenOffice.org in Swedish.
+
+
+%package help-ta
+Summary:	Tamil help for OpenOffice.org
+Group:		Office
+Provides:	%{ooname}-help = %{version}-%{release}
+Requires:	%{ooname}-l10n-ta = %{version}
+
+%description help-ta
+OpenOffice.org is an Open Source, community-developed, office suite.
+
+This package contains the localized help files of OpenOffice.org in Tamil.
+
+
+%package help-tr
+Summary:	Turkish help for OpenOffice.org
+Group:		Office
+Provides:	%{ooname}-help = %{version}-%{release}
+Requires:	%{ooname}-l10n-tr = %{version}
+Obsoletes:	OpenOffice.org-help-tr
+Provides:	OpenOffice.org-help-tr
+
+%description help-tr
+OpenOffice.org is an Open Source, community-developed, office suite.
+
+This package contains the localized help files of OpenOffice.org in Turkish.
+
+
+%package help-zh_CN
+Summary:	Chinese Simplified help for OpenOffice.org
+Group:		Office
+Provides:	%{ooname}-help = %{version}-%{release}
+Requires:	%{ooname}-l10n-zh_CN = %{version}
+Obsoletes:	OpenOffice.org-help-zh_CN
+Provides:	OpenOffice.org-help-zh_CN
+
+%description help-zh_CN
+OpenOffice.org is an Open Source, community-developed, office suite.
+
+This package contains the localized help files of OpenOffice.org in Chinese Simplified.
+
+
+%package help-zh_TW
+Summary:	Chinese Traditional help for OpenOffice.org
+Group:		Office
+Provides:	%{ooname}-help = %{version}-%{release}
+Requires:	%{ooname}-l10n-zh_TW = %{version}
+Obsoletes:	OpenOffice.org-help-zh_TW
+Provides:	OpenOffice.org-help-zh_TW
+
+%description help-zh_TW
+OpenOffice.org is an Open Source, community-developed, office suite.
+
+This package contains the localized help files of OpenOffice.org in Chinese Traditional.
+
+
+%package help-zu
+Summary:	Zulu help for OpenOffice.org
+Group:		Office
+Provides:	%{ooname}-help = %{version}-%{release}
+Requires:	%{ooname}-l10n-zu = %{version}
+
+%description help-zu
+OpenOffice.org is an Open Source, community-developed, office suite.
+
+This package contains the localized help files of OpenOffice.org in Zulu.
 %endif
 
 %prep
@@ -2351,5 +2816,122 @@ fi
 %defattr(-,root,root)
 
 %files l10n-zu -f build/lang_zu_list.txt
+%defattr(-,root,root)
+
+%files help-it -f build/help_it_list.txt
+%defattr(-,root,root)
+
+%files help-af -f build/help_af_list.txt
+%defattr(-,root,root)
+
+%files help-ar -f build/help_ar_list.txt
+%defattr(-,root,root)
+
+%files help-bg -f build/help_bg_list.txt
+%defattr(-,root,root)
+
+%files help-br -f build/help_br_list.txt
+%defattr(-,root,root)
+
+%files help-bs -f build/help_bs_list.txt
+%defattr(-,root,root)
+
+%files help-ca -f build/help_ca_list.txt
+%defattr(-,root,root)
+
+%files help-cs -f build/help_cs_list.txt
+%defattr(-,root,root)
+
+%files help-cy -f build/help_cy_list.txt
+%defattr(-,root,root)
+
+%files help-da -f build/help_da_list.txt
+%defattr(-,root,root)
+
+%files help-de -f build/help_de_list.txt
+%defattr(-,root,root)
+
+%files help-el -f build/help_el_list.txt
+%defattr(-,root,root)
+
+%files help-en_GB -f build/help_en-GB_list.txt
+%defattr(-,root,root)
+
+%files help-es -f build/help_es_list.txt
+%defattr(-,root,root)
+
+%files help-et -f build/help_et_list.txt
+%defattr(-,root,root)
+
+%files help-eu -f build/help_eu_list.txt
+%defattr(-,root,root)
+
+%files help-fi -f build/help_fi_list.txt
+%defattr(-,root,root)
+
+%files help-fr -f build/help_fr_list.txt
+%defattr(-,root,root)
+
+%files help-he -f build/help_he_list.txt
+%defattr(-,root,root)
+
+%files help-hi -f build/help_hi_list.txt
+%defattr(-,root,root)
+
+%files help-hu -f build/help_hu_list.txt
+%defattr(-,root,root)
+
+%files help-ja -f build/help_ja_list.txt
+%defattr(-,root,root)
+
+%files help-ko -f build/help_ko_list.txt
+%defattr(-,root,root)
+
+%files help-mk -f build/help_mk_list.txt
+%defattr(-,root,root)
+
+%files help-nb -f build/help_nb_list.txt
+%defattr(-,root,root)
+
+%files help-nl -f build/help_nl_list.txt
+%defattr(-,root,root)
+
+%files help-nn -f build/help_nn_list.txt
+%defattr(-,root,root)
+
+%files help-pl -f build/help_pl_list.txt
+%defattr(-,root,root)
+
+%files help-pt -f build/help_pt_list.txt
+%defattr(-,root,root)
+
+%files help-pt_BR -f build/help_pt-BR_list.txt
+%defattr(-,root,root)
+
+%files help-ru -f build/help_ru_list.txt
+%defattr(-,root,root)
+
+%files help-sk -f build/help_sk_list.txt
+%defattr(-,root,root)
+
+%files help-sl -f build/help_sl_list.txt
+%defattr(-,root,root)
+
+%files help-sv -f build/help_sv_list.txt
+%defattr(-,root,root)
+
+%files help-ta -f build/help_ta_list.txt
+%defattr(-,root,root)
+
+%files help-tr -f build/help_tr_list.txt
+%defattr(-,root,root)
+
+%files help-zh_CN -f build/help_zh-CN_list.txt
+%defattr(-,root,root)
+
+%files help-zh_TW -f build/help_zh-TW_list.txt
+%defattr(-,root,root)
+
+%files help-zu -f build/help_zu_list.txt
 %defattr(-,root,root)
 %endif
