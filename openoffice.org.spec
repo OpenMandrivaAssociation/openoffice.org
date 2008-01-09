@@ -50,7 +50,7 @@
 %ifarch x86_64
 %define use_gcj		1
 %else
-%define	use_gcj		0
+%define	use_gcj		1
 %endif
 %{?_with_gcj: %global use_gcj 1}
 %{?_without_gcj: %global use_gcj 0}
@@ -159,7 +159,7 @@ BuildRequires:	db1-devel
 %if %{use_systemdb}
 BuildRequires:	%{mklibname db 4.2} >= 4.2.5-4mdk
 BuildRequires:	libdbcxx >= 4.2.5-4mdk
-BuildRequires:	libdb-devel >= 4.2.5-4mdk
+BuildRequires:	db-devel >= 4.2.5-4mdk
 BuildRequires:	libdbjava >= 4.2.5-4mdk
 %else
 BuildConflicts: libdbjava4.2
@@ -215,7 +215,7 @@ BuildRequires:	zip
 # java
 %if %{use_gcj}
 BuildRequires:	ant
-BuildRequires:  java-gcj-compat-devel >= 1.0.76-14.8
+BuildRequires:	java-rpmbuild
 #
 BuildRequires:	xml-commons-apis
 %else
