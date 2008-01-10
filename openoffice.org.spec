@@ -51,7 +51,11 @@
 %ifarch x86_64
 %define use_gcj		1
 %else
+%if %mdkversion >= 200800
 %define	use_gcj		1
+%else
+%define	use_gcj		0
+%endif
 %endif
 %{?_with_gcj: %global use_gcj 1}
 %{?_without_gcj: %global use_gcj 0}
@@ -216,7 +220,12 @@ BuildRequires:	zip
 # java
 %if %{use_gcj}
 BuildRequires:	ant
+%if %mdkversion >= 200810
 BuildRequires:	java-rpmbuild
+%else
+BuildRequires:	java-1.7.0-icedtea-devel
+%define java_home %{_jvmdir}/java-icedtea
+%endif
 #
 BuildRequires:	xml-commons-apis
 %else
