@@ -760,6 +760,7 @@ Requires:	urw-fonts
 Requires:	myspell-it
 Requires:	myspell-hyph-it
 Obsoletes:	%{ooname}-go-ooo-l10n-it <= %{version}
+Suggests:	%{ooname}-help-it
 
 %description l10n-it
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -781,6 +782,7 @@ Requires:	myspell-af
 Obsoletes:	OpenOffice.org-l10n-af
 Provides:	OpenOffice.org-l10n-af
 Obsoletes:	%{ooname}-go-ooo-l10n-af <= %{version}
+Suggests:	%{ooname}-help-af
 
 %description l10n-af
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -802,6 +804,7 @@ Requires:	fonts-ttf-arabic
 Obsoletes:	OpenOffice.org-l10n-ar
 Provides:	OpenOffice.org-l10n-ar
 Obsoletes:	%{ooname}-go-ooo-l10n-ar <= %{version}
+Suggests:	%{ooname}-help-ar
 
 %description l10n-ar
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -822,6 +825,7 @@ Requires:	locales-bg
 Obsoletes:	OpenOffice.org-l10n-bg
 Provides:	OpenOffice.org-l10n-bg
 Obsoletes:	%{ooname}-go-ooo-l10n-bg <= %{version}
+Suggests:	%{ooname}-help-bg
 
 %description l10n-bg
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -840,6 +844,7 @@ Provides:	%{ooname}-l10n = %{version}-%{release}
 Requires:	%{ooname}-common = %{version}
 Requires:	locales-br
 Obsoletes:	%{ooname}-go-ooo-l10n-br <= %{version}
+Suggests:	%{ooname}-help-br
 
 %description l10n-br
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -858,6 +863,7 @@ Provides:	%{ooname}-l10n = %{version}-%{release}
 Requires:	%{ooname}-common = %{version}
 Requires:	locales-bs
 Obsoletes:	%{ooname}-go-ooo-l10n-bs <= %{version}
+Suggests:	%{ooname}-help-bs
 
 %description l10n-bs
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -880,6 +886,7 @@ Requires:	myspell-ca
 Obsoletes:	OpenOffice.org-l10n-ca
 Provides:	OpenOffice.org-l10n-ca
 Obsoletes:	%{ooname}-go-ooo-l10n-ca <= %{version}
+Suggests:	%{ooname}-help-ca
 
 %description l10n-ca
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -903,6 +910,7 @@ Requires:	myspell-hyph-cs
 Obsoletes:	%{ooname}-go-ooo-l10n-cs <= %{version}
 Obsoletes:	OpenOffice.org-l10n-cs
 Provides:	OpenOffice.org-l10n-cs
+Suggests:	%{ooname}-help-cs
 
 %description l10n-cs
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -925,6 +933,7 @@ Requires:	myspell-cy
 Obsoletes:	OpenOffice.org-l10n-cy
 Provides:	OpenOffice.org-l10n-cy
 Obsoletes:	%{ooname}-go-ooo-l10n-cy <= %{version}
+Suggests:	%{ooname}-help-cy
 
 %description l10n-cy
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -948,6 +957,7 @@ Requires:	myspell-da, myspell-hyph-da
 Obsoletes:	OpenOffice.org-l10n-da
 Provides:	OpenOffice.org-l10n-da
 Obsoletes:	%{ooname}-go-ooo-l10n-da <= %{version}
+Suggests:	%{ooname}-help-da
 
 %description l10n-da
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -972,6 +982,7 @@ Requires:	myspell-hyph-de
 Obsoletes:	%{ooname}-go-ooo-l10n-de <= %{version}
 Obsoletes:	OpenOffice.org-l10n-de
 Provides:	OpenOffice.org-l10n-de
+Suggests:	%{ooname}-help-de
 
 %description l10n-de
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -995,6 +1006,7 @@ Requires:	myspell-hyph-el
 Obsoletes:	OpenOffice.org-l10n-el
 Provides:	OpenOffice.org-l10n-el
 Obsoletes:	%{ooname}-go-ooo-l10n-el <= %{version}
+Suggests:	%{ooname}-help-el
 
 %description l10n-el
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1016,6 +1028,7 @@ Requires:	urw-fonts
 Requires:	myspell-en_GB
 Requires:	myspell-hyph-en
 Obsoletes:	%{ooname}-go-ooo-l10n-en_GB <= %{version}
+Suggests:	%{ooname}-help-en_GB
 
 %description l10n-en_GB
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1040,6 +1053,7 @@ Requires:	myspell-hyph-es
 Obsoletes:	%{ooname}-go-ooo-l10n-es <= %{version}
 Obsoletes:	OpenOffice.org-l10n-es
 Provides:	OpenOffice.org-l10n-es
+Suggests:	%{ooname}-help-es
 
 %description l10n-es
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1064,6 +1078,7 @@ Requires:	myspell-hyph-et
 Obsoletes:	OpenOffice.org-l10n-et
 Provides:	OpenOffice.org-l10n-et
 Obsoletes:	%{ooname}-go-ooo-l10n-et <= %{version}
+Suggests:	%{ooname}-help-et
 
 %description l10n-et
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1086,6 +1101,7 @@ Requires:	urw-fonts
 Obsoletes:	OpenOffice.org-l10n-eu
 Provides:	OpenOffice.org-l10n-eu
 Obsoletes:	%{ooname}-go-ooo-l10n-eu <= %{version}
+Suggests:	%{ooname}-help-eu
 
 %description l10n-eu
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1109,6 +1125,7 @@ Requires:	%{ooname}-voikko
 Obsoletes:	OpenOffice.org-l10n-fi
 Provides:	OpenOffice.org-l10n-fi
 Obsoletes:	%{ooname}-go-ooo-l10n-fi <= %{version}
+Suggests:	%{ooname}-help-fi
 
 %description l10n-fi
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1133,6 +1150,7 @@ Requires:	myspell-hyph-fr
 Obsoletes:	OpenOffice.org-l10n-fr
 Provides:	OpenOffice.org-l10n-fr
 Obsoletes:	%{ooname}-go-ooo-l10n-fr <= %{version}
+Suggests:	%{ooname}-help-fr
 
 %description l10n-fr
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1154,6 +1172,7 @@ Requires:	urw-fonts
 Obsoletes:	OpenOffice.org-l10n-he
 Provides:	OpenOffice.org-l10n-he
 Obsoletes:	%{ooname}-go-ooo-l10n-he <= %{version}
+Suggests:	%{ooname}-help-he
 
 %description l10n-he
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1175,6 +1194,7 @@ Requires:	urw-fonts
 Obsoletes:	OpenOffice.org-l10n-hi
 Provides:	OpenOffice.org-l10n-hi
 Obsoletes:	%{ooname}-go-ooo-l10n-hi <= %{version}
+Suggests:	%{ooname}-help-hi
 
 %description l10n-hi
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1198,6 +1218,7 @@ Requires:	myspell-hyph-hu
 Obsoletes:	OpenOffice.org-l10n-hu
 Provides:	OpenOffice.org-l10n-hu
 Obsoletes:	%{ooname}-go-ooo-l10n-hu <= %{version}
+Suggests:	%{ooname}-help-hu
 
 %description l10n-hu
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1219,6 +1240,7 @@ Requires:	fonts-ttf-japanese >= 0.20020727-1mdk
 Obsoletes:	OpenOffice.org-l10n-ja
 Provides:	OpenOffice.org-l10n-ja
 Obsoletes:	%{ooname}-go-ooo-l10n-ja <= %{version}
+Suggests:	%{ooname}-help-ja
 
 %description l10n-ja
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1240,6 +1262,7 @@ Requires:	fonts-ttf-korean >= 2.1
 Obsoletes:	OpenOffice.org-l10n-ko
 Provides:	OpenOffice.org-l10n-ko
 Obsoletes:	%{ooname}-go-ooo-l10n-ko <= %{version}
+Suggests:	%{ooname}-help-ko
 
 %description l10n-ko
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1258,6 +1281,7 @@ Provides:	%{ooname}-l10n = %{version}-%{release}
 Requires:	%{ooname}-common = %{version}
 Requires:	locales-mk
 Obsoletes:	%{ooname}-go-ooo-l10n-mk <= %{version}
+Suggests:	%{ooname}-help-mk
 
 %description l10n-mk
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1279,6 +1303,7 @@ Requires:	urw-fonts
 Obsoletes:	OpenOffice.org-l10n-nb
 Provides:	OpenOffice.org-l10n-nb
 Obsoletes:	%{ooname}-go-ooo-l10n-nb <= %{version}
+Suggests:	%{ooname}-help-nb
 
 %description l10n-nb
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1303,6 +1328,7 @@ Requires:	myspell-hyph-nl
 Obsoletes:	OpenOffice.org-l10n-nl
 Provides:	OpenOffice.org-l10n-nl
 Obsoletes:	%{ooname}-go-ooo-l10n-nl <= %{version}
+Suggests:	%{ooname}-help-nl
 
 %description l10n-nl
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1324,6 +1350,7 @@ Requires:	urw-fonts
 Obsoletes:	OpenOffice.org-l10n-nn
 Provides:	OpenOffice.org-l10n-nn
 Obsoletes:	%{ooname}-go-ooo-l10n-nn <= %{version}
+Suggests:	%{ooname}-help-nn
 
 %description l10n-nn
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1346,6 +1373,7 @@ Requires:	myspell-hyph-pl
 Obsoletes:	OpenOffice.org-l10n-pl
 Provides:	OpenOffice.org-l10n-pl
 Obsoletes:	%{ooname}-go-ooo-l10n-pl <= %{version}
+Suggests:	%{ooname}-help-pl
 
 %description l10n-pl
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1370,6 +1398,7 @@ Requires:	myspell-hyph-pt
 Obsoletes:	OpenOffice.org-l10n-pt
 Provides:	OpenOffice.org-l10n-pt
 Obsoletes:	%{ooname}-go-ooo-l10n-pt <= %{version}
+Suggests:	%{ooname}-help-pt
 
 %description l10n-pt
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1393,6 +1422,7 @@ Requires:	myspell-pt_BR
 Obsoletes:	OpenOffice.org-l10n_pt_BR
 Provides:	OpenOffice.org-l10n_pt_BR
 Obsoletes:	%{ooname}-go-ooo-l10n-pt_BR <= %{version}
+Suggests:	%{ooname}-help-pt_BR
 
 %description l10n-pt_BR
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1416,6 +1446,7 @@ Requires:	myspell-hyph-ru
 Obsoletes:	OpenOffice.org-l10n-ru
 Provides:	OpenOffice.org-l10n-ru
 Obsoletes:	%{ooname}-go-ooo-l10n-ru <= %{version}
+Suggests:	%{ooname}-help-ru
 
 %description l10n-ru
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1438,7 +1469,8 @@ Requires:	myspell-sk
 Requires:	myspell-hyph-sk
 Obsoletes:	OpenOffice.org-l10n-sk
 Provides:	OpenOffice.org-l10n-sk
-Obsoletes:	%{ooname}-go-ooo-l10n-su <= %{version}
+Obsoletes:	%{ooname}-go-ooo-l10n-sk <= %{version}
+Suggests:	%{ooname}-help-sk
 
 %description l10n-sk
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1461,6 +1493,7 @@ Requires:	myspell-sl, myspell-hyph-sl
 Obsoletes:	OpenOffice.org-l10n-sl
 Provides:	OpenOffice.org-l10n-sl
 Obsoletes:	%{ooname}-go-ooo-l10n-sl <= %{version}
+Suggests:	%{ooname}-help-sl
 
 %description l10n-sl
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1485,6 +1518,7 @@ Requires:	myspell-hyph-sv
 Obsoletes:	OpenOffice.org-l10n-sv
 Provides:	OpenOffice.org-l10n-sv
 Obsoletes:	%{ooname}-go-ooo-l10n-sv <= %{version}
+Suggests:	%{ooname}-help-sv
 
 %description l10n-sv
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1506,6 +1540,7 @@ Requires:	urw-fonts
 Obsoletes:	OpenOffice.org-l10n-ta
 Provides:	OpenOffice.org-l10n-ta
 Obsoletes:	%{ooname}-go-ooo-l10n-ta <= %{version}
+Suggests:	%{ooname}-help-ta
 
 %description l10n-ta
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1527,6 +1562,7 @@ Requires:	urw-fonts
 Obsoletes:	OpenOffice.org-l10n-tr
 Provides:	OpenOffice.org-l10n-tr
 Obsoletes:	%{ooname}-go-ooo-l10n-tr <= %{version}
+Suggests:	%{ooname}-help-tr
 
 %description l10n-tr
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1548,6 +1584,7 @@ Requires:	fonts-ttf-chinese
 Obsoletes:	OpenOffice.org-l10n-zh_CN
 Provides:	OpenOffice.org-l10n-zh_CN
 Obsoletes:	%{ooname}-go-ooo-l10n-zh_CN <= %{version}
+Suggests:	%{ooname}-help-zh_CN
 
 %description l10n-zh_CN
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1569,6 +1606,7 @@ Requires:	fonts-ttf-chinese
 Obsoletes:	OpenOffice.org-l10n-zh_TW
 Provides:	OpenOffice.org-l10n-zh_TW
 Obsoletes:	%{ooname}-go-ooo-l10n-zh_TW <= %{version}
+Suggests:	%{ooname}-help-zh_TW
 
 %description l10n-zh_TW
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1591,6 +1629,7 @@ Requires:	myspell-zu
 Obsoletes:	OpenOffice.org-l10n-zu
 Provides:	OpenOffice.org-l10n-zu
 Obsoletes:	%{ooname}-go-ooo-l10n-zu <= %{version}
+Suggests:	%{ooname}-help-zu
 
 %description l10n-zu
 OpenOffice.org is an Open Source, community-developed, office suite.
