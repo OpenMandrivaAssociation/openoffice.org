@@ -601,6 +601,7 @@ Requires: %{name}-core = %{version}
 Requires: clipart-openclipart
 # Due to the split
 Conflicts: %{name} = 2.2.1
+Obsoletes: %{name}-galleries <= 2.2.1
 
 %description openclipart
 OpenOffice.org is a full-featured office productivity suite that provides a
