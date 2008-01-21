@@ -2173,7 +2173,7 @@ This package contains the localized help files of OpenOffice.org in Zulu.
 %build
 # Workaround for bug http://qa.mandriva.com/show_bug.cgi?id=27771
 if [ -z $QTDIR ]; then
-	. /etc/profile.d/qtdir3.sh
+	. /etc/profile.d/50qtdir3.sh
 fi
 %if !%{use_gcj}
 if [ -z $JAVA_HOME ]; then
