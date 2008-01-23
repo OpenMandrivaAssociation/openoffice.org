@@ -365,6 +365,17 @@ This package contains the spreadsheet component for OpenOffice.org.
 %package common
 Group: Office
 Summary: OpenOffice.org office suite architecture independent files
+%if %mdkversion < 200810
+# On upgrades, we can't split that way or we will loose functionality.
+Requires: %{name}-gnome
+Requires: %{name}-kde
+Requires: %{name}-openclipart
+Requires: %{name}-style-andromeda
+Requires: %{name}-style-crystal
+Requires: %{name}-style-hicontrast
+Requires: %{name}-style-industrial
+Requires: %{name}-style-tango
+%endif
 # Require the architecture dependant stuff
 Requires: %{name}-core = %{version}
 # Require at least one style to be installed
@@ -376,6 +387,9 @@ Requires: ghostscript
 Requires: fonts-ttf-liberation
 Requires: %{mklibname sane 1}
 Requires: desktop-common-data >= 2008
+# rpm will automatically grab the require for libsane1, but there are some
+# configs needed at this package, so we must require it too.
+Requires: sane-backends
 # Due to %{_bindir}/paperconf
 Requires: paper-utils
 Requires(post): desktop-file-utils update-alternatives
