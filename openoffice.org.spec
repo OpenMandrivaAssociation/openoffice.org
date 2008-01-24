@@ -2518,6 +2518,12 @@ cd -
 %endif
 # End of BrOffice support (install)
 
+# Change progress bar colors
+sed -i '/^ProgressBarColor/d;/^ProgressFrameColor/d' \
+	%{buildroot}%{ooodir}/program/sofficerc
+echo 'ProgressBarColor=68,135,223' >> %{buildroot}%{ooodir}/program/sofficerc
+echo 'ProgressFrameColor=112,171,229' >> %{buildroot}%{ooodir}/program/sofficerc
+
 %clean
 rm -rf %{buildroot}
 
