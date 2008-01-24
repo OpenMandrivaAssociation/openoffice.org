@@ -20,10 +20,10 @@
 #define _source_payload w9.bzdio
 
 %define version		2.3.1
-%define release		%mkrel 2
+%define release		%mkrel 3
 
 %define oootagver	oog680-m9
-%define ooobuildver	2.3.1.20080110mdv
+%define ooobuildver	2.3.1.2.20080124mdv
 %define jdkver		1_5_0_11
 %ifarch x86_64
 %define mdvsuffix	2.3_64
