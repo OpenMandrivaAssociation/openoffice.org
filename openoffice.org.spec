@@ -2533,6 +2533,7 @@ rm -rf %{buildroot}
 /usr/sbin/update-alternatives --remove ooffice %{_bindir}/ooffice2.1 || :
 /usr/sbin/update-alternatives \
         --install %{_bindir}/soffice ooffice   %{_bindir}/ooffice%{mdvsuffix} %{oooaltpri} \
+	--slave %{_bindir}/ooffice   ooffice   %{_bindir}/ooffice%{mdvsuffix} \
 	--slave %{_bindir}/oowriter  oowriter  %{_bindir}/oowriter%{mdvsuffix} \
 	--slave %{_bindir}/oobase    oobase    %{_bindir}/oobase%{mdvsuffix} \
 	--slave %{_bindir}/oodraw    oodraw    %{_bindir}/oodraw%{mdvsuffix} \
