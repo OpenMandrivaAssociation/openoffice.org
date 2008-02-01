@@ -292,7 +292,6 @@ Source60:	openoffice.org.csh
 Source61:	openoffice.org.sh
 
 Patch1:		ooo-build-2.1.0-lzmatarball.patch
-Patch4:		openoffice.org2-2.0.2-qstart.patch
 Patch19:	ooo-build-2.2.1-desktop_files.patch
 Patch20:	ooo-build-desktop.patch
 
@@ -521,6 +520,8 @@ Summary: GNOME Integration for OpenOffice.org (VFS, GConf)
 Conflicts: %{name} = 2.2.1
 Obsoletes: %{name}-gtk <= 2.3.0.5
 Conflicts: %{name}-gtk <= 2.3.0.5
+Obsoletes: %{name}-qstart <= 2.3.0.5
+Conflicts: %{name}-qstart <= 2.3.0.5
 Obsoletes: %{name}-evolution <= 2.3.0.5
 Conflicts: %{name}-evolution <= 2.3.0.5
 Suggests: %{name}-style-tango = %{version}
@@ -2171,7 +2172,6 @@ This package contains the localized help files of OpenOffice.org in Zulu.
 %patch1 -p1 -b .lzma
 %endif
 
-%patch4 -p1 -b .qstart
 %if ! %unstable
 %patch19 -p1 -b .desktop_files
 %endif
