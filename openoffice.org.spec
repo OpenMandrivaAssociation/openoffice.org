@@ -19,11 +19,11 @@
 %define _binary_payload w9.lzdio
 #define _source_payload w9.bzdio
 
-%define version		2.3.99.1
+%define version		2.3.99.2
 %define release		%mkrel 1
 
 %define oootagver	ooh680-m5
-%define ooobuildver	2.3.99.1.20080124mdv
+%define ooobuildver	2.3.99.2.20080201mdv
 %define jdkver		1_5_0_11
 %ifarch x86_64
 %define mdvsuffix	2.4_64
