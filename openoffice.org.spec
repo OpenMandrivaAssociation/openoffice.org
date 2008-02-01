@@ -293,8 +293,6 @@ Source61:	openoffice.org.sh
 
 Patch1:		ooo-build-2.1.0-lzmatarball.patch
 Patch4:		openoffice.org2-2.0.2-qstart.patch
-Patch6:		openoffice.org-2.1.0-firefox-xpcom.patch
-Patch17:	ooo-build-fix-build-java-target-patch.patch
 Patch19:	ooo-build-2.2.1-desktop_files.patch
 Patch20:	ooo-build-desktop.patch
 
@@ -2174,9 +2172,6 @@ This package contains the localized help files of OpenOffice.org in Zulu.
 %endif
 
 %patch4 -p1 -b .qstart
-# Seems not needed
-#patch6 -p1 -b .xpcom
-#%patch17 -p1 -b .javac
 %if ! %unstable
 %patch19 -p1 -b .desktop_files
 %endif
