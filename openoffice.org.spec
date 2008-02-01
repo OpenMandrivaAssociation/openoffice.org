@@ -19,16 +19,16 @@
 %define _binary_payload w9.lzdio
 #define _source_payload w9.bzdio
 
-%define version		2.3.1
-%define release		%mkrel 3
+%define version		2.3.99.1
+%define release		%mkrel 1
 
-%define oootagver	oog680-m9
-%define ooobuildver	2.3.1.2.20080124mdv
+%define oootagver	ooh680-m5
+%define ooobuildver	2.3.99.1.20080124mdv
 %define jdkver		1_5_0_11
 %ifarch x86_64
-%define mdvsuffix	2.3_64
+%define mdvsuffix	2.4_64
 %else
-%define mdvsuffix	2.3
+%define mdvsuffix	2.4
 %endif
 %define ooodir		%{_libdir}/ooo-%{mdvsuffix}
 %define libdbver	4.2
@@ -64,7 +64,7 @@
 %{?_with_hunspell: %global use_hunspell 1}
 %{?_without_hunspell: %global use_hunspell 0}
 
-%define use_icecream	0
+%define use_icecream	1
 %{?_with_icecream: %global use_icecream 1}
 %{?_without_icecream: %global use_icecream 0}
 
@@ -77,7 +77,7 @@
 %{?_with_smp: %global use_smp 1}
 %{?_without_smp: %global use_smp 0}
 
-%define use_mono	0
+%define use_mono	1
 %{?_with_mono: %global use_mono 1}
 %{?_without_mono: %global use_mono 0}
 
@@ -257,13 +257,14 @@ BuildRequires:	libmdbtools-devel
 #
 ####################################################################
 
-Source0:	http://www.go-ooo.org/packages/OOG680/ooo-build-%{ooobuildver}.tar.gz
-Source1:	http://www.go-ooo.org/packages/OOG680/%{oootagver}-core.tar.%{oootarext}
-Source2:	http://www.go-ooo.org/packages/OOG680/%{oootagver}-lang.tar.%{oootarext}
-Source3:	http://www.go-ooo.org/packages/OOG680/%{oootagver}-binfilter.tar.%{oootarext}
-Source4:	http://www.go-ooo.org/packages/OOG680/%{oootagver}-system.tar.%{oootarext}
-Source5:	http://www.go-ooo.org/packages/OOG680/%{oootagver}-sdk_oo.tar.%{oootarext}
-Source6:	http://download.go-oo.org/SRC680/oox.2007-09-05.tar.bz2
+Source0:	http://www.go-ooo.org/packages/OOH680/ooo-build-%{ooobuildver}.tar.gz
+Source1:	http://www.go-ooo.org/packages/OOH680/%{oootagver}-core.tar.%{oootarext}
+Source2:	http://www.go-ooo.org/packages/OOH680/%{oootagver}-lang.tar.%{oootarext}
+Source3:	http://www.go-ooo.org/packages/OOH680/%{oootagver}-binfilter.tar.%{oootarext}
+Source4:	http://www.go-ooo.org/packages/OOH680/%{oootagver}-system.tar.%{oootarext}
+Source5:	http://www.go-ooo.org/packages/OOH680/%{oootagver}-sdk_oo.tar.%{oootarext}
+Source6:	http://download.go-oo.org/SRC680/oox.2008-01-29.tar.bz2
+Source7:	http://download.go-oo.org/SRC680/writerfilter.2008-01-29.tar.bz2
 Source10:	http://www.go-ooo.org/packages/SRC680/ooo_tango_images-1.tar.bz2
 Source11:	http://download.go-oo.org/SRC680/ooo_crystal_images-6.tar.bz2
 Source12:	http://www.go-ooo.org/packages/SRC680/ooo_custom_images-13.tar.bz2
@@ -296,6 +297,7 @@ Patch6:		openoffice.org-2.1.0-firefox-xpcom.patch
 Patch14:	ooo-build-2.2.1-kde.patch
 Patch17:	ooo-build-fix-build-java-target-patch.patch
 Patch19:	ooo-build-2.2.1-desktop_files.patch
+Patch20:	ooo-build-desktop.patch
 
 %description
 OpenOffice.org is an Open Source, community-developed, multi-platform
@@ -2180,6 +2182,7 @@ This package contains the localized help files of OpenOffice.org in Zulu.
 %if ! %unstable
 %patch19 -p1 -b .desktop_files
 %endif
+%patch20 -p1
 
 # We want odk
 #sed -i /disable-odk/d distro-configs/Mandriva*
@@ -2225,6 +2228,7 @@ ln -sf %{SOURCE3} src/
 ln -sf %{SOURCE4} src/
 ln -sf %{SOURCE5} src/
 ln -sf %{SOURCE6} src/
+ln -sf %{SOURCE7} src/
 ln -sf %{SOURCE10} src/
 ln -sf %{SOURCE11} src/
 ln -sf %{SOURCE12} src/
@@ -2357,12 +2361,12 @@ CXXFLAGS="%{optflags} %{optsafe} -fno-omit-frame-pointer -fno-strict-aliasing -f
 %else
  %if !%{use_ccache} && %{use_icecream}
 	--with-gcc-speedup=icecream \
-	--with-icecream-max-jobs=10 \
+	--with-max-jobs=10 \
 	--with-icecream-bindir=%{_libdir}/icecc/bin
  %else
   %if %{use_ccache} && %{use_icecream}
 	--with-gcc-speedup=ccache,icecream \
-	--with-icecream-max-jobs=10 \
+	--with-max-jobs=10 \
 	--with-icecream-bindir=%{_libdir}/icecc/bin
   %endif
  %endif
