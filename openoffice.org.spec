@@ -22,8 +22,8 @@
 %define version		2.3.99.2
 %define release		%mkrel 1
 
-%define oootagver	ooh680-m5
-%define ooobuildver	2.3.99.2.20080201mdv
+%define oootagver	ooh680-m6
+%define ooobuildver	2.3.99.2.20080207
 %define jdkver		1_5_0_11
 %ifarch x86_64
 %define mdvsuffix	2.4_64
@@ -121,6 +121,7 @@ Requires:	%{name}-draw = %{version}
 Requires:	%{name}-impress = %{version}
 Requires:	%{name}-math = %{version}
 Requires:	%{name}-writer = %{version}
+Suggests:	%{name}-dtd-officedocument1.0 = %{version}
 Obsoletes:	OpenOffice.org
 Obsoletes:	OpenOffice.org-libs
 Obsoletes:	%{ooname}-go-ooo <= %{version}
@@ -477,8 +478,9 @@ This package contains the drawing component for OpenOffice.org.
 %package dtd-officedocument1.0
 Group: Office
 Summary: OfficeDocument 1.0 DTD (OpenOffice.org 1.x)
-Requires: %{name}-common = %{version}
-Requires: %{name}-core = %{version}
+# <mrl> http://qa.mandriva.com/show_bug.cgi?id=37559
+#Requires: %{name}-common = %{version}
+#Requires: %{name}-core = %{version}
 # Due to the split
 Conflicts: %{name} = 2.2.1
 
@@ -578,6 +580,7 @@ Group: Office
 Summary: OpenOffice.org office suite Java support arch. independent files
 Requires: %{name}-common = %{version}
 Requires: %{name}-core = %{version}
+Requires: java
 # Due to the split
 Conflicts: %{name} = 2.2.1
 Conflicts: %{name}-common <= 2.3.0.5-1mdv
