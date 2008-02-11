@@ -410,7 +410,7 @@ Summary: OpenOffice.org office suite architecture dependent files
 # Due to the split
 Conflicts: %{name} = 2.2.1
 Conflicts: %{name}-base <= 2.3.0.5-1mdv
-Conflicts: %{name}-common <= 2.3.0.5-1mdv
+Conflicts: %{name}-common <= 2.3.1-1mdv
 Conflicts: %{name}-devel <= 2.3.0.5-1mdv
 Conflicts: %{name}-draw <= 2.3.0.5-1mdv
 Conflicts: %{name}-impress <= 2.3.0.5-1mdv
