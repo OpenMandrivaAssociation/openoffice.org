@@ -1,4 +1,5 @@
 %define unstable	0
+%define debug_package  %{nil}
 
 %define l10n   1
 %{?_with_l10n: %global l10n 1}
