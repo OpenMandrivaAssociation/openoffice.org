@@ -1455,7 +1455,8 @@ Suggests:	%{ooname}-help-pt_BR
 %description l10n-pt_BR
 OpenOffice.org is an Open Source, community-developed, office suite.
 
-This package contains the localization of OpenOffice.org in Portuguese Brazilian.
+This package contains the localization of OpenOffice.org in Portuguese
+Brazilian.
 It contains the user interface, the templates and the autotext
 features. Please note that not all of these are available for all
 possible language. You can switch user interface language using the
@@ -1639,7 +1640,8 @@ Suggests:	%{ooname}-help-zh_TW
 %description l10n-zh_TW
 OpenOffice.org is an Open Source, community-developed, office suite.
 
-This package contains the localization of OpenOffice.org in Chinese Traditional.
+This package contains the localization of OpenOffice.org in Chinese
+Traditional.
 It contains the user interface, the templates and the autotext
 features. Please note that not all of these are available for all
 possible language. You can switch user interface language using the
@@ -1980,7 +1982,8 @@ Requires:	%{ooname}-l10n-nb = %{version}
 %description help-nb
 OpenOffice.org is an Open Source, community-developed, office suite.
 
-This package contains the localized help files of OpenOffice.org in Norwegian Bokmal.
+This package contains the localized help files of OpenOffice.org in Norwegian
+Bokmal.
 
 
 %package help-nl
@@ -2006,7 +2009,8 @@ Requires:	%{ooname}-l10n-nn = %{version}
 %description help-nn
 OpenOffice.org is an Open Source, community-developed, office suite.
 
-This package contains the localized help files of OpenOffice.org in Norwegian Nynorsk.
+This package contains the localized help files of OpenOffice.org in Norwegian
+Nynorsk.
 
 %package help-pl
 Summary:	Polish help for OpenOffice.org
@@ -2043,7 +2047,8 @@ Provides:	OpenOffice.org-help-pt_BR
 %description help-pt_BR
 OpenOffice.org is an Open Source, community-developed, office suite.
 
-This package contains the localized help files of OpenOffice.org in Portuguese Brazilian.
+This package contains the localized help files of OpenOffice.org in Portuguese
+Brazilian.
 
 
 %package help-ru
@@ -2139,7 +2144,8 @@ Provides:	OpenOffice.org-help-zh_CN
 %description help-zh_CN
 OpenOffice.org is an Open Source, community-developed, office suite.
 
-This package contains the localized help files of OpenOffice.org in Chinese Simplified.
+This package contains the localized help files of OpenOffice.org in Chinese
+Simplified.
 
 
 %package help-zh_TW
@@ -2153,7 +2159,8 @@ Provides:	OpenOffice.org-help-zh_TW
 %description help-zh_TW
 OpenOffice.org is an Open Source, community-developed, office suite.
 
-This package contains the localized help files of OpenOffice.org in Chinese Traditional.
+This package contains the localized help files of OpenOffice.org in Chinese
+Traditional.
 
 
 %package help-zu
