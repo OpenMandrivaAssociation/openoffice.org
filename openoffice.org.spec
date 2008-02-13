@@ -20,11 +20,11 @@
 %define _binary_payload w9.lzdio
 #define _source_payload w9.bzdio
 
-%define version		2.3.99.2
+%define version		2.3.99.3
 %define release		%mkrel 1
 
-%define oootagver	ooh680-m6
-%define ooobuildver	2.3.99.2.20080207
+%define oootagver	ooh680-m7
+%define ooobuildver	2.3.99.3
 %define jdkver		1_5_0_11
 %ifarch x86_64
 %define mdvsuffix	2.4_64
@@ -2354,6 +2354,10 @@ CXXFLAGS="%{optflags} %{optsafe} -g0 -fno-omit-frame-pointer -fno-strict-aliasin
 %endif
 %if %{use_mono}
 	--enable-mono \
+%if 0
+	# FIXME: Check this ---v
+%endif
+	--with-mono-gac-root=%{_libdir} \
 %else
 	--disable-mono \
 %endif
