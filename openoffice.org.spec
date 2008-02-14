@@ -2543,8 +2543,10 @@ rm -rf %{buildroot}
 # <mrl> Bogus versioning in previous alternatives setup forces us to do this
 # We can safelly remove it, as we are obsoleting that version anyway.
 /usr/sbin/update-alternatives --remove ooffice %{_bindir}/ooffice2.1 || :
+# We changed the master name here.
+/usr/sbin/update-alternatives --remove ooffice %{_bindir}/ooffice2.3 || :
 /usr/sbin/update-alternatives \
-        --install %{_bindir}/soffice ooffice   %{_bindir}/ooffice%{mdvsuffix} %{oooaltpri} \
+        --install %{_bindir}/soffice soffice   %{_bindir}/ooffice%{mdvsuffix} %{oooaltpri} \
 	--slave %{_bindir}/ooffice   ooffice   %{_bindir}/ooffice%{mdvsuffix} \
 	--slave %{_bindir}/oowriter  oowriter  %{_bindir}/oowriter%{mdvsuffix} \
 	--slave %{_bindir}/oobase    oobase    %{_bindir}/oobase%{mdvsuffix} \
@@ -2553,7 +2555,7 @@ rm -rf %{buildroot}
 	--slave %{_bindir}/oocalc    oocalc    %{_bindir}/oocalc%{mdvsuffix} \
         --slave %{_bindir}/ootool    ootool    %{_bindir}/ootool%{mdvsuffix} \
         --slave %{_bindir}/ooweb     ooweb     %{_bindir}/ooweb%{mdvsuffix}
-[ -e %{_bindir}/ooffice ] || /usr/sbin/update-alternatives --auto ooffice
+[ -e %{_bindir}/soffice ] || /usr/sbin/update-alternatives --auto soffice
 
 # BrOffice support %post
 for i in \
@@ -2582,7 +2584,7 @@ done
 
 %postun common
 if [ ! -e "%{_bindir}/ooffice%{mdvsuffix}" ]; then
-        /usr/sbin/update-alternatives --remove ooffice %{_bindir}/ooffice%{mdvsuffix}
+        /usr/sbin/update-alternatives --remove soffice %{_bindir}/ooffice%{mdvsuffix}
 fi
 
 # BrOffice support %postun common
@@ -2773,7 +2775,8 @@ fi
 %files mono -f build/mono_list.txt
 %defattr(-,root,root)
 %{_libdir}/pkgconfig/mono-ooo%{mdvsuffix}-2.3.pc
-%{_libdir}/mono/ooo-2.4
+%{_libdir}/mono/*/*/*
+%{_libdir}/mono/ooo-%{mdvsuffix}
 %endif
 
 %if %l10n
