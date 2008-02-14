@@ -24,7 +24,7 @@
 %define release		%mkrel 1
 
 %define oootagver	ooh680-m7
-%define ooobuildver	2.3.99.3
+%define ooobuildver	2.3.99.3.20080213
 %define jdkver		1_5_0_11
 %ifarch x86_64
 %define mdvsuffix	2.4_64
@@ -2773,6 +2773,7 @@ fi
 %files mono -f build/mono_list.txt
 %defattr(-,root,root)
 %{_libdir}/pkgconfig/mono-ooo%{mdvsuffix}-2.3.pc
+%{_libdir}/mono/ooo-2.4
 %endif
 
 %if %l10n
