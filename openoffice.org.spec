@@ -24,7 +24,7 @@
 %define release		%mkrel 1
 
 %define oootagver	ooh680-m7
-%define ooobuildver	2.3.99.3.20080214
+%define ooobuildver	2.3.99.4.20080218
 %define jdkver		1_5_0_11
 %ifarch x86_64
 %define mdvsuffix	2.4_64
