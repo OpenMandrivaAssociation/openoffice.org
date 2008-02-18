@@ -20,7 +20,7 @@
 %define _binary_payload w9.lzdio
 #define _source_payload w9.bzdio
 
-%define version		2.3.99.3
+%define version		2.3.99.4
 %define release		%mkrel 1
 
 %define oootagver	ooh680-m7
