@@ -107,7 +107,7 @@
 %define _requires_exceptions libjawt.so\\|libmyspell.so\\|libstlport_gcc.so\\|libjpeg.so
 %define _provides_exceptions libsndfile.so\\|libportaudio.so\\|libdb-4.2.so\\|libdb_java-4.2.so\\|libmyspell.so\\|libstlport_gcc.so
 
-Summary:	Open source office suite (ooo-build)
+Summary:	Office suite (ooo-build)
 Name:		%{name}
 Version:	%{version}
 Release:	%{release}
