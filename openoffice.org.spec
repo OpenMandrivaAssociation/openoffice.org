@@ -21,7 +21,7 @@
 #define _source_payload w9.bzdio
 
 %define version		2.3.99.4
-%define release		%mkrel 1
+%define release		%mkrel 2
 
 %define oootagver	ooh680-m7
 %define ooobuildver	2.3.99.4.20080218
@@ -65,11 +65,11 @@
 %{?_with_hunspell: %global use_hunspell 1}
 %{?_without_hunspell: %global use_hunspell 0}
 
-%define use_icecream	1
+%define use_icecream	0
 %{?_with_icecream: %global use_icecream 1}
 %{?_without_icecream: %global use_icecream 0}
 
-%define use_ccache	1
+%define use_ccache	0
 %define ccachedir	~/.ccache-OOo%{mdvsuffix}
 %{?_with_ccache: %global use_ccache 1}
 %{?_without_ccache: %global use_ccache 0}
@@ -86,19 +86,13 @@
 %{?_with_clipart: %global use_openclipart 1}
 %{?_without_clipart: %global use_openclipart 0}
 
-%define use_systemdb	0
+%define use_systemdb	1
 %{?_with_systemdb: %global use_systemdb 1}
 %{?_without_systemdb: %global use_systemdb 0}
 
-%define use_systemboost 0
+%define use_systemboost 1
 %{?_with_systemboost: %global use_systemboost 1}
 %{?_without_systemboost: %global use_systemboost 0}
-
-# disable for now in X86-64 (gengal segfaults)
-%ifarch x86_64
-%define use_systemdb	1
-%define use_systemboost 1
-%endif
 
 # (fix to avoid gcc 4.0.2 produces segfaulting javaldx bin which breaks
 # building process)
@@ -171,6 +165,7 @@ BuildRequires:	libdbjava >= 4.2.5-4mdk
 %else
 BuildConflicts: libdbjava4.2
 %endif
+BuildRequires:	bsh
 BuildRequires:	libcurl-devel
 BuildRequires:	libgtk+2-devel
 BuildRequires:	libsvg-devel
@@ -2287,22 +2282,26 @@ CXXFLAGS="%{optflags} %{optsafe} -g0 -fno-omit-frame-pointer -fno-strict-aliasin
         --disable-qadevooo \
         --enable-java \
 	--enable-gstreamer \
+	--enable-lockdown \
+	--enable-opengl \
 	--with-firefox \
+	--without-myspell-dicts \
 	--with-system-mozilla=firefox \
 	--with-system-libs \
 	--with-system-hsqldb \
-	--without-system-beanshell \
-	--without-system-xml-apis \
-	--without-system-xerces \
-	--without-system-xalan \
-	--without-system-xt \
+	--with-system-beanshell \
+	--with-system-xml-apis \
+	--with-system-xerces \
+	--with-system-xalan \
+	--with-system-xt \
+	--with-system-xrender-headers \
 	--without-system-xmlsec \
 	--without-system-mspack \
 	--with-system-libwps \
 	--with-system-libwpd \
 	--with-system-libwpg \
 	--with-system-libsvg \
-	--without-system-sablot \
+	--with-system-sablot \
 %ifarch x86_64
 	--with-intro-bitmaps="%{SOURCE31}" \
         --with-about-bitmaps="%{SOURCE32}" \
@@ -2332,12 +2331,7 @@ CXXFLAGS="%{optflags} %{optsafe} -g0 -fno-omit-frame-pointer -fno-strict-aliasin
 	--with-docdir=%{_datadir}/doc/packages/ooo-%{mdvsuffix} \
 	--with-system-glitz \
 	--with-system-sane-header \
-%ifarch x86_64
-	--disable-cairo \
-	--disable-canvas \
-%else
 	--with-system-cairo \
-%endif
 	--with-system-nas \
 	--with-dynamic-xinerama \
 	--enable-binfilter \
@@ -2354,9 +2348,6 @@ CXXFLAGS="%{optflags} %{optsafe} -g0 -fno-omit-frame-pointer -fno-strict-aliasin
 %endif
 %if %{use_mono}
 	--enable-mono \
-%if 0
-	# FIXME: Check this ---v
-%endif
 	--with-mono-gac-root=%{_libdir} \
 %else
 	--disable-mono \
@@ -3021,3 +3012,493 @@ fi
 %files help-zu -f build/help_zu_list.txt
 %defattr(-,root,root)
 %endif
+
+%changelog
+* Wed Feb 20 2008 Marcelo Ricardo Leitner <mrl@mandriva.com> 2.3.99.4-2mdv2008.1
++ Revision 
+- Use system-db and system-boost for both archs, as gengal does not segfault anymore.
+- Enabled usage of OpenGL.
+- Enabled lockdown system.
+- Use tons of java stuff from the system. (beanshell, xml-apis, xerces, xalan and xt)
+- Use system sablot.
+- Enabled cairo/canvas for x86_64.
+- Imported the changelog in the meanwhile, while we don't submit the package through
+  the buildsystem.
+
+* Tue Feb 19 2008 Marcelo Ricardo Leitner <mrl@mandriva.com> 2.3.99.4-1mdv2008.1
++ Revision 171536
+- Merged our ooo-build with upstream ones: we submitted all our fixed to upstream.
+- New version: 2.3.99.4
+- New ooo-build: 2.3.99.4-20080218
+- Fixed master name for main alterantives.
+- Re-enabled mono bindings
+- Added new mono files to %files
+- Disabled debug pacakges.
+- Updated conflicts tag from -core to -common prior to 2.3.1-1mdv
+- Made ooo-dtd-officedocument1.0 not require ooo, and it doesn't require.
+  Closes: #37559
+- Made openoffice.org suggest ooo-dtd-officedocument1.0. Closes: #37559
+- Added java requires to ooo-base package.
+- Removed qstart patch, as we ship it in -gnome package now.
+- Added proper obsoletes/conflict for upgrading old -qstart packages.
+- Updated oox and writerfilter to 2008-01-29
+- Updated cli_*.dll
+
+* Thu Jan 10 2008 Marcelo Ricardo Leitner <mrl@mandriva.com> 2.3.1-2mdv2008.1
++ Revision 147621
+Changes at the spec:
+- Split the helps out of l10n packages.
+- Added oodraw to alternatives catalog. Closes: #36618
+- Forces compressing payload with lzma/maximum compression(9).
+- Fixes to build with icedtea. Thanks to Anssi for helping with this move.
+- Add a missing Suggests to tango style at gnome package. Closes: #36519
+Changes from ooo-build tree:
+- Do not merge the help listings with l10n ones.
+
+* Fri Dec 14 2007 Marcelo Ricardo Leitner <mrl@mandriva.com> 2.3.1-1mdv2008.1
++ Revision 133876
+Changes at the spec:
+- New upstream: 2.3.1 Closes: #34236, #34724, #34274 and #35835
+- Fixed alternatives for handling BrOffice support.
+- Fixed wrong dependency for libjpeg.so. Closes: #35354
+- Link against internal xmlsec, as linking with the system one is broken.
+  Closes: #35067
+- Fix wrong require for libjpeg.so at -draw subpackage. Closes: #35354
+- Removed alternatives for handling BrOffice support: we simply don't need it.
+- Added update_desktop_database/clean_desktop_database calls to all subpackages
+  that holds .desktop files.
+- Disabled mono bindings, as current cooker mono-devel seems broken.
+- Build against system hsqldb.
+- Enhanced /etc/profile.d scripts handling regarding multi-arch support.
+  Closes: #35402
+- Added dependencies to java stuff on ooo-base, as it depends on it.
+- Fix alterantives handling for BrOffice support. They were conflicting if you
+  had installed both 32 and 64b in the same box.
+- From guillomovitch:
+  - bash completion file don't have .sh suffix
+Changes from ooo-build tree:
+- Enhanced packaging. Closes: #35853
+- Fixed wizards path. Closes: #35619
+- Speed up Hungarian fixes processing.
+- Fix msfontextract tools. Closes: #24314
+
+* Fri Nov 23 2007 Marcelo Ricardo Leitner <mrl@mandriva.com> 2.3.0.5-2mdv2008.1
++ Revision 111340
+Changes at the spec:
+- Remove support for old menu system.
+- Added BrOffice support.
+- Moved alternatives scripts to -common package, as it must affect systems
+  without the main meta-package.
+- As now we are using alternatives for the .desktop files, update the desktop
+  database only after dealing with alternatives.
+- Added patch gtk: fixes wrong free commands in OOo. Closes: #34724
+- Converted openintro_mandriva64.bmp to a 24 bit bitmap, as current splash
+  can't handle anything different than that.
+- Using ooo-build tarball from our soft/ repository now.
+- Removed patches angola, force_downloads, ooqstart, xdg and wizards, as they
+  are already merged in the tarball.
+- Disable patch firefox-xpcom for now, as seems it can be handled via configure
+  options.
+- Place mdvsuffix in bash_completion and profile.d scripts, so we can have both
+  archs installed.
+- Check if PYTHONPATH is empty and properly set it, thus avoiding including the
+  current dir on the path.
+- Added back support to build without l10n packages (although seems not working
+  100%)
+- Our ooo-build 20071122
+- Uncompressed FontOOo
+- Merged -evolution and -gtk into -gnome
+- Merged -filter-mobiledev into -filter-binfilter
+- Splitted -pyuno
+- Splitted -testtool
+- Moved file listings to ooo-build scripts.
+- Fix alternatives handling for BrOffice support
+- Fix wrong dependency for libjpeg.so. Closes: #35354
+Changes from ooo-build tree:
+- Merged a lot of our patches from the package.
+- Also apply patches from sets CairoFonts, CalcSolver, Split and NotDebian.
+- Merged some patches from ooo-build upstream, including
+  gnome-vfs-read-only-smb.diff for our #35183.
+
+* Mon Nov 05 2007 Marcelo Ricardo Leitner <mrl@mandriva.com> 2.3.0.5-1mdv2008.1
++ Revision 106021
+- New upstream: 2.3.0.5 (oog-m7)
+- Disabled linking against system xmlsec, as it (the linking) is currently
+  broken.
+- Removed patch xmlsec, as it's not used.
+- Added conflicts to the previous release, as thousands of files were moved.
+- Remove BuildRequires to inkscape: seems to not be needed.
+- Removed german dicts lines, as of commit #104173 we don't need it anymore.
+- -l10n packages should require openoffice.org-common now, and not the whole
+  suite.
+- Removed BuildRequires for thousands of locale- packages, as they are not
+  needed.
+- Removed support to build the "tiny" langset, as it won't be used.
+- Removed all thes/hyph/dict from the package: they should be available by
+  general packages.
+- Updated DicOOo and decompressed it.
+- Make out -clipart package require openclipart one.
+- Try to avoid urpmi question by making all application packages also require
+  explicitly -core.
+- Do not force requires for freetype, odbc, sndfile and portaudio, as rpm is
+  getting them automatically.
+- Dropped support for < 2007.1
+- Fully disable QA tools for now. We will work on that after release a first
+  build for cooker.
+- Main package should also require -impress module.
+- -impress must require -draw
+- Added Suggests for the theme styles on gtk/kde packages.
+- Puts proper dependencies between the subpackages
+- Added libsvg-devel buildrequires.
+- Removed patchs neon and neon2: already fixed in upstream.
+- Removed patch CVE-2007-2834: already fixed in upstream.
+- Updated patch ooqstart
+- Enhanced the detection of the number of processors to use by using
+  RPM_BUILD_NCPUS variable.
+- Move the entire gallery collection to openclipart subpackage.
+- Move FontOOo and DicOOo from share/dicts/ooo/ to share/dicts/ at least.
+- Do not include the whole myspell stuff in OOo again, as we are already
+  requiring myspell- packages.
+- Fixed icecream paths.
+- Fixed missing trailing \ on hunspell configure option.
+- Do not run configure twice: do not run configure on autogen, as it was being
+  done without any option.
+- Enabled ccache.
+- Updated FontOOo
+
+* Thu Oct 18 2007 Marcelo Ricardo Leitner <mrl@mandriva.com> 2.2.1-4mdv2008.1
++ Revision: 99960
+- Remove localwidget patch, it off already.
+- Rediffed ooqstart patch.
+- Fix syntax error in openoffice.org.csh. Closes: #34423
+
+* Fri Sep 21 2007 Marcelo Ricardo Leitner <mrl@mandriva.com> 2.2.1-3mdv2008.0
++ Revision: 95418
+- Fix patch22 order, as used for the build.
+- Added patch force_downloads: force downloading of documents from the web
+  and/or other IOs (KIOs). Closes: #26983
+- Adds back '64' tag to .desktop filenames when it's build on x86_64. Closes: #33825
+- Added support for /etc/profile.d/openoffice.org.{c,}sh. Closes: #33475
+- Updated thes_es_ES. Closes: #33536.
+- Updated thes_bg_BG_v2.tar.bz2 and thes_en_US_v2.tar.bz2 in thes-2.tar.
+  Closes: #33537, #33538
+- Added patch openoffice.org-2.2.1-CVE-2007-2834.patch. Closes: #33824
+- Force enable gstreamer backend. Closes: #27580
+- Fix Icon tag on desktop files.
+
+  + Anssi Hannula <anssi@mandriva.org>
+    - fix removal of old alternative when mdvsuffix changes
+
+* Wed Sep 05 2007 Marcelo Ricardo Leitner <mrl@mandriva.com> 2.2.1-2mdv2008.0
++ Revision: 80050
+- Added neon2 patch. Closes: #25204
+- Implemented .desktop categories changes as requested by #32902
+- Added patch desktop_files: do not versionate stable .desktop files.
+- Use ooo-build ver 2.2.1.10110: move on step further on svn version for using
+  stable libwp*.
+- Added requires to fonts-ttf-liberation.
+- Forced linking against libneon >= 0.26: linking against 0.24 is even more
+  unstable (UI freezes).
+- Removed patch libwpg: already applied on ooo-build-2.2.1-10110.
+- New design for Mandriva 2008.0.
+- Added neon patch: closes #32121
+  Fixes handling URL's with wierd chars due to new libneon behaviour change.
+- Fix path for icu tools.
+- Import openoffice.org
+
+  + Anssi Hannula <anssi@mandriva.org>
+    - require openoffice.org-voikko instead of myspell-hyph-fi in
+      openoffice.org-l10n-fi for better Finnish support
+    - fix use_systemboost build option
+
+  + Thierry Vignaud <tvignaud@mandriva.com>
+    - convert prereq
+    - kill file require on update-alternatives
+
+  + Ademar de Souza Reis Jr <ademar@mandriva.com.br>
+    - remove PreReq for chkfontpath (apparently a legacy requirement,
+      since it's not used anywhere)
+    - change fonts-ttf-vera requirements to fonts-ttf-dejavu
+      (Dejavu is the preferred default font)
+
+* Fri Jun 29 2007 Marcelo Ricardo Leitner <mrl@mandriva.com> 2.2.1-1mdv2008.0
+- Updated to 2.2.1
+- Renamed to openoffice.org
+- Not using lzma for now
+- Enabled SMP usage.
+- Dropped support for <= 2006.0
+- Added requires to paper-utils, due to paperconf.
+- libwpd, libwpg, libwps, libicu and libmdbtools are now linked externally.
+- Added patch xdg: fix complaiment about MultipleArgs on template2.2.desktop
+- Added patch libwpg: fix missing config variable SYSTEM_LIBWPG during build
+  time.
+- Added patch kde: moves fps_kde.uno.so to -kde package, otherwise OOo gets
+  confused about kde/gnome dialogs.
+- Added patch ooqstart: fixes ooqstart.desktop exec command line.
+- Many fixes for java/x86_64 from Anssi Hannula, including patch
+  ooo-build-fix-build-java-target-patch
+
+* Sat Mar 24 2007 Giuseppe Ghibò <ghibo@mandriva.com> 2.2.0-4.rc4.1mdv2007.1
+- ooo-build 2.2.0_cvs20070323.
+- use oof680-m14 (RC4).
+
+* Wed Mar 21 2007 Giuseppe Ghibò <ghibo@mandriva.com> 2.2.0-3.m13.2mdv2007.1
+- ooo-build 2.2.0_cvs20070321.
+
+* Mon Mar 19 2007 Giuseppe Ghibò <ghibo@mandriva.com> 2.2.0-3.m13.1mdv2007.1
+- Rebuilt against latest clipart-openclipart (fixes bug #29568).
+- ooo-build 2.2.0_cvs20070319.
+- use system libwpd.
+
+* Mon Mar 12 2007 Giuseppe Ghibò <ghibo@mandriva.com> 2.2.0-2.rc3.2mdv2007.1
+- ooo-build 2.2.0_cvs20070312.
+- Removed X-MandrivaLinux-Office-Spreadsheet from base*.desktop (bug #29381).
+- Don't use splash screens with transparencies (report by Hélène).
+
+* Fri Mar 09 2007 Giuseppe Ghibò <ghibo@mandriva.com> 2.2.0-2.rc3.1mdv2007.1
+- ooo-build 2.2.0_cvs20070309.
+- use oof680-m11 (RC3).
+
+* Tue Mar 06 2007 Giuseppe Ghibò <ghibo@mandriva.com> 2.2.0-2.m10.2mdv2007.1
+- ooo-build 2.2.0_cvs20070306.
+- Fixed splash screen.
+
+* Sat Mar 03 2007 Giuseppe Ghibò <ghibo@mandriva.com> 2.2.0-2.m10.1mdv2007.1
+- ooo-build 2.2.0_cvs20070304.
+- merged Felipe Arruda's fixes for brazilian .desktop files translations.
+- merged Funda Wang patches for VCL.xcu for chinese menus (bug #29026).
+- force building with system sane.
+- Updated Splash Screens (thanks to Hélène Durosini).
+
+* Mon Feb 26 2007 Giuseppe Ghibò <ghibo@mandriva.com> 2.2.0-1mdv2007.1
+- ooo-build 2.2.0_cvs2007025.
+- renamed to *go-ooo to distinguish from main openoffice.org.
+
+* Sat Feb 24 2007 Giuseppe Ghibò <ghibo@mandriva.com> 2.1.0-5mdv2007.1
+- removed mimelnk subpackage
+- ooo-build 2.1.6_cvs20070224 (fix problem when saving in PPT).
+- added update-alternatives for ooffice links into %{_bindir}.
+- moved docdir (to allow coexisting between i586 and x86_64 packages).
+
+* Fri Feb 16 2007 Giuseppe Ghibò <ghibo@mandriva.com> 2.1.0-4mdv2007.1
+- ooo-build 2.1.6_cvs20070216.
+- Removed Patch8 (merged upstream).
+- Removed Patch9 (merged upstream).
+- Rebuilt Patch10 (partially merged upstream).
+
+* Mon Feb 12 2007 Giuseppe Ghibò <ghibo@mandriva.com> 2.1.0-3mdv2007.1
+- Updated Source15 (updates for de_DE, it_IT, pl_PL,
+  new thesaurus for pt_PT, nb_NO, ru_RU).
+
+* Sat Feb 10 2007 Giuseppe Ghibò <ghibo@mandriva.com> 2.1.0-2mdv2007.1
+- ooo-build 2.1.5_cvs20070210.
+- Added Patch7 for serializer.jar for problems with gcj.
+
+* Thu Feb 08 2007 Giuseppe Ghibò <ghibo@mandriva.com> 2.1.0-1mdv2007.1
+- ooo-build 2.1.3_cvs20070208.
+- use 2.1 for mdvsuffix.
+- Removed Patch5 (no longer needed).
+- OpenOffice 2.1.0.
+- Added Patch7 (temporary disable patch for chinese, as it
+  doesn't apply anymore and need to be rediffed).
+- Added BuildConflicts for libportaudio2 (Florian Hubold).
+
+* Tue Jan 30 2007 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.4-4mdv2007.1
+- ooo-build 2.0.4.14_cvs20070130.
+
+* Mon Jan 29 2007 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.4-3mdv2007.0
+- BuildRequires for libportaudio0-devel instead libportaudio-devel
+  (libportaudio2-devel is broken?).
+
+* Thu Jan 04 2007 Vincent Danen <vdanen@mandriva.com> 2.0.4-2.1mdv2007.0
+- build for updates, includes the fix for CVE-2006-5870
+
+* Wed Dec 20 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.4-2mdv2007.0
+- added mime-types 'application/vnd.ms-works;application/x-msworks-wp;
+  zz-application/zz-winassoc-wps' to writer*desktop (bug #27616).
+- cosmetics to the SPEC file.
+
+* Wed Dec 20 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.4-1mdv2007.0
+- OpenOffice to 2.0.4.
+- ooo-build 20061220 cvs.
+
+* Tue Sep 19 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.3-6mdv2007.0
+- ooo-build 20060919 cvs: fix cjk fonts (bug #22018, #25701).
+
+* Fri Sep 15 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.3-5mdv2007.0
+- Rebuilt against mozilla-firefox 1.5.0.7.
+
+* Thu Sep 14 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.3-4mdv2007.0
+- Changed .desktop entries categories according to bug #25641.
+- Fixed splash screen (ooo-build 20060914 cvs).
+
+* Mon Sep 11 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.3-3mdv2007.0
+- use %mklibname for unixODBC (from Gwenole).
+- added mk in language list.
+- fixed csh path in setsdk_unix.csh script.
+- Updated FontOOo.sxw wizard to release 1.6.
+- Updated DicOOo.sxwd wizard to release 1.6.1.
+- Removed Patch5,6 (unused).
+- Removed Patch7, merged ooo-build upstream (ooo-build 2.0.3-20060911).
+- Added mimetypes for old OpenOffice formats (missed in kdelibs-common),
+  Source53 and mimelnk subpackage.
+- Removed kaffe from "Conflicts" (seems not conflicting in runtime)
+  (from D.Walluck).
+
+* Mon Aug 21 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.3-2mdv2007.0
+- ooo-build 20060821 cvs.
+- Merged Anssi Hannula's fixes (and added -devel and -devel-doc subpackages).
+- Added Patch7 for dbus-0.91.
+
+* Thu Jul 06 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.3-1mdv2007.0
+- Release 2.0.3.
+- ooo-build 20060706 cvs.
+
+* Mon Jun 26 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.3-0.m6.2mdv2007.0
+- ooo-build 20060624 cvs.
+
+* Wed Jun 21 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.3-0.m6.1mdv2006.0
+- Release oooc680-m6.
+- Added Breton language.
+
+* Mon Jun 19 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.3-0.m5.1mdk
+- 2.0.3-m5.
+- ooo-build 20060619 cvs.
+- Removed hunspell subpackage (was empty).
+- Renamed package to OpenOffice.org (warly).
+
+* Sat May 06 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.2-6mdk
+- ooo-build 2.0.2.9.
+- Added Patch6 to allow building with neon library version 0.26.
+
+* Sat Apr 15 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.2-5mdk
+- ooo-build 2.0.2.7 (fixes also bug #21869).
+- fix typo in Requires when --with systemdb is used (thanks to Richard Houser).
+- Disable default cairo rendering for 2006.0 (cause jittering/slow down under
+  Impress presentations).
+
+* Sat Mar 18 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.2-4mdk
+- ooo-build 2.0.2.1.
+
+* Sat Mar 11 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.2-3mdk
+- Removed Patch3 (merged into ooo-build upstream).
+- ooo-build 2.0.2.cvs20060311.
+
+* Sat Mar 11 2006 Giuseppe Ghibr <ghibo@mandriva.com> 2.0.2-2mdk
+- Modified Patch3 (set OOO_EXTRA_ARG to empty string which is
+  not the same as unset).
+
+* Thu Mar 09 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.2-1mdk
+- Release 2.0.2 final.
+- ooo-build 2.0.2.
+
+* Mon Mar 06 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.2-0.rc4.3mdk
+- moved ooqstart to a standalone subpackage (Patch4).
+
+* Sat Mar 04 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.2-0.rc4.2mdk
+- ooo-build 2.0.157.cvs20060304 (fixes bug #21428, IZ#62068).
+- Added Patch3 (fixes OOO_EXTRA_ARG env var when it's not set and
+  called from ooffice2.0 wrapper).
+
+* Fri Mar 03 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.2-0.rc4.1mdk
+- ooo-build 2.0.157.cvs20060302.
+- Disable direct quickstart call for now.
+
+* Thu Mar 02 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.2-0.m5.2mdk
+- ooo-build 2.0.157.cvs20060301.
+- Added Conflicts: kaffe.
+
+* Wed Mar 01 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.2-0.m5.1mdk
+- Release oob680-m5.
+
+* Tue Feb 28 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.2-0.m4.1mdk
+- Release oob680-m4.
+
+* Mon Feb 06 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.1-1mdk
+- Release 2.0.1
+- remove --with-system-db-version in configure because doesn't exists anymore.
+- added --with-systemdb conditional flag.
+- added --with-tiny_langset conditional flag
+- ooo-build-2.0.1.3.
+- Added --with gcj switch for building with gcj instead of Sun JDK.
+- Added Patch1 for supporting .lzma tarballs.
+- Added Patch2 to fix bug #19111 (from Eskild Hustvedt).
+- Moved Patch5 into ooo-build tree.
+
+* Sat Jan 14 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0-7mdk
+- fixed bug IZ#47323.
+- removed de-DE.tar.bz2 from Source15 not Source14.
+- ooo-build-cvs20051026 (fix bug IZ#52047).
+- renamed menu name to openoffice.org-2.0 (Gwenole).
+- Added bulgarian l10n subpackage.
+- ooo-build-cvs20060114.
+- Lowered optimization to -O1, as -O2 causes segfaults (with gcc 4.0.2-1mdk) in the
+  libunosal.so.3 libs from javaldx executable during package building.
+
+* Thu Oct 20 2005 Giuseppe Ghibò <ghibo@mandriva.com> 2.0-1mdk
+- 2.0 final.
+
+* Fri Oct 14 2005 Giuseppe Ghibò <ghibo@mandriva.com> 2.0-0.rc3.1mdk
+- 2.0-rc3.
+
+* Mon Sep 26 2005 Giuseppe Ghibò <ghibo@mandriva.com> 2.0-0.m129.3mdk
+- ooobuild cvs 20050924.
+- moved libsndfile.so, libportaudio.so, libdb-4.2.so, libmyspell.so,
+  libstlport_gcc.so to provides exceptions (Pascal Terjan).
+
+* Sat Sep 24 2005 Giuseppe Ghibò <ghibo@mandriva.com> 2.0-0.m129.2mdk
+- ooobuild cvs 20050921.
+- Removed Patch4 (fixed in upstream).
+- Added libdb-4.2.so, libmyspell.so, libstlport_gcc.so to require exceptions
+  (bug #17262).
+
+* Sat Sep 17 2005 Giuseppe Ghibò <ghibo@mandriva.com> 2.0-0.m129.1mdk
+- 1.9.129.
+- ooobuild cvs 20050918.
+- Removed Patch0->3 (merged upstream).
+- Added Patch4 (disable patch for i54709), because it doesn't apply correctly.
+- White progressbar.
+- Added Gwenole Patches for having OOo2 working under X86_64 in 32bit mode
+  (Patch5).
+
+* Wed Sep 14 2005 Giuseppe Ghibò <ghibo@mandriva.com> 2.0-0.m128.5mdk
+- Fix bug #18581 (libportaudio).
+- Move libkab1.so to -kde package (pterjan).
+
+* Wed Sep 14 2005 Giuseppe Ghibò <ghibo@mandriva.com> 2.0-0.m128.4mdk
+- ooobuild cvs 20050914.
+
+* Wed Sep 14 2005 Giuseppe Ghibò <ghibo@mandriva.com> 2.0-0.m128.3mdk
+- added Patch0 for spellchecker
+- Updated Source16.
+
+* Mon Sep 12 2005 Giuseppe Ghibò <ghibo@mandriva.com> 2.0-0.m128.2mdk
+- binfilters, mono.
+
+* Thu Sep 08 2005 Giuseppe Ghibò <ghibo@mandriva.com> 2.0-0.m128.1mdk
+- 1.9.128.
+
+* Mon Jul 25 2005 Giuseppe Ghibò <ghibo@mandriva.com> 2.0-0.m121.1mdk
+- 1.9.121.
+
+* Mon Jul 11 2005 Giuseppe Ghibò <ghibo@mandriva.com> 2.0-0.m116.1mdk
+- 1.9.116.
+
+* Mon Jul 11 2005 Giuseppe Ghibò <ghibo@mandriva.com> 2.0-0.m114.1mdk
+- 1.9.114.
+
+* Fri Jun 24 2005 Giuseppe Ghibò <ghibo@mandriva.com> 2.0-0.m110.1mdk
+- Updated ooo-build to cvs 20050624.
+
+* Thu Jun 23 2005 Giuseppe Ghibò <ghibo@mandriva.com> 2.0-0.m108.2mdk
+- Updated ooo-build to cvs 20050623 (fixes problem with
+  icon sets).
+
+* Wed Jun 22 2005 Giuseppe Ghibò <ghibo@mandriva.com> 2.0-0.m108.1mdk
+- 1.9.110.
+
+* Wed Mar 23 2005 Giuseppe Ghibò <ghibo@mandrakesoft.com> 1.1.4-1mdk
+- 1.1.4.
+
+* Fri Jan 21 2005 Giuseppe Ghibò <ghibo@mandrakesoft.com> 1.1.3-1mdk
+- Initial release.
