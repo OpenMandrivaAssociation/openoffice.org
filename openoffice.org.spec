@@ -393,6 +393,7 @@ Requires(postun): desktop-file-utils update-alternatives
 Conflicts: %{name} = 2.2.1
 Conflicts: %{name}-devel <= 2.3.0.5-1mdv
 Conflicts: %{name}-math <= 2.3.0.5-1mdv
+Conflicts: %{name}-core <= 2.3.99.4-1mdv
 
 %description common
 OpenOffice.org is a full-featured office productivity suite that provides a
