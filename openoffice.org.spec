@@ -20,11 +20,11 @@
 %define _binary_payload w9.lzdio
 #define _source_payload w9.bzdio
 
-%define version		2.3.99.4
-%define release		%mkrel 2
+%define version		2.4.0
+%define release		%mkrel 1
 
-%define oootagver	ooh680-m7
-%define ooobuildver	2.3.99.4.20080218
+%define oootagver	ooh680-m8
+%define ooobuildver	2.4.0.20080229
 %define jdkver		1_5_0_11
 %ifarch x86_64
 %define mdvsuffix	2.4_64
@@ -260,8 +260,8 @@ Source2:	http://www.go-ooo.org/packages/OOH680/%{oootagver}-lang.tar.%{oootarext
 Source3:	http://www.go-ooo.org/packages/OOH680/%{oootagver}-binfilter.tar.%{oootarext}
 Source4:	http://www.go-ooo.org/packages/OOH680/%{oootagver}-system.tar.%{oootarext}
 Source5:	http://www.go-ooo.org/packages/OOH680/%{oootagver}-sdk_oo.tar.%{oootarext}
-Source6:	http://download.go-oo.org/SRC680/oox.2008-01-29.tar.bz2
-Source7:	http://download.go-oo.org/SRC680/writerfilter.2008-01-29.tar.bz2
+Source6:	http://download.go-oo.org/SRC680/oox.2008-02-29.tar.bz2
+Source7:	http://download.go-oo.org/SRC680/writerfilter.2008-02-29.tar.bz2
 Source10:	http://www.go-ooo.org/packages/SRC680/ooo_tango_images-1.tar.bz2
 Source11:	http://download.go-oo.org/SRC680/ooo_crystal_images-6.tar.bz2
 Source12:	http://www.go-ooo.org/packages/SRC680/ooo_custom_images-13.tar.bz2
@@ -2694,7 +2694,6 @@ fi
 %ghost %{_datadir}/applications/draw*.desktop
 %ghost %{_datadir}/applications/impress*.desktop
 %ghost %{_datadir}/applications/math*.desktop
-%ghost %{_datadir}/applications/template*.desktop
 %ghost %{_datadir}/applications/web*.desktop
 %ghost %{_datadir}/applications/writer*.desktop
 
@@ -3015,7 +3014,7 @@ fi
 %endif
 
 %changelog
-* Wed Feb 20 2008 Marcelo Ricardo Leitner <mrl@mandriva.com> 2.3.99.4-2mdv2008.1
+* Wed Feb 20 2008 Marcelo Ricardo Leitner <mrl@mandriva.com> 2.4.0-1mdv2008.1
 + Revision 
 - Use system-db and system-boost for both archs, as gengal does not segfault anymore.
 - Enabled usage of OpenGL.
@@ -3025,6 +3024,9 @@ fi
 - Enabled cairo/canvas for x86_64.
 - Imported the changelog in the meanwhile, while we don't submit the package through
   the buildsystem.
+- Do not mark template*.desktop as ghost in the same package we ship it,
+  otherelse it is not shipped.
+- Updated oox and writerfilter to 20080229.
 
 * Tue Feb 19 2008 Marcelo Ricardo Leitner <mrl@mandriva.com> 2.3.99.4-1mdv2008.1
 + Revision 171536
