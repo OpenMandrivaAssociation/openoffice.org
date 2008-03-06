@@ -3022,6 +3022,7 @@ fi
 - Do not mark template*.desktop as ghost in the same package we ship it,
   otherelse it is not shipped.
 - Updated oox and writerfilter to 20080229.
+- Suggest java-common at openoffice.org-common, as it may be used by some macros.
 
 * Tue Feb 19 2008 Marcelo Ricardo Leitner <mrl@mandriva.com> 2.3.99.4-1mdv2008.1
 + Revision 171536
