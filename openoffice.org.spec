@@ -372,6 +372,8 @@ Requires: %{name}-core = %{version}
 Requires: %{name}-style = %{version}
 # And suggest the andromeda one
 Suggests: %{name}-style-andromeda = %{version}
+# Also suggest java-common, as it may be used by some macros
+Suggests: %{name}-java-common
 # And then general requires for OOo follows
 Requires: ghostscript
 Requires: fonts-ttf-liberation
