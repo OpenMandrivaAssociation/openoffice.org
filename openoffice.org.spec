@@ -172,7 +172,7 @@ BuildRequires:	libsvg-devel
 BuildRequires:	libgstreamer-plugins-base-devel
 BuildRequires:	libxaw-devel
 BuildRequires:	libldap-devel
-BuildRequires:	%{mklibname portaudio 0}-devel
+BuildRequires:	libportaudio-devel
 BuildConflicts: %{mklibname libportaudio 2}-devel
 BuildRequires:	libsndfile-devel
 BuildRequires:	unixODBC-devel
@@ -234,12 +234,7 @@ BuildConflicts:	gcj-tools
 BuildConflicts: java-kaffe
 %endif
 BuildConflicts:	STLport-devel
-
 BuildRequires:	hsqldb
-# <mrl> not working as external yet
-#BuildRequires:	bsh
-#BuildRequires:	libsablotron0-devel
-
 BuildRequires:	libwpg-devel
 BuildRequires:	libwps-devel
 BuildRequires:	icu
@@ -475,11 +470,9 @@ This package contains the drawing component for OpenOffice.org.
 %package dtd-officedocument1.0
 Group: Office
 Summary: OfficeDocument 1.0 DTD (OpenOffice.org 1.x)
-# <mrl> http://qa.mandriva.com/show_bug.cgi?id=37559
-#Requires: %{name}-common = %{version}
-#Requires: %{name}-core = %{version}
-# Due to the split
+# due to the split
 Conflicts: %{name} = 2.2.1
+# no need to require -core or -common, see #37559
 
 %description dtd-officedocument1.0
 OpenOffice.org is a full-featured office productivity suite that provides a
@@ -627,7 +620,7 @@ and sounds.
 %package pyuno
 Group: Office
 Summary: Python bindings for UNO library
-# FIXME
+# FIXME: what should we require: -common, -core, both, none?
 #Requires: %{name}-common = %{version}
 Conflicts: %{name}-common <= 2.3.0.5-1mdv
 
@@ -2386,9 +2379,10 @@ PATH=$PATH:/usr/sbin
 rm -rf %{buildroot}
 make install DESTDIR=%{buildroot}
 rm -rf %{buildroot}/opt
-# <mrl> This is buggy and duplicated.
+# FIXME: there are template/<locale>wizard/letter already
 #rm -rf %{buildroot}%{ooodir}/share/template/wizard/letter/
-# <mrl> Link to the shared one
+
+# use the dicts from myspell-<lang>
 rm -rf %{buildroot}%{ooodir}/share/dict/ooo
 ln -s %{_datadir}/dict/ooo %{buildroot}%{ooodir}/share/dict
 
@@ -2447,7 +2441,8 @@ desktop-file-install --vendor="" \
   --add-category="X-MandrivaLinux-CrossDesktop" \
   --dir %{buildroot}%{_datadir}/applications %{buildroot}%{_datadir}/applications/base*desktop
 
-# FontOOo|DictOOo wizard
+# XXX FontOOo|DictOOo wizard
+# these should die soon (after 2008.1)
 install -m 644 %{SOURCE50} %{buildroot}%{_libdir}/ooo-%{mdvsuffix}/share/dict/FontOOo.sxw
 install -m 644 %{SOURCE51} %{buildroot}%{_libdir}/ooo-%{mdvsuffix}/share/dict/DicOOo.sxw
 
@@ -2641,8 +2636,6 @@ fi
 
 %files base -f build/base_list.txt
 %{_bindir}/oobase%{mdvsuffix}
-### <mrl> Please note ? at filenames. They are needed because 32b builds produces
-### "li" files while 64b builds produces "lx" files.
 %{_datadir}/applications/base*.desktop
 %{_mandir}/man1/oobase%{mdvsuffix}.1*
 
@@ -2659,7 +2652,7 @@ fi
 %{_bindir}/oofromtemplate%{mdvsuffix}
 %{_bindir}/ootool%{mdvsuffix}
 %dir %{ooodir}/share/dict
-# FIXME: Wrong place?
+# XXX: these .sxw will die soon, see comment on %%install
 %{ooodir}/share/dict/*.sxw
 %{_datadir}/applications/template*.desktop
 %{_datadir}/icons/hicolor/*/apps/ooo-base%{mdvsuffix}.*
