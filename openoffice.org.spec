@@ -20,11 +20,11 @@
 %define _binary_payload w9.lzdio
 #define _source_payload w9.bzdio
 
-%define version		2.4.0
+%define version		2.4.0.2
 %define release		%mkrel 1
 
-%define oootagver	ooh680-m8
-%define ooobuildver	2.4.0.20080229
+%define oootagver	ooh680-m9
+%define ooobuildver	2.4.0.2.20080306
 %define jdkver		1_5_0_11
 %ifarch x86_64
 %define mdvsuffix	2.4_64
@@ -249,26 +249,26 @@ BuildRequires:	libmdbtools-devel
 #
 ####################################################################
 
-Source0:	http://www.go-ooo.org/packages/OOH680/ooo-build-%{ooobuildver}.tar.gz
-Source1:	http://www.go-ooo.org/packages/OOH680/%{oootagver}-core.tar.%{oootarext}
-Source2:	http://www.go-ooo.org/packages/OOH680/%{oootagver}-lang.tar.%{oootarext}
-Source3:	http://www.go-ooo.org/packages/OOH680/%{oootagver}-binfilter.tar.%{oootarext}
-Source4:	http://www.go-ooo.org/packages/OOH680/%{oootagver}-system.tar.%{oootarext}
-Source5:	http://www.go-ooo.org/packages/OOH680/%{oootagver}-sdk_oo.tar.%{oootarext}
+Source0:	http://download.go-oo.org/OOH680/ooo-build-%{ooobuildver}.tar.gz
+Source1:	http://download.go-oo.org/OOH680/%{oootagver}-core.tar.%{oootarext}
+Source2:	http://download.go-oo.org/OOH680/%{oootagver}-lang.tar.%{oootarext}
+Source3:	http://download.go-oo.org/OOH680/%{oootagver}-binfilter.tar.%{oootarext}
+Source4:	http://download.go-oo.org/OOH680/%{oootagver}-system.tar.%{oootarext}
+Source5:	http://download.go-oo.org/OOH680/%{oootagver}-sdk_oo.tar.%{oootarext}
 Source6:	http://download.go-oo.org/SRC680/oox.2008-02-29.tar.bz2
 Source7:	http://download.go-oo.org/SRC680/writerfilter.2008-02-29.tar.bz2
-Source10:	http://www.go-ooo.org/packages/SRC680/ooo_tango_images-1.tar.bz2
+Source10:	http://download.go-oo.org/SRC680/ooo_tango_images-1.tar.bz2
 Source11:	http://download.go-oo.org/SRC680/ooo_crystal_images-6.tar.bz2
-Source12:	http://www.go-ooo.org/packages/SRC680/ooo_custom_images-13.tar.bz2
-Source13:	http://www.go-ooo.org/packages/SRC680/extras-2.tar.bz2
-Source17:	http://www.go-ooo.org/packages/SRC680/mdbtools-0.6pre1.tar.gz
-Source18:	http://www.go-ooo.org/packages/SRC680/hunspell-1.0.8.tar.gz
-Source19:	http://www.go-ooo.org/packages/SRC680/hunspell_UNO_1.1.tar.gz
-Source20:	http://www.go-ooo.org/packages/SRC680/cli_types.dll
-Source21:	http://www.go-ooo.org/packages/SRC680/cli_types_bridgetest.dll
-Source23:	http://www.go-ooo.org/packages/xt/xt-20051206-src-only.zip
-Source24:	http://www.go-ooo.org/packages/SRC680/lp_solve_5.5.0.10_source.tar.gz
-Source25:	http://www.go-ooo.org/packages/SRC680/biblio.tar.bz2
+Source12:	http://download.go-oo.org/SRC680/ooo_custom_images-13.tar.bz2
+Source13:	http://download.go-oo.org/SRC680/extras-2.tar.bz2
+Source17:	http://download.go-oo.org/SRC680/mdbtools-0.6pre1.tar.gz
+Source18:	http://download.go-oo.org/SRC680/hunspell-1.0.8.tar.gz
+Source19:	http://download.go-oo.org/SRC680/hunspell_UNO_1.1.tar.gz
+Source20:	http://download.go-oo.org/SRC680/cli_types.dll
+Source21:	http://download.go-oo.org/SRC680/cli_types_bridgetest.dll
+Source23:	http://download.go-oo.org/xt/xt-20051206-src-only.zip
+Source24:	http://download.go-oo.org/SRC680/lp_solve_5.5.0.10_source.tar.gz
+Source25:	http://download.go-oo.org/SRC680/biblio.tar.bz2
 Source26:	http://tools.openoffice.org/unowinreg_prebuild/680/unowinreg.dll
 # splash screens
 Source27:	openintro_mandriva.bmp
@@ -3009,8 +3009,13 @@ fi
 %endif
 
 %changelog
-* Wed Feb 20 2008 Marcelo Ricardo Leitner <mrl@mandriva.com> 2.4.0-1mdv2008.1
-+ Revision 
+* Thu Mar 06 2008 Ademar de Souza Reis Jr. <ademar@mandriva.com> 2.4.0.2-1mdv2008.1
++ Revision
+- New version: 2.4.0.2 (ooo-build 2.4.0.2, ooo 2.4.0-rc3)
+- New ooo-build: 2.4.0.2-20080306
+- Minor spec cleanups
+
+* Wed Feb 20 2008 Marcelo Ricardo Leitner <mrl@mandriva.com>
 - Use system-db and system-boost for both archs, as gengal does not segfault anymore.
 - Enabled usage of OpenGL.
 - Enabled lockdown system.
