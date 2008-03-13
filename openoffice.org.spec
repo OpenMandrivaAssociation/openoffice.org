@@ -20,11 +20,11 @@
 %define _binary_payload w9.lzdio
 #define _source_payload w9.bzdio
 
-%define version		2.4.0.2
+%define version		2.4.0.3
 %define release		%mkrel 1
 
-%define oootagver	ooh680-m9
-%define ooobuildver	2.4.0.2.20080306
+%define oootagver	ooh680-m11
+%define ooobuildver	2.4.0.3.20080313
 %define jdkver		1_5_0_11
 %ifarch x86_64
 %define mdvsuffix	2.4_64
@@ -3009,9 +3009,9 @@ fi
 %endif
 
 %changelog
-* Thu Mar 06 2008 Ademar de Souza Reis Jr. <ademar@mandriva.com> 2.4.0.2-1mdv2008.1
+* Thu Mar 06 2008 Ademar de Souza Reis Jr. <ademar@mandriva.com> 2.4.0.3-1mdv2008.1
 + Revision
-- New version: 2.4.0.2 (ooo-build 2.4.0.2, ooo 2.4.0-rc3)
+- New version: 2.4.0.3 (ooo-build 2.4.0.3, ooo 2.4.0-rc5)
 - Minor spec cleanups
 
 * Wed Feb 20 2008 Marcelo Ricardo Leitner <mrl@mandriva.com>
