@@ -3012,7 +3012,6 @@ fi
 * Thu Mar 06 2008 Ademar de Souza Reis Jr. <ademar@mandriva.com> 2.4.0.2-1mdv2008.1
 + Revision
 - New version: 2.4.0.2 (ooo-build 2.4.0.2, ooo 2.4.0-rc3)
-- New ooo-build: 2.4.0.2-20080306
 - Minor spec cleanups
 
 * Wed Feb 20 2008 Marcelo Ricardo Leitner <mrl@mandriva.com>
@@ -3242,63 +3241,63 @@ Changes from ooo-build tree:
 - Many fixes for java/x86_64 from Anssi Hannula, including patch
   ooo-build-fix-build-java-target-patch
 
-* Sat Mar 24 2007 Giuseppe Ghibò <ghibo@mandriva.com> 2.2.0-4.rc4.1mdv2007.1
+* Sat Mar 24 2007 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.2.0-4.rc4.1mdv2007.1
 - ooo-build 2.2.0_cvs20070323.
 - use oof680-m14 (RC4).
 
-* Wed Mar 21 2007 Giuseppe Ghibò <ghibo@mandriva.com> 2.2.0-3.m13.2mdv2007.1
+* Wed Mar 21 2007 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.2.0-3.m13.2mdv2007.1
 - ooo-build 2.2.0_cvs20070321.
 
-* Mon Mar 19 2007 Giuseppe Ghibò <ghibo@mandriva.com> 2.2.0-3.m13.1mdv2007.1
+* Mon Mar 19 2007 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.2.0-3.m13.1mdv2007.1
 - Rebuilt against latest clipart-openclipart (fixes bug #29568).
 - ooo-build 2.2.0_cvs20070319.
 - use system libwpd.
 
-* Mon Mar 12 2007 Giuseppe Ghibò <ghibo@mandriva.com> 2.2.0-2.rc3.2mdv2007.1
+* Mon Mar 12 2007 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.2.0-2.rc3.2mdv2007.1
 - ooo-build 2.2.0_cvs20070312.
 - Removed X-MandrivaLinux-Office-Spreadsheet from base*.desktop (bug #29381).
-- Don't use splash screens with transparencies (report by Hélène).
+- Don't use splash screens with transparencies (report by HÃ©lÃ¨ne).
 
-* Fri Mar 09 2007 Giuseppe Ghibò <ghibo@mandriva.com> 2.2.0-2.rc3.1mdv2007.1
+* Fri Mar 09 2007 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.2.0-2.rc3.1mdv2007.1
 - ooo-build 2.2.0_cvs20070309.
 - use oof680-m11 (RC3).
 
-* Tue Mar 06 2007 Giuseppe Ghibò <ghibo@mandriva.com> 2.2.0-2.m10.2mdv2007.1
+* Tue Mar 06 2007 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.2.0-2.m10.2mdv2007.1
 - ooo-build 2.2.0_cvs20070306.
 - Fixed splash screen.
 
-* Sat Mar 03 2007 Giuseppe Ghibò <ghibo@mandriva.com> 2.2.0-2.m10.1mdv2007.1
+* Sat Mar 03 2007 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.2.0-2.m10.1mdv2007.1
 - ooo-build 2.2.0_cvs20070304.
 - merged Felipe Arruda's fixes for brazilian .desktop files translations.
 - merged Funda Wang patches for VCL.xcu for chinese menus (bug #29026).
 - force building with system sane.
-- Updated Splash Screens (thanks to Hélène Durosini).
+- Updated Splash Screens (thanks to HÃ©lÃ¨ne Durosini).
 
-* Mon Feb 26 2007 Giuseppe Ghibò <ghibo@mandriva.com> 2.2.0-1mdv2007.1
+* Mon Feb 26 2007 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.2.0-1mdv2007.1
 - ooo-build 2.2.0_cvs2007025.
 - renamed to *go-ooo to distinguish from main openoffice.org.
 
-* Sat Feb 24 2007 Giuseppe Ghibò <ghibo@mandriva.com> 2.1.0-5mdv2007.1
+* Sat Feb 24 2007 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.1.0-5mdv2007.1
 - removed mimelnk subpackage
 - ooo-build 2.1.6_cvs20070224 (fix problem when saving in PPT).
 - added update-alternatives for ooffice links into %{_bindir}.
 - moved docdir (to allow coexisting between i586 and x86_64 packages).
 
-* Fri Feb 16 2007 Giuseppe Ghibò <ghibo@mandriva.com> 2.1.0-4mdv2007.1
+* Fri Feb 16 2007 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.1.0-4mdv2007.1
 - ooo-build 2.1.6_cvs20070216.
 - Removed Patch8 (merged upstream).
 - Removed Patch9 (merged upstream).
 - Rebuilt Patch10 (partially merged upstream).
 
-* Mon Feb 12 2007 Giuseppe Ghibò <ghibo@mandriva.com> 2.1.0-3mdv2007.1
+* Mon Feb 12 2007 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.1.0-3mdv2007.1
 - Updated Source15 (updates for de_DE, it_IT, pl_PL,
   new thesaurus for pt_PT, nb_NO, ru_RU).
 
-* Sat Feb 10 2007 Giuseppe Ghibò <ghibo@mandriva.com> 2.1.0-2mdv2007.1
+* Sat Feb 10 2007 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.1.0-2mdv2007.1
 - ooo-build 2.1.5_cvs20070210.
 - Added Patch7 for serializer.jar for problems with gcj.
 
-* Thu Feb 08 2007 Giuseppe Ghibò <ghibo@mandriva.com> 2.1.0-1mdv2007.1
+* Thu Feb 08 2007 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.1.0-1mdv2007.1
 - ooo-build 2.1.3_cvs20070208.
 - use 2.1 for mdvsuffix.
 - Removed Patch5 (no longer needed).
@@ -3307,36 +3306,36 @@ Changes from ooo-build tree:
   doesn't apply anymore and need to be rediffed).
 - Added BuildConflicts for libportaudio2 (Florian Hubold).
 
-* Tue Jan 30 2007 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.4-4mdv2007.1
+* Tue Jan 30 2007 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.0.4-4mdv2007.1
 - ooo-build 2.0.4.14_cvs20070130.
 
-* Mon Jan 29 2007 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.4-3mdv2007.0
+* Mon Jan 29 2007 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.0.4-3mdv2007.0
 - BuildRequires for libportaudio0-devel instead libportaudio-devel
   (libportaudio2-devel is broken?).
 
 * Thu Jan 04 2007 Vincent Danen <vdanen@mandriva.com> 2.0.4-2.1mdv2007.0
 - build for updates, includes the fix for CVE-2006-5870
 
-* Wed Dec 20 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.4-2mdv2007.0
+* Wed Dec 20 2006 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.0.4-2mdv2007.0
 - added mime-types 'application/vnd.ms-works;application/x-msworks-wp;
   zz-application/zz-winassoc-wps' to writer*desktop (bug #27616).
 - cosmetics to the SPEC file.
 
-* Wed Dec 20 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.4-1mdv2007.0
+* Wed Dec 20 2006 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.0.4-1mdv2007.0
 - OpenOffice to 2.0.4.
 - ooo-build 20061220 cvs.
 
-* Tue Sep 19 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.3-6mdv2007.0
+* Tue Sep 19 2006 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.0.3-6mdv2007.0
 - ooo-build 20060919 cvs: fix cjk fonts (bug #22018, #25701).
 
-* Fri Sep 15 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.3-5mdv2007.0
+* Fri Sep 15 2006 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.0.3-5mdv2007.0
 - Rebuilt against mozilla-firefox 1.5.0.7.
 
-* Thu Sep 14 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.3-4mdv2007.0
+* Thu Sep 14 2006 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.0.3-4mdv2007.0
 - Changed .desktop entries categories according to bug #25641.
 - Fixed splash screen (ooo-build 20060914 cvs).
 
-* Mon Sep 11 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.3-3mdv2007.0
+* Mon Sep 11 2006 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.0.3-3mdv2007.0
 - use %mklibname for unixODBC (from Gwenole).
 - added mk in language list.
 - fixed csh path in setsdk_unix.csh script.
@@ -3349,42 +3348,42 @@ Changes from ooo-build tree:
 - Removed kaffe from "Conflicts" (seems not conflicting in runtime)
   (from D.Walluck).
 
-* Mon Aug 21 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.3-2mdv2007.0
+* Mon Aug 21 2006 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.0.3-2mdv2007.0
 - ooo-build 20060821 cvs.
 - Merged Anssi Hannula's fixes (and added -devel and -devel-doc subpackages).
 - Added Patch7 for dbus-0.91.
 
-* Thu Jul 06 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.3-1mdv2007.0
+* Thu Jul 06 2006 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.0.3-1mdv2007.0
 - Release 2.0.3.
 - ooo-build 20060706 cvs.
 
-* Mon Jun 26 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.3-0.m6.2mdv2007.0
+* Mon Jun 26 2006 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.0.3-0.m6.2mdv2007.0
 - ooo-build 20060624 cvs.
 
-* Wed Jun 21 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.3-0.m6.1mdv2006.0
+* Wed Jun 21 2006 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.0.3-0.m6.1mdv2006.0
 - Release oooc680-m6.
 - Added Breton language.
 
-* Mon Jun 19 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.3-0.m5.1mdk
+* Mon Jun 19 2006 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.0.3-0.m5.1mdk
 - 2.0.3-m5.
 - ooo-build 20060619 cvs.
 - Removed hunspell subpackage (was empty).
 - Renamed package to OpenOffice.org (warly).
 
-* Sat May 06 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.2-6mdk
+* Sat May 06 2006 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.0.2-6mdk
 - ooo-build 2.0.2.9.
 - Added Patch6 to allow building with neon library version 0.26.
 
-* Sat Apr 15 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.2-5mdk
+* Sat Apr 15 2006 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.0.2-5mdk
 - ooo-build 2.0.2.7 (fixes also bug #21869).
 - fix typo in Requires when --with systemdb is used (thanks to Richard Houser).
 - Disable default cairo rendering for 2006.0 (cause jittering/slow down under
   Impress presentations).
 
-* Sat Mar 18 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.2-4mdk
+* Sat Mar 18 2006 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.0.2-4mdk
 - ooo-build 2.0.2.1.
 
-* Sat Mar 11 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.2-3mdk
+* Sat Mar 11 2006 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.0.2-3mdk
 - Removed Patch3 (merged into ooo-build upstream).
 - ooo-build 2.0.2.cvs20060311.
 
@@ -3392,33 +3391,33 @@ Changes from ooo-build tree:
 - Modified Patch3 (set OOO_EXTRA_ARG to empty string which is
   not the same as unset).
 
-* Thu Mar 09 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.2-1mdk
+* Thu Mar 09 2006 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.0.2-1mdk
 - Release 2.0.2 final.
 - ooo-build 2.0.2.
 
-* Mon Mar 06 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.2-0.rc4.3mdk
+* Mon Mar 06 2006 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.0.2-0.rc4.3mdk
 - moved ooqstart to a standalone subpackage (Patch4).
 
-* Sat Mar 04 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.2-0.rc4.2mdk
+* Sat Mar 04 2006 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.0.2-0.rc4.2mdk
 - ooo-build 2.0.157.cvs20060304 (fixes bug #21428, IZ#62068).
 - Added Patch3 (fixes OOO_EXTRA_ARG env var when it's not set and
   called from ooffice2.0 wrapper).
 
-* Fri Mar 03 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.2-0.rc4.1mdk
+* Fri Mar 03 2006 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.0.2-0.rc4.1mdk
 - ooo-build 2.0.157.cvs20060302.
 - Disable direct quickstart call for now.
 
-* Thu Mar 02 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.2-0.m5.2mdk
+* Thu Mar 02 2006 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.0.2-0.m5.2mdk
 - ooo-build 2.0.157.cvs20060301.
 - Added Conflicts: kaffe.
 
-* Wed Mar 01 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.2-0.m5.1mdk
+* Wed Mar 01 2006 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.0.2-0.m5.1mdk
 - Release oob680-m5.
 
-* Tue Feb 28 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.2-0.m4.1mdk
+* Tue Feb 28 2006 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.0.2-0.m4.1mdk
 - Release oob680-m4.
 
-* Mon Feb 06 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0.1-1mdk
+* Mon Feb 06 2006 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.0.1-1mdk
 - Release 2.0.1
 - remove --with-system-db-version in configure because doesn't exists anymore.
 - added --with-systemdb conditional flag.
@@ -3429,7 +3428,7 @@ Changes from ooo-build tree:
 - Added Patch2 to fix bug #19111 (from Eskild Hustvedt).
 - Moved Patch5 into ooo-build tree.
 
-* Sat Jan 14 2006 Giuseppe Ghibò <ghibo@mandriva.com> 2.0-7mdk
+* Sat Jan 14 2006 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.0-7mdk
 - fixed bug IZ#47323.
 - removed de-DE.tar.bz2 from Source15 not Source14.
 - ooo-build-cvs20051026 (fix bug IZ#52047).
@@ -3439,24 +3438,24 @@ Changes from ooo-build tree:
 - Lowered optimization to -O1, as -O2 causes segfaults (with gcc 4.0.2-1mdk) in the
   libunosal.so.3 libs from javaldx executable during package building.
 
-* Thu Oct 20 2005 Giuseppe Ghibò <ghibo@mandriva.com> 2.0-1mdk
+* Thu Oct 20 2005 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.0-1mdk
 - 2.0 final.
 
-* Fri Oct 14 2005 Giuseppe Ghibò <ghibo@mandriva.com> 2.0-0.rc3.1mdk
+* Fri Oct 14 2005 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.0-0.rc3.1mdk
 - 2.0-rc3.
 
-* Mon Sep 26 2005 Giuseppe Ghibò <ghibo@mandriva.com> 2.0-0.m129.3mdk
+* Mon Sep 26 2005 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.0-0.m129.3mdk
 - ooobuild cvs 20050924.
 - moved libsndfile.so, libportaudio.so, libdb-4.2.so, libmyspell.so,
   libstlport_gcc.so to provides exceptions (Pascal Terjan).
 
-* Sat Sep 24 2005 Giuseppe Ghibò <ghibo@mandriva.com> 2.0-0.m129.2mdk
+* Sat Sep 24 2005 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.0-0.m129.2mdk
 - ooobuild cvs 20050921.
 - Removed Patch4 (fixed in upstream).
 - Added libdb-4.2.so, libmyspell.so, libstlport_gcc.so to require exceptions
   (bug #17262).
 
-* Sat Sep 17 2005 Giuseppe Ghibò <ghibo@mandriva.com> 2.0-0.m129.1mdk
+* Sat Sep 17 2005 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.0-0.m129.1mdk
 - 1.9.129.
 - ooobuild cvs 20050918.
 - Removed Patch0->3 (merged upstream).
@@ -3465,44 +3464,44 @@ Changes from ooo-build tree:
 - Added Gwenole Patches for having OOo2 working under X86_64 in 32bit mode
   (Patch5).
 
-* Wed Sep 14 2005 Giuseppe Ghibò <ghibo@mandriva.com> 2.0-0.m128.5mdk
+* Wed Sep 14 2005 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.0-0.m128.5mdk
 - Fix bug #18581 (libportaudio).
 - Move libkab1.so to -kde package (pterjan).
 
-* Wed Sep 14 2005 Giuseppe Ghibò <ghibo@mandriva.com> 2.0-0.m128.4mdk
+* Wed Sep 14 2005 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.0-0.m128.4mdk
 - ooobuild cvs 20050914.
 
-* Wed Sep 14 2005 Giuseppe Ghibò <ghibo@mandriva.com> 2.0-0.m128.3mdk
+* Wed Sep 14 2005 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.0-0.m128.3mdk
 - added Patch0 for spellchecker
 - Updated Source16.
 
-* Mon Sep 12 2005 Giuseppe Ghibò <ghibo@mandriva.com> 2.0-0.m128.2mdk
+* Mon Sep 12 2005 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.0-0.m128.2mdk
 - binfilters, mono.
 
-* Thu Sep 08 2005 Giuseppe Ghibò <ghibo@mandriva.com> 2.0-0.m128.1mdk
+* Thu Sep 08 2005 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.0-0.m128.1mdk
 - 1.9.128.
 
-* Mon Jul 25 2005 Giuseppe Ghibò <ghibo@mandriva.com> 2.0-0.m121.1mdk
+* Mon Jul 25 2005 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.0-0.m121.1mdk
 - 1.9.121.
 
-* Mon Jul 11 2005 Giuseppe Ghibò <ghibo@mandriva.com> 2.0-0.m116.1mdk
+* Mon Jul 11 2005 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.0-0.m116.1mdk
 - 1.9.116.
 
-* Mon Jul 11 2005 Giuseppe Ghibò <ghibo@mandriva.com> 2.0-0.m114.1mdk
+* Mon Jul 11 2005 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.0-0.m114.1mdk
 - 1.9.114.
 
-* Fri Jun 24 2005 Giuseppe Ghibò <ghibo@mandriva.com> 2.0-0.m110.1mdk
+* Fri Jun 24 2005 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.0-0.m110.1mdk
 - Updated ooo-build to cvs 20050624.
 
-* Thu Jun 23 2005 Giuseppe Ghibò <ghibo@mandriva.com> 2.0-0.m108.2mdk
+* Thu Jun 23 2005 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.0-0.m108.2mdk
 - Updated ooo-build to cvs 20050623 (fixes problem with
   icon sets).
 
-* Wed Jun 22 2005 Giuseppe Ghibò <ghibo@mandriva.com> 2.0-0.m108.1mdk
+* Wed Jun 22 2005 Giuseppe GhibÃ² <ghibo@mandriva.com> 2.0-0.m108.1mdk
 - 1.9.110.
 
-* Wed Mar 23 2005 Giuseppe Ghibò <ghibo@mandrakesoft.com> 1.1.4-1mdk
+* Wed Mar 23 2005 Giuseppe GhibÃ² <ghibo@mandrakesoft.com> 1.1.4-1mdk
 - 1.1.4.
 
-* Fri Jan 21 2005 Giuseppe Ghibò <ghibo@mandrakesoft.com> 1.1.3-1mdk
+* Fri Jan 21 2005 Giuseppe GhibÃ² <ghibo@mandrakesoft.com> 1.1.3-1mdk
 - Initial release.
