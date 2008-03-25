@@ -273,9 +273,6 @@ Source26:	http://tools.openoffice.org/unowinreg_prebuild/680/unowinreg.dll
 # splash screens
 Source27:	openintro_mandriva.bmp
 Source28:	openabout_mandriva.bmp
-# splash screens (64bit)
-Source31:	openintro_mandriva64.bmp
-Source32:	openabout_mandriva64.bmp
 #
 # http://oooconv.free.fr/fontooo/FontOOo.sxw.bz2
 Source50:	FontOOo.sxw
@@ -2245,8 +2242,6 @@ ln -sf %{SOURCE25} src/
 # splash screen
 ln -sf %{SOURCE27} src/
 ln -sf %{SOURCE28} src/
-ln -sf %{SOURCE31} src/
-ln -sf %{SOURCE32} src/
 
 if [ -x ./autogen.sh ]; then
 	NOCONFIGURE=1 ./autogen.sh --with-distro=%{distroname}
@@ -2298,13 +2293,8 @@ CXXFLAGS="%{optflags} %{optsafe} -g0 -fno-omit-frame-pointer -fno-strict-aliasin
 	--with-system-libwpg \
 	--with-system-libsvg \
 	--with-system-sablot \
-%ifarch x86_64
-	--with-intro-bitmaps="%{SOURCE31}" \
-        --with-about-bitmaps="%{SOURCE32}" \
-%else
 	--with-intro-bitmaps="%{SOURCE27}" \
-        --with-about-bitmaps="%{SOURCE28}" \
-%endif
+    --with-about-bitmaps="%{SOURCE28}" \
 %if %use_gcj
 	--with-jdk-home=%java_home \
 	--with-java-target-version=1.5 \
