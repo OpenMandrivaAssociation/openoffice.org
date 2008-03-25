@@ -2267,11 +2267,11 @@ CXXFLAGS="%{optflags} %{optsafe} -g0 -fno-omit-frame-pointer -fno-strict-aliasin
 %configure2_5x \
 	--with-distro=%{distroname} \
 	--with-vendor=Mandriva \
-        --with-tag=%{oootagver} \
+	--with-tag=%{oootagver} \
 	--with-build-version="%{ooobuildver}" \
-        --enable-odk \
-        --disable-qadevooo \
-        --enable-java \
+	--enable-odk \
+	--disable-qadevooo \
+	--enable-java \
 	--enable-gstreamer \
 	--enable-lockdown \
 	--enable-opengl \
@@ -2294,7 +2294,7 @@ CXXFLAGS="%{optflags} %{optsafe} -g0 -fno-omit-frame-pointer -fno-strict-aliasin
 	--with-system-libsvg \
 	--with-system-sablot \
 	--with-intro-bitmaps="%{SOURCE27}" \
-    --with-about-bitmaps="%{SOURCE28}" \
+	--with-about-bitmaps="%{SOURCE28}" \
 %if %use_gcj
 	--with-jdk-home=%java_home \
 	--with-java-target-version=1.5 \
@@ -2302,7 +2302,7 @@ CXXFLAGS="%{optflags} %{optsafe} -g0 -fno-omit-frame-pointer -fno-strict-aliasin
 	--with-jdk-home=$JAVA_HOME \
 %endif
 %if %{use_systemdb}
-        --with-system-db \
+	--with-system-db \
 	--with-db-jar=%{_datadir}/java/db-%{libdbver}.jar \
 %else
 	--without-system-db \
@@ -2310,7 +2310,7 @@ CXXFLAGS="%{optflags} %{optsafe} -g0 -fno-omit-frame-pointer -fno-strict-aliasin
 %if %{use_systemboost}
 	--with-system-boost \
 %endif
-        --with-system-gcc \
+	--with-system-gcc \
 	--with-lang=%{ooolangs} \
 	--with-binsuffix=%{mdvsuffix} \
 	--with-installed-ooo-dirname=ooo-%{mdvsuffix} \
@@ -2321,11 +2321,11 @@ CXXFLAGS="%{optflags} %{optsafe} -g0 -fno-omit-frame-pointer -fno-strict-aliasin
 	--with-system-nas \
 	--with-dynamic-xinerama \
 	--enable-binfilter \
-        --enable-access \
+	--enable-access \
 	--enable-split-app-modules \
 	--enable-split-opt-features \
 %if %use_hunspell
-        --enable-hunspell \
+	--enable-hunspell \
 %else
 	--disable-hunspell \
 %endif
@@ -2525,15 +2525,15 @@ rm -rf %{buildroot}
 # We changed the master name here.
 /usr/sbin/update-alternatives --remove ooffice %{_bindir}/ooffice2.3 || :
 /usr/sbin/update-alternatives \
-        --install %{_bindir}/soffice soffice   %{_bindir}/ooffice%{mdvsuffix} %{oooaltpri} \
+	--install %{_bindir}/soffice soffice   %{_bindir}/ooffice%{mdvsuffix} %{oooaltpri} \
 	--slave %{_bindir}/ooffice   ooffice   %{_bindir}/ooffice%{mdvsuffix} \
 	--slave %{_bindir}/oowriter  oowriter  %{_bindir}/oowriter%{mdvsuffix} \
 	--slave %{_bindir}/oobase    oobase    %{_bindir}/oobase%{mdvsuffix} \
 	--slave %{_bindir}/oodraw    oodraw    %{_bindir}/oodraw%{mdvsuffix} \
 	--slave %{_bindir}/ooimpress ooimpress %{_bindir}/ooimpress%{mdvsuffix} \
 	--slave %{_bindir}/oocalc    oocalc    %{_bindir}/oocalc%{mdvsuffix} \
-        --slave %{_bindir}/ootool    ootool    %{_bindir}/ootool%{mdvsuffix} \
-        --slave %{_bindir}/ooweb     ooweb     %{_bindir}/ooweb%{mdvsuffix}
+	--slave %{_bindir}/ootool    ootool    %{_bindir}/ootool%{mdvsuffix} \
+	--slave %{_bindir}/ooweb     ooweb     %{_bindir}/ooweb%{mdvsuffix}
 [ -e %{_bindir}/soffice ] || /usr/sbin/update-alternatives --auto soffice
 
 # BrOffice support %post
@@ -2549,11 +2549,11 @@ done
 
 # alternatives names follows oobr_<filename> mark, making it explicit.
 /usr/sbin/update-alternatives \
-        --install %{ooodir}/program/bootstraprc oobr_bootstraprc%{mdvsuffix} \
+	--install %{ooodir}/program/bootstraprc oobr_bootstraprc%{mdvsuffix} \
 		%{ooodir}/program/bootstraprc.ooo 1 \
-        --slave %{ooodir}/program/versionrc oobr_versionrc%{mdvsuffix} \
+	--slave %{ooodir}/program/versionrc oobr_versionrc%{mdvsuffix} \
 		%{ooodir}/program/versionrc.ooo \
-        --slave %{ooodir}/share/registry/data/org/openoffice/Setup.xcu oobr_Setup.xcu%{mdvsuffix} \
+	--slave %{ooodir}/share/registry/data/org/openoffice/Setup.xcu oobr_Setup.xcu%{mdvsuffix} \
 		%{ooodir}/share/registry/data/org/openoffice/Setup.xcu.ooo
 # Always do this configuration, as the switch should be transparent.
 /usr/sbin/update-alternatives --auto oobr_bootstraprc
@@ -2579,11 +2579,11 @@ fi
 # BrOffice support %post l10n-pt_BR
 # alternatives names follows oobr_<filename> mark, making it explicit.
 /usr/sbin/update-alternatives \
-        --install %{ooodir}/program/bootstraprc oobr_bootstraprc%{mdvsuffix} \
+	--install %{ooodir}/program/bootstraprc oobr_bootstraprc%{mdvsuffix} \
 		%{ooodir}/program/bootstraprc.bro 2 \
-        --slave %{ooodir}/program/versionrc oobr_versionrc%{mdvsuffix} \
+	--slave %{ooodir}/program/versionrc oobr_versionrc%{mdvsuffix} \
 		%{ooodir}/program/versionrc.bro \
-        --slave %{ooodir}/share/registry/data/org/openoffice/Setup.xcu oobr_Setup.xcu%{mdvsuffix} \
+	--slave %{ooodir}/share/registry/data/org/openoffice/Setup.xcu oobr_Setup.xcu%{mdvsuffix} \
 		%{ooodir}/share/registry/data/org/openoffice/Setup.xcu.bro
 # Always do this configuration, as the switch should be transparent.
 /usr/sbin/update-alternatives --auto oobr_bootstraprc
