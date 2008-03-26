@@ -3035,11 +3035,11 @@ fi
 %changelog
 * Thu Mar 20 2008 Ademar de Souza Reis Jr. <ademar@mandriva.com> 2.4.0.4-1mdv2008.1
 + Revision
-- New version: 2.4.0.4 (ooo-build 2.4.0.4, ooo 2.4.0 final)
+- New version: 2.4.0.4 (ooo-build 2.4.0.4, ooo 2.4.0-rc6)
 - Added unopkg files (ooo extensions manager)
 - New splash screen (Closes: #38720)
 - Added OOXML mime-types to .desktop files (Closes: #36465)
-- Changed some conflicts rules (due to de split) from = 2.2.1
+- Changed some conflicts rules (due to the split) from = 2.2.1
   to <= 2.2.1, so that we can upgrade mdv-2007.1 (Closes: #38891)
 - Added new icons for both apps and mimetypes (part of #26311)
 - minor spec cleanup
