@@ -273,6 +273,9 @@ Source26:	http://tools.openoffice.org/unowinreg_prebuild/680/unowinreg.dll
 # splash screens and about images
 Source27:	openintro_mandriva.bmp
 Source28:	openabout_mandriva.bmp
+# new icons, extracted from upstream rpm
+# openoffice.org-mandriva-menus-2.4-9268.noarch.rpm
+Source30: icons.tar.bz2
 # http://oooconv.free.fr/fontooo/FontOOo.sxw.bz2
 Source50:	FontOOo.sxw
 Source51:	ftp://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/DicOOo.sxw
@@ -2238,9 +2241,13 @@ ln -sf %{SOURCE26} src/
 ln -sf %{SOURCE23} src/
 ln -sf %{SOURCE24} src/
 ln -sf %{SOURCE25} src/
+
 # splash screen
 ln -sf %{SOURCE27} src/
 ln -sf %{SOURCE28} src/
+
+# icons
+ln -sf %{SOURCE30} src/
 
 if [ -x ./autogen.sh ]; then
 	NOCONFIGURE=1 ./autogen.sh --with-distro=%{distroname}
@@ -2531,6 +2538,8 @@ sed -i '/^ProgressBarColor/d;/^ProgressFrameColor/d' \
 echo 'ProgressBarColor=68,135,223' >> %{buildroot}%{ooodir}/program/sofficerc
 echo 'ProgressFrameColor=112,171,229' >> %{buildroot}%{ooodir}/program/sofficerc
 
+tar xjf %{SOURCE30} -C %{buildroot}%{_datadir}
+
 %clean
 rm -rf %{buildroot}
 
@@ -2673,6 +2682,11 @@ fi
 %{_datadir}/icons/hicolor/*/apps/ooo-template%{mdvsuffix}.*
 %{_datadir}/icons/hicolor/*/apps/ooo-web%{mdvsuffix}.*
 %{_datadir}/icons/hicolor/*/apps/ooo-writer%{mdvsuffix}.*
+# new icons
+%{_datadir}/icons/hicolor/*/apps/openofficeorg24-*.png
+%{_datadir}/icons/hicolor/*/mimetypes/openofficeorg24-*.png
+%{_datadir}/icons/gnome/*/apps/openofficeorg24-*.png
+%{_datadir}/icons/gnome/*/mimetypes/openofficeorg24-*.png
 %{_datadir}/pixmaps/ooo-base%{mdvsuffix}.png
 %{_datadir}/pixmaps/ooo-calc%{mdvsuffix}.png
 %{_datadir}/pixmaps/ooo-draw%{mdvsuffix}.png
@@ -3024,9 +3038,10 @@ fi
 - New version: 2.4.0.4 (ooo-build 2.4.0.4, ooo 2.4.0 final)
 - Added unopkg files (ooo extensions manager)
 - New splash screen (Closes: #38720)
-- Add OOXML mime-types to .desktop files (Closes: #36465)
-- Change some conflicts rules (due to de split) from = 2.2.1
+- Added OOXML mime-types to .desktop files (Closes: #36465)
+- Changed some conflicts rules (due to de split) from = 2.2.1
   to <= 2.2.1, so that we can upgrade mdv-2007.1 (Closes: #38891)
+- Added new icons for both apps and mimetypes (part of #26311)
 - minor spec cleanup
 
 * Fri Mar 14 2008 Ademar de Souza Reis Jr. <ademar@mandriva.com> 2.4.0.3-1mdv2008.1
