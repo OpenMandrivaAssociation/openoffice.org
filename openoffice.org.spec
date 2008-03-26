@@ -276,6 +276,8 @@ Source28:	openabout_mandriva.bmp
 # new icons, extracted from upstream rpm
 # openoffice.org-mandriva-menus-2.4-9268.noarch.rpm
 Source30: icons.tar.bz2
+# templates for kde "create new" context menu
+Source31: kde-context-menu-templates.tar.bz2
 # http://oooconv.free.fr/fontooo/FontOOo.sxw.bz2
 Source50:	FontOOo.sxw
 Source51:	ftp://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/DicOOo.sxw
@@ -2249,6 +2251,9 @@ ln -sf %{SOURCE28} src/
 # icons
 ln -sf %{SOURCE30} src/
 
+# templates for kde context menu
+ln -sf %{SOURCE31} src/
+
 if [ -x ./autogen.sh ]; then
 	NOCONFIGURE=1 ./autogen.sh --with-distro=%{distroname}
 fi
@@ -2538,7 +2543,11 @@ sed -i '/^ProgressBarColor/d;/^ProgressFrameColor/d' \
 echo 'ProgressBarColor=68,135,223' >> %{buildroot}%{ooodir}/program/sofficerc
 echo 'ProgressFrameColor=112,171,229' >> %{buildroot}%{ooodir}/program/sofficerc
 
+# new icons
 tar xjf %{SOURCE30} -C %{buildroot}%{_datadir}
+
+# templates for kde "create new" context menu
+tar xjf %{SOURCE31} -C %{buildroot}%{_datadir}
 
 %clean
 rm -rf %{buildroot}
@@ -2659,6 +2668,8 @@ fi
 %files calc -f build/calc_list.txt
 %{_bindir}/oocalc%{mdvsuffix}
 %{_datadir}/applications/calc*.desktop
+%{_datadir}/templates/ooo-spreadsheet.desktop
+%{_datadir}/templates/.source/ooo-spreadsheet.ods
 %{_mandir}/man1/oocalc%{mdvsuffix}.1*
 
 %files common -f build/common_list.txt
@@ -2725,6 +2736,8 @@ fi
 %files draw -f build/draw_list.txt
 %{_bindir}/oodraw%{mdvsuffix}
 %{_datadir}/applications/draw*.desktop
+%{_datadir}/templates/ooo-drawing.desktop
+%{_datadir}/templates/.source/ooo-drawing.odg
 %{_mandir}/man1/oodraw%{mdvsuffix}.1*
 
 %files dtd-officedocument1.0 -f build/dtd_list.txt
@@ -2736,6 +2749,8 @@ fi
 %files impress -f build/impress_list.txt
 %{_bindir}/ooimpress%{mdvsuffix}
 %{_datadir}/applications/impress*.desktop
+%{_datadir}/templates/ooo-presentation.desktop
+%{_datadir}/templates/.source/ooo-presentation.odp
 %{_mandir}/man1/ooimpress%{mdvsuffix}.1*
 
 %files java-common -f build/java_common_list.txt
@@ -2778,6 +2793,8 @@ fi
 %{_bindir}/oowriter%{mdvsuffix}
 %{_datadir}/applications/writer*.desktop
 %{_datadir}/applications/web*.desktop
+%{_datadir}/templates/ooo-text.desktop
+%{_datadir}/templates/.source/ooo-text.odt
 %{_mandir}/man1/ooweb%{mdvsuffix}.1*
 %{_mandir}/man1/oowriter%{mdvsuffix}.1*
 
@@ -3033,15 +3050,17 @@ fi
 %endif
 
 %changelog
-* Thu Mar 20 2008 Ademar de Souza Reis Jr. <ademar@mandriva.com> 2.4.0.4-1mdv2008.1
+* Wed Mar 26 2008 Ademar de Souza Reis Jr. <ademar@mandriva.com> 2.4.0.4-1mdv2008.1
 + Revision
 - New version: 2.4.0.4 (ooo-build 2.4.0.4, ooo 2.4.0-rc6)
 - Added unopkg files (ooo extensions manager)
 - New splash screen (Closes: #38720)
 - Added OOXML mime-types to .desktop files (Closes: #36465)
-- Changed some conflicts rules (due to the split) from = 2.2.1
-  to <= 2.2.1, so that we can upgrade mdv-2007.1 (Closes: #38891)
+- Changed some conflict rules (due to the split) from '= 2.2.1'
+  to '<= 2.2.1', so that we can upgrade mdv-2007.1 (Closes: #38891)
 - Added new icons for both apps and mimetypes (part of #26311)
+- Added OpenDocument entries for KDE "create new" context menu
+  (Closes: #16983)
 - minor spec cleanup
 
 * Fri Mar 14 2008 Ademar de Souza Reis Jr. <ademar@mandriva.com> 2.4.0.3-1mdv2008.1
