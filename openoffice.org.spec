@@ -20,11 +20,11 @@
 %define _binary_payload w9.lzdio
 #define _source_payload w9.bzdio
 
-%define version		2.4.0.3
+%define version		2.4.0.4
 %define release		%mkrel 1
 
-%define oootagver	ooh680-m11
-%define ooobuildver	2.4.0.3.20080313
+%define oootagver	ooh680-m12
+%define ooobuildver	2.4.0.4.20080320
 %define jdkver		1_5_0_11
 %ifarch x86_64
 %define mdvsuffix	2.4_64
@@ -270,10 +270,9 @@ Source23:	http://download.go-oo.org/xt/xt-20051206-src-only.zip
 Source24:	http://download.go-oo.org/SRC680/lp_solve_5.5.0.10_source.tar.gz
 Source25:	http://download.go-oo.org/SRC680/biblio.tar.bz2
 Source26:	http://tools.openoffice.org/unowinreg_prebuild/680/unowinreg.dll
-# splash screens
+# splash screens and about images
 Source27:	openintro_mandriva.bmp
 Source28:	openabout_mandriva.bmp
-#
 # http://oooconv.free.fr/fontooo/FontOOo.sxw.bz2
 Source50:	FontOOo.sxw
 Source51:	ftp://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/DicOOo.sxw
@@ -308,7 +307,7 @@ Requires: %{name}-core = %{version}
 Requires: hsqldb
 Requires: %{name}-java-common = %{version}
 # Due to the split
-Conflicts: %{name} = 2.2.1
+Conflicts: %{name} <= 2.2.1
 Conflicts: %{name}-common <= 2.3.0.5-1mdv
 
 %description base
@@ -340,7 +339,7 @@ Summary: OpenOffice.org office suite - spreadsheet
 Requires: %{name}-common = %{version}
 Requires: %{name}-core = %{version}
 # Due to the split
-Conflicts: %{name} = 2.2.1
+Conflicts: %{name} <= 2.2.1
 Conflicts: %{name}-common <= 2.3.0.5-1mdv
 
 %description calc
@@ -384,7 +383,7 @@ Requires: paper-utils
 Requires(post): desktop-file-utils update-alternatives
 Requires(postun): desktop-file-utils update-alternatives
 # Due to the split
-Conflicts: %{name} = 2.2.1
+Conflicts: %{name} <= 2.1.0
 Conflicts: %{name}-devel <= 2.3.0.5-1mdv
 Conflicts: %{name}-math <= 2.3.0.5-1mdv
 Conflicts: %{name}-core <= 2.3.99.4-1mdv
@@ -399,7 +398,7 @@ This package contains the architecture-independent files of OpenOffice.org.
 Group: Office
 Summary: OpenOffice.org office suite architecture dependent files
 # Due to the split
-Conflicts: %{name} = 2.2.1
+Conflicts: %{name} <= 2.1.0
 Conflicts: %{name}-base <= 2.3.0.5-1mdv
 Conflicts: %{name}-common <= 2.3.1-1mdv
 Conflicts: %{name}-devel <= 2.3.0.5-1mdv
@@ -421,7 +420,7 @@ Summary: OpenOffice.org SDK - development files
 Requires: %{name}-common = %{version}
 Requires: %{name}-core = %{version}
 # Due to the split
-Conflicts: %{name} = 2.2.1
+Conflicts: %{name} <= 2.2.1
 
 %description devel
 OpenOffice.org is a full-featured office productivity suite that provides a
@@ -436,7 +435,7 @@ Group: Office
 Summary: OpenOffice.org SDK - documentation
 Requires: %{name}-devel = %{version}
 # Due to the split
-Conflicts: %{name} = 2.2.1
+Conflicts: %{name} <= 2.2.1
 
 %description devel-doc
 OpenOffice.org is a full-featured office productivity suite that provides
@@ -456,7 +455,7 @@ Summary: OpenOffice.org office suite - drawing
 Requires: %{name}-common = %{version}
 Requires: %{name}-core = %{version}
 # Due to the split
-Conflicts: %{name} = 2.2.1
+Conflicts: %{name} <= 2.2.1
 Conflicts: %{name}-common <= 2.3.0.5-1mdv
 Conflicts: %{name}-impress <= 2.3.0.5-1mdv
 
@@ -470,7 +469,7 @@ This package contains the drawing component for OpenOffice.org.
 Group: Office
 Summary: OfficeDocument 1.0 DTD (OpenOffice.org 1.x)
 # due to the split
-Conflicts: %{name} = 2.2.1
+Conflicts: %{name} <= 2.2.1
 # no need to require -core or -common, see #37559
 
 %description dtd-officedocument1.0
@@ -486,7 +485,7 @@ Summary: Legacy filters (e.g. StarOffice 5.2) for OpenOffice.org
 Requires: %{name}-common = %{version}
 Requires: %{name}-core = %{version}
 # Due to the split
-Conflicts: %{name} = 2.2.1
+Conflicts: %{name} <= 2.2.1
 Obsoletes: %{name}-filter-mobiledev <= 2.3.0.5
 Conflicts: %{name}-filter-mobiledev <= 2.3.0.5
 Conflicts: %{name}-common <= 2.3.0.5-1mdv
@@ -508,7 +507,7 @@ This package contains the "binfilters", legacy filters for
 Group: Office
 Summary: GNOME Integration for OpenOffice.org (VFS, GConf)
 # Due to the split
-Conflicts: %{name} = 2.2.1
+Conflicts: %{name} <= 2.2.1
 Obsoletes: %{name}-gtk <= 2.3.0.5
 Conflicts: %{name}-gtk <= 2.3.0.5
 Obsoletes: %{name}-qstart <= 2.3.0.5
@@ -535,7 +534,7 @@ Requires: %{name}-common = %{version}
 Requires: %{name}-core = %{version}
 Requires: %{name}-draw = %{version}
 # Due to the split
-Conflicts: %{name} = 2.2.1
+Conflicts: %{name} <= 2.2.1
 Conflicts: %{name}-common <= 2.3.0.5-1mdv
 
 %description impress
@@ -551,7 +550,7 @@ Requires: %{name}-common = %{version}
 Requires: %{name}-core = %{version}
 Suggests: %{name}-style-crystal = %{version}
 # Due to the split
-Conflicts: %{name} = 2.2.1
+Conflicts: %{name} <= 2.2.1
 
 %description kde
 OpenOffice.org is a full-featured office productivity suite that provides a
@@ -571,7 +570,7 @@ Requires: %{name}-common = %{version}
 Requires: %{name}-core = %{version}
 Requires: java
 # Due to the split
-Conflicts: %{name} = 2.2.1
+Conflicts: %{name} <= 2.2.1
 Conflicts: %{name}-common <= 2.3.0.5-1mdv
 
 %description java-common
@@ -590,7 +589,7 @@ Summary: OpenOffice.org office suite - equation editor
 Requires: %{name}-common = %{version}
 Requires: %{name}-core = %{version}
 # Due to the split
-Conflicts: %{name} = 2.2.1
+Conflicts: %{name} <= 2.2.1
 Conflicts: %{name}-common <= 2.3.0.5-1mdv
 
 %description math
@@ -606,7 +605,7 @@ Requires: %{name}-common = %{version}
 Requires: %{name}-core = %{version}
 Requires: clipart-openclipart
 # Due to the split
-Conflicts: %{name} = 2.2.1
+Conflicts: %{name} <= 2.2.1
 Obsoletes: %{name}-galleries <= 2.2.1
 
 %description openclipart
@@ -634,7 +633,7 @@ This package contains the Python bindings for the UNO library.
 #Summary: OpenOffice.org API Test Data
 #Requires: %{name}-common = %{version}
 ## Due to the split
-#Conflicts: %{name} = 2.2.1
+#Conflicts: %{name} <= 2.2.1
 #
 #%description qa-api-tests
 #OpenOffice.org is a full-featured office productivity suite that provides a
@@ -647,7 +646,7 @@ Group: Office
 Summary: OpenOffice.org Automatic Test Programs
 Requires: %{name}-common = %{version}
 # Due to the split
-Conflicts: %{name} = 2.2.1
+Conflicts: %{name} <= 2.2.1
 Conflicts: %{name}-common <= 2.3.0.5-1mdv
 
 %description testtool
@@ -664,7 +663,7 @@ Requires: %{name}-common = %{version}
 Requires: %{name}-core = %{version}
 Provides: %{name}-style = %{version}-%{release}
 # Due to the split
-Conflicts: %{name} = 2.2.1
+Conflicts: %{name} <= 2.2.1
 
 %description style-andromeda
 OpenOffice.org is a full-featured office productivity suite that provides a
@@ -681,7 +680,7 @@ Requires: %{name}-common = %{version}
 Requires: %{name}-core = %{version}
 Provides: %{name}-style = %{version}-%{release}
 # Due to the split
-Conflicts: %{name} = 2.2.1
+Conflicts: %{name} <= 2.2.1
 
 %description style-crystal
 OpenOffice.org is a full-featured office productivity suite that provides a
@@ -696,7 +695,7 @@ Requires: %{name}-common = %{version}
 Requires: %{name}-core = %{version}
 Provides: %{name}-style = %{version}-%{release}
 # Due to the split
-Conflicts: %{name} = 2.2.1
+Conflicts: %{name} <= 2.2.1
 
 %description style-hicontrast
 OpenOffice.org is a full-featured office productivity suite that provides a
@@ -712,7 +711,7 @@ Requires: %{name}-common = %{version}
 Requires: %{name}-core = %{version}
 Provides: %{name}-style = %{version}-%{release}
 # Due to the split
-Conflicts: %{name} = 2.2.1
+Conflicts: %{name} <= 2.2.1
 
 %description style-industrial
 OpenOffice.org is a full-featured office productivity suite that provides a
@@ -741,7 +740,7 @@ Summary: OpenOffice.org office suite - word processor
 Requires: %{name}-common = %{version}
 Requires: %{name}-core = %{version}
 # Due to the split
-Conflicts: %{name} = 2.2.1
+Conflicts: %{name} <= 2.2.1
 Conflicts: %{name}-common <= 2.3.0.5-1mdv
 Conflicts: %{name}-core <= 2.3.0.5-1mdv
 
@@ -2433,6 +2432,23 @@ desktop-file-install --vendor="" \
   --add-category="X-MandrivaLinux-CrossDesktop" \
   --dir %{buildroot}%{_datadir}/applications %{buildroot}%{_datadir}/applications/base*desktop
 
+# MS OOXML (#36465)
+desktop-file-install \
+  --add-mime-type="application/vnd.openxmlformats-officedocument.wordprocessingml.document" \
+  --add-mime-type="application/vnd.ms-word.document.macroEnabled.12" \
+  --dir %{buildroot}%{_datadir}/applications %{buildroot}%{_datadir}/applications/writer*desktop
+
+desktop-file-install \
+  --add-mime-type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" \
+  --add-mime-type="application/vnd.ms-excel.sheet.macroEnabled.12" \
+  --dir %{buildroot}%{_datadir}/applications %{buildroot}%{_datadir}/applications/calc*desktop
+
+desktop-file-install \
+  --add-mime-type="application/vnd.openxmlformats-officedocument.presentationml.presentation" \
+  --add-mime-type="application/vnd.ms-powerpoint.presentation.macroEnabled.12" \
+  --dir %{buildroot}%{_datadir}/applications %{buildroot}%{_datadir}/applications/impress*desktop
+
+
 # XXX FontOOo|DictOOo wizard
 # these should die soon (after 2008.1)
 install -m 644 %{SOURCE50} %{buildroot}%{_libdir}/ooo-%{mdvsuffix}/share/dict/FontOOo.sxw
@@ -2681,6 +2697,10 @@ fi
 %ghost %{_datadir}/applications/math*.desktop
 %ghost %{_datadir}/applications/web*.desktop
 %ghost %{_datadir}/applications/writer*.desktop
+# XXX not sure where these came from
+%{_bindir}/unopkg%{mdvsuffix}
+%{_mandir}/man1/unopkg%{mdvsuffix}.1*
+%{_datadir}/applications/ooo-extension-manager*.desktop
 
 %files core -f build/core_list.txt
 
@@ -2999,8 +3019,18 @@ fi
 %endif
 
 %changelog
-* Thu Mar 06 2008 Ademar de Souza Reis Jr. <ademar@mandriva.com> 2.4.0.3-1mdv2008.1
+* Thu Mar 20 2008 Ademar de Souza Reis Jr. <ademar@mandriva.com> 2.4.0.4-1mdv2008.1
 + Revision
+- New version: 2.4.0.4 (ooo-build 2.4.0.4, ooo 2.4.0 final)
+- Added unopkg files (ooo extensions manager)
+- New splash screen (Closes: #38720)
+- Add OOXML mime-types to .desktop files (Closes: #36465)
+- Change some conflicts rules (due to de split) from = 2.2.1
+  to <= 2.2.1, so that we can upgrade mdv-2007.1 (Closes: #38891)
+- minor spec cleanup
+
+* Fri Mar 14 2008 Ademar de Souza Reis Jr. <ademar@mandriva.com> 2.4.0.3-1mdv2008.1
++ Revision 187680
 - New version: 2.4.0.3 (ooo-build 2.4.0.3, ooo 2.4.0-rc5)
 - Minor spec cleanups
 
