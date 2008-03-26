@@ -2559,7 +2559,7 @@ for i in \
     %{ooodir}/share/registry/data/org/openoffice/Setup.xcu
 do
     if [ -f "$i" ]; then
-	rm -f "$i"
+        rm -f "$i"
     fi
 done
 
