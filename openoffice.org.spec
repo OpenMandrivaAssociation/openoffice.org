@@ -2545,6 +2545,9 @@ echo 'ProgressFrameColor=112,171,229' >> %{buildroot}%{ooodir}/program/sofficerc
 
 # new icons
 tar xjf %{SOURCE30} -C %{buildroot}%{_datadir}
+for f in %{buildroot}%{_datadir}/applications/*desktop; do
+   sed -i 's@Icon=ooo-\(base\|calc\|draw\|impress\|math\|writer\)2\.4@Icon=openofficeorg24-\1@' $f
+done
 
 # templates for kde "create new" context menu
 tar xjf %{SOURCE31} -C %{buildroot}%{_datadir}
