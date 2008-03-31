@@ -21,7 +21,7 @@
 #define _source_payload w9.bzdio
 
 %define version		2.4.0.4
-%define release		%mkrel 1
+%define release		%mkrel 2
 
 %define oootagver	ooh680-m12
 %define ooobuildver	2.4.0.4.20080320
@@ -273,9 +273,15 @@ Source26:	http://tools.openoffice.org/unowinreg_prebuild/680/unowinreg.dll
 # splash screens and about images
 Source27:	openintro_mandriva.bmp
 Source28:	openabout_mandriva.bmp
-# new icons, extracted from upstream rpm
+
+# XXX new icons, extracted from upstream rpm
 # openoffice.org-mandriva-menus-2.4-9268.noarch.rpm
+# these icons should be in a separate package, as
+# the mime icons may be useful even without openoffice
+# installed (they're referenced by kde .desktop files,
+# for example)
 Source30: icons.tar.bz2
+
 # templates for kde "create new" context menu
 Source31: kde-context-menu-templates.tar.bz2
 # http://oooconv.free.fr/fontooo/FontOOo.sxw.bz2
@@ -2460,7 +2466,6 @@ desktop-file-install \
   --add-mime-type="application/vnd.ms-powerpoint.presentation.macroEnabled.12" \
   --dir %{buildroot}%{_datadir}/applications %{buildroot}%{_datadir}/applications/impress*desktop
 
-
 # XXX FontOOo|DictOOo wizard
 # these should die soon (after 2008.1)
 install -m 644 %{SOURCE50} %{buildroot}%{_libdir}/ooo-%{mdvsuffix}/share/dict/FontOOo.sxw
@@ -2546,7 +2551,19 @@ echo 'ProgressFrameColor=112,171,229' >> %{buildroot}%{ooodir}/program/sofficerc
 # new icons
 tar xjf %{SOURCE30} -C %{buildroot}%{_datadir}
 for f in %{buildroot}%{_datadir}/applications/*desktop; do
+%ifarch x86_64
+   sed -i 's@Icon=ooo-\(base\|calc\|draw\|impress\|math\|writer\)2\.4_64@Icon=openofficeorg24-\1@' $f
+%else
    sed -i 's@Icon=ooo-\(base\|calc\|draw\|impress\|math\|writer\)2\.4@Icon=openofficeorg24-\1@' $f
+%endif
+done
+
+# XXX disable the menu entries for these
+# besides not being real apps, we don't have new-style icons for them
+# see #26311#c33
+for f in %{buildroot}%{_datadir}/applications/template*desktop \
+	%{buildroot}%{_datadir}/applications/web*desktop; do
+	echo 'NoDisplay=true' >> $f
 done
 
 # templates for kde "create new" context menu
@@ -2597,6 +2614,8 @@ done
 # End of BrOffice support %post
 
 %{update_desktop_database}
+%update_icon_cache gnome
+%update_icon_cache hicolor
 
 %postun common
 if [ ! -e "%{_bindir}/ooffice%{mdvsuffix}" ]; then
@@ -2610,6 +2629,8 @@ fi
 # End of BrOffice support %postun common
 
 %{clean_desktop_database}
+%clean_icon_cache gnome
+%clean_icon_cache hicolor
 
 %if %l10n
 %post l10n-pt_BR
@@ -2714,17 +2735,12 @@ fi
 %{_mandir}/man1/oofromtemplate%{mdvsuffix}.1*
 %{_mandir}/man1/openoffice%{mdvsuffix}.1*
 %{_datadir}/mime
-# Due to alternatives upgrade from 2.3.0.5-1mdv to -2mdv
+# XXX Due to alternatives upgrade from 2.3.0.5-1mdv to -2mdv
+# (.desktop files are not included because they are in their
+# respective subpackages already (#38412))
 %ghost %{ooodir}/program/bootstraprc
 %ghost %{ooodir}/program/versionrc
 %ghost %{ooodir}/share/registry/data/org/openoffice/Setup.xcu
-%ghost %{_datadir}/applications/base*.desktop
-%ghost %{_datadir}/applications/calc*.desktop
-%ghost %{_datadir}/applications/draw*.desktop
-%ghost %{_datadir}/applications/impress*.desktop
-%ghost %{_datadir}/applications/math*.desktop
-%ghost %{_datadir}/applications/web*.desktop
-%ghost %{_datadir}/applications/writer*.desktop
 # XXX not sure where these came from
 %{_bindir}/unopkg%{mdvsuffix}
 %{_mandir}/man1/unopkg%{mdvsuffix}.1*
@@ -2900,7 +2916,7 @@ fi
 %files l10n-pt_BR -f build/lang_pt-BR_list.txt
 %defattr(-,root,root)
 # BrOffice support
-# Yes, by this way there will be broken symlinks if you don't make a full suite
+# XXX Yes, by this way there will be broken symlinks if you don't make a full suite
 # installation.
 %{_bindir}/br*
 %{ooodir}/program/bootstraprc.bro
@@ -3053,9 +3069,20 @@ fi
 %endif
 
 %changelog
-* Wed Mar 26 2008 Ademar de Souza Reis Jr. <ademar@mandriva.com> 2.4.0.4-1mdv2008.1
+* Fri Mar 28 2008 Ademar de Souza Reis Jr. <ademar@mandriva.com> 2.4.0.4-2mdv2008.1
 + Revision
-- New version: 2.4.0.4 (ooo-build 2.4.0.4, ooo 2.4.0-rc6)
+- Remove some ghost entries from -common package which were causing it to
+  own files from the application subpackages (Closes: #38412);
+- Since we're installing icons on the system, add %%clean_icon_cache calls
+  to -common %%post and %%postun sections (spotted by Frederic Crozat);
+- Fix icons names on x86_64 .desktop files (Closes: #39508);
+- Remove menu entries for "OpenOffice.org" and "Web/Writer". They're not
+  real applications and we don't have new icons for them (see #26311#c33);
+- Minor spec cleanup (XXX comments, etc).
+
+* Wed Mar 26 2008 Ademar de Souza Reis Jr. <ademar@mandriva.com> 2.4.0.4-1mdv2008.1
++ Revision 190514
+- New version: 2.4.0.4 (ooo-build 2.4.0.4, ooo 2.4.0-rc6 - same as 2.4.0)
 - Added unopkg files (ooo extensions manager)
 - New splash screen (Closes: #38720)
 - Added OOXML mime-types to .desktop files (Closes: #36465)
