@@ -3070,7 +3070,7 @@ fi
 
 %changelog
 * Fri Mar 28 2008 Ademar de Souza Reis Jr. <ademar@mandriva.com> 2.4.0.4-2mdv2008.1
-+ Revision
++ Revision 191275
 - Remove some ghost entries from -common package which were causing it to
   own files from the application subpackages (Closes: #38412);
 - Since we're installing icons on the system, add %%clean_icon_cache calls
