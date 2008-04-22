@@ -20,11 +20,11 @@
 %define _binary_payload w9.lzdio
 #define _source_payload w9.bzdio
 
-%define version		2.4.0.4
-%define release		%mkrel 2
+%define version		2.4.0.7
+%define release		%mkrel 1
 
 %define oootagver	ooh680-m12
-%define ooobuildver	2.4.0.4.20080320
+%define ooobuildver	2.4.0.7.20080422
 %define jdkver		1_5_0_11
 %ifarch x86_64
 %define mdvsuffix	2.4_64
@@ -60,10 +60,6 @@
 %endif
 %{?_with_gcj: %global use_gcj 1}
 %{?_without_gcj: %global use_gcj 0}
-
-%define use_hunspell	1
-%{?_with_hunspell: %global use_hunspell 1}
-%{?_without_hunspell: %global use_hunspell 0}
 
 %define use_icecream	0
 %{?_with_icecream: %global use_icecream 1}
@@ -262,8 +258,6 @@ Source11:	http://download.go-oo.org/SRC680/ooo_crystal_images-6.tar.bz2
 Source12:	http://download.go-oo.org/SRC680/ooo_custom_images-13.tar.bz2
 Source13:	http://download.go-oo.org/SRC680/extras-2.tar.bz2
 Source17:	http://download.go-oo.org/SRC680/mdbtools-0.6pre1.tar.gz
-Source18:	http://download.go-oo.org/SRC680/hunspell-1.0.8.tar.gz
-Source19:	http://download.go-oo.org/SRC680/hunspell_UNO_1.1.tar.gz
 Source20:	http://download.go-oo.org/SRC680/cli_types.dll
 Source21:	http://download.go-oo.org/SRC680/cli_types_bridgetest.dll
 Source23:	http://download.go-oo.org/xt/xt-20051206-src-only.zip
@@ -2236,10 +2230,6 @@ ln -sf %{SOURCE11} src/
 ln -sf %{SOURCE12} src/
 ln -sf %{SOURCE13} src/
 ln -sf %{SOURCE17} src/
-%if %use_hunspell
-ln -sf %{SOURCE18} src/
-ln -sf %{SOURCE19} src/
-%endif
 %if %{use_mono}
 ln -sf %{SOURCE20} src/
 ln -sf %{SOURCE21} src/
@@ -2341,11 +2331,7 @@ CXXFLAGS="%{optflags} %{optsafe} -g0 -fno-omit-frame-pointer -fno-strict-aliasin
 	--enable-access \
 	--enable-split-app-modules \
 	--enable-split-opt-features \
-%if %use_hunspell
 	--enable-hunspell \
-%else
-	--disable-hunspell \
-%endif
 %if %{use_openclipart}
 	--with-openclipart=%{_datadir}/images/openclipart \
 %endif
@@ -3069,6 +3055,14 @@ fi
 %endif
 
 %changelog
+* Fri Apr 04 2008 Ademar de Souza Reis Jr. <ademar@mandriva.com> 2.4.0.7-1mdv2008.1
++ Revision
+- new ooo-build upstream version: 2.4.0.7
+  Closes: #38874 (Some numbers are shown in Eastern-Arabic)
+  Closes: #39799 (oowriter: broken "idents & spacing" in "format paragraph")
+  Closes: #39789 (oowriter spellcheck doesn't work)
+- hunspell support is upstream, so remove unecessary sources and flags
+
 * Fri Mar 28 2008 Ademar de Souza Reis Jr. <ademar@mandriva.com> 2.4.0.4-2mdv2008.1
 + Revision 191275
 - Remove some ghost entries from -common package which were causing it to
