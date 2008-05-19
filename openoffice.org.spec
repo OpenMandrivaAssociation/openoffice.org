@@ -287,6 +287,7 @@ Source61:	openoffice.org.sh
 Patch1:		ooo-build-2.1.0-lzmatarball.patch
 Patch19:	ooo-build-2.2.1-desktop_files.patch
 Patch20:	ooo-build-desktop.patch
+Patch21:	ooo-build-set-desktop-file-broffice-in-pt_BR.patch
 
 %description
 OpenOffice.org is an Open Source, community-developed, multi-platform
@@ -2179,6 +2180,7 @@ This package contains the localized help files of OpenOffice.org in Zulu.
 %patch19 -p1 -b .desktop_files
 %endif
 %patch20 -p1
+%patch21 -p0
 
 # We want odk
 #sed -i /disable-odk/d distro-configs/Mandriva*
