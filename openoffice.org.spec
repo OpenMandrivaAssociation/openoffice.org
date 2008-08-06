@@ -21,7 +21,7 @@
 #define _source_payload w9.bzdio
 
 %define version		2.4.0.7
-%define release		%mkrel 1
+%define release		%mkrel 2
 
 %define oootagver	ooh680-m12
 %define ooobuildver	2.4.0.7.20080422
