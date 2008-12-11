@@ -156,7 +156,7 @@ BuildRequires:	glitz-devel
 BuildRequires:	gnutls-devel
 BuildRequires:	gnome-vfsmm2.6-devel
 BuildRequires:	gperf
-BuildRequires:	ImageMagick
+BuildRequires:	imagemagick
 BuildRequires:	kdelibs-devel
 BuildRequires:	kernel-source
 BuildRequires:	db1-devel
