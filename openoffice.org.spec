@@ -3307,7 +3307,7 @@ fi
 
 %changelog
 * Mon Jan 12 2009 Rafael Cabral <cabral@mandriva.com> 0:3.0.1-0.rc1.1mdv2009.0
-- Revision 
+- Revision 332572
 - New upstream version 3.0.1 (ooo-build call this release as rc1)
 - Changed to use libicu40 from the system (--with-system-icu)
 - Rebuild for Python 2.6 
