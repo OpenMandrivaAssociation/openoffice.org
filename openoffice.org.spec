@@ -21,18 +21,16 @@
 %define _binary_payload w9.lzdio
 #define _source_payload w9.bzdio
 
-#dev300 (Alpha2): changed to 3.0
-%define version	        3.0
-%define release		%mkrel 2
+%define version	        3.0.1
+%define release		%mkrel rc1.1
 
-#dev300: changed to dev300-m28
-%define oootagver	ooo300-m9
-%define ooobuildver	3.0.0.9.20090114
+%define oootagver	ooo300-m14
+%define ooobuildver	r15090
 %define jdkver		1_5_0_11
 %ifarch x86_64
-%define mdvsuffix	3.0_64
+%define mdvsuffix	3.0.1_64
 %else
-%define mdvsuffix	3.0
+%define mdvsuffix	3.0.1
 %endif
 %define ooodir		%{_libdir}/ooo-%{mdvsuffix}
 %define libdbver	4.2
@@ -64,7 +62,7 @@
 %{?_with_gcj: %global use_gcj 1}
 %{?_without_gcj: %global use_gcj 0}
 
-%define use_icecream    0
+%define use_icecream    0	
 %{?_with_icecream: %global use_icecream 1}
 %{?_without_icecream: %global use_icecream 0}
 
@@ -156,7 +154,7 @@ BuildRequires:	glitz-devel
 BuildRequires:	gnutls-devel
 BuildRequires:	gnome-vfsmm2.6-devel
 BuildRequires:	gperf
-BuildRequires:	imagemagick
+BuildRequires:	ImageMagick
 BuildRequires:	kdelibs-devel
 BuildRequires:	kernel-source
 BuildRequires:	db1-devel
@@ -257,14 +255,8 @@ BuildRequires:  %{mklibname poppler}-devel
 #
 ####################################################################
 
-#dev300: changed url to DEV300
-Source0:	http://download.go-oo.org/DEV300/ooo-build-%{ooobuildver}.tar.bz2
-# Source3:	http://download.go-oo.org/DEV300/%{oootagver}-binfilter.tar.%{oootarext}
-# Source4:	http://download.go-oo.org/DEV300/%{oootagver}-system.tar.%{oootarext}
+Source0:	http://download.go-oo.org/DEV300/ooo-build-3.0.1-%{ooobuildver}.tar.gz
 Source5:	http://download.go-oo.org/DEV300/%{oootagver}-sdk.tar.%{oootarext}
-
-#dev300: source added
-# Source70:	 http://download.go-oo.org/OOO300/%{oootagver}-swext.tar.%{oootarext}
 Source71:	 http://download.go-oo.org/OOO300/%{oootagver}-ure.tar.%{oootarext}
 Source72:	 http://download.go-oo.org/OOO300/%{oootagver}-base.tar.%{oootarext}
 Source73:	 http://download.go-oo.org/OOO300/%{oootagver}-calc.tar.%{oootarext}
@@ -281,7 +273,7 @@ Source83:	 http://download.go-oo.org/OOOV300/%{oootagver}-libs_extern.tar.%{ooot
 Source84:	 http://download.go-oo.org/OOO300/%{oootagver}-libs_extern_sys.tar.%{oootarext}
 Source85:	 http://download.go-oo.org/OOO300/%{oootagver}-components.tar.%{oootarext}
 Source86:	 http://download.go-oo.org/OOO300/%{oootagver}-postprocess.tar.%{oootarext}
-Source90:	 http://download.go-oo.org/DEV300/scsolver.2008-10-07.tar.bz2
+Source90:	 http://download.go-oo.org/DEV300/scsolver.2008-10-30.tar.bz2
 Source104: 	 http://download.go-oo.org/OOO300/%{oootagver}-extensions.tar.bz2
 
 Source6:	http://download.go-oo.org/SRC680/oox.2008-02-29.tar.bz2
@@ -289,9 +281,12 @@ Source7:	http://download.go-oo.org/SRC680/writerfilter.2008-02-29.tar.bz2
 Source13:	http://download.go-oo.org/SRC680/extras-3.tar.bz2
 Source17:	http://download.go-oo.org/SRC680/mdbtools-0.6pre1.tar.gz
 
-#dev300: changed url to DEV300 (seems be equal to old files)
-Source20:	http://download.go-oo.org/DEV300/cli_types.dll
-Source21:	http://download.go-oo.org/DEV300/cli_types_bridgetest.dll
+Source20:	http://download.go-oo.org/OOO300/ooo-cli-prebuilt-3.0.1.tar.bz2
+Source21:       http://download.go-oo.org/OOO300/cairo-1.4.10.tar.gz
+Source22: 	http://download.go-oo.org/OOO300/libwpd-0.8.14.tar.gz
+
+Source3: 	http://download.go-oo.org/OOO300/libwps-0.1.2.tar.gz
+Source4:        http://download.go-oo.org/OOO300/libwpg-0.1.3.tar.gz
 
 Source23:	http://download.go-oo.org/xt/xt-20051206-src-only.zip
 Source24:	http://download.go-oo.org/SRC680/lp_solve_5.5.0.10_source.tar.gz
@@ -303,25 +298,20 @@ Source28:	openabout_mandriva.bmp
 
 #dev300
 Source87:	mdv-apply
-Source88:	mdv-exceptcxx-include-string.diff
 Source89:	mdv-package-ooo
-Source91:	mdv-toolbariconstosmall.diff
 Source92:	mdv-xdgmailasmailer.diff
 Source102:	mdv-desktop-japanese.patch
-Source103:	mdv-desktop-japanese64.patch
+source103:	mdv-desktop-japanese64.patch
+source91:       mdv-buildfix-fmtargs.diff 
+Source88:       mdv-sysui-disableslack.diff
 Source30: 	icons.tar.bz2
 
 # templates for kde "create new" context menu
 Source31: kde-context-menu-templates.tar.bz2
-# http://oooconv.free.fr/fontooo/FontOOo.sxw.bz2
-# Source50:	FontOOo.sxw
-# Source51:	ftp://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/DicOOo.sxw
 Source60:	openoffice.org.csh
 Source61:	openoffice.org.sh
 
-Patch1:		ooo-build-2.1.0-lzmatarball.patch
 # Patch19:	ooo-build-2.2.1-desktop_files.patch
-# Patch20:	ooo-build-desktop.patch
 # Patch21:	ooo-build-set-desktop-file-broffice-in-pt_BR.patch
 
 %description
@@ -391,7 +381,7 @@ Summary: OpenOffice.org office suite architecture independent files
 # Requires: %{name}-gnome
 # Requires: %{name}-kde
 Requires: %{name}-openclipart
-Requires: %{name}-style-galaxy
+Requires: %{name}-style-galaxy 
 Requires: %{name}-style-crystal
 Requires: %{name}-style-hicontrast
 Requires: %{name}-style-industrial
@@ -418,7 +408,7 @@ Requires: sane-backends
 # Due to %{_bindir}/paperconf
 Requires: paper-utils
 #dev300
-Requires: %{mklibname icu 40}
+Requires: %{mklibname icu 40} 
 Requires: %{mklibname hunspell 1.2_0}
 Requires(post): desktop-file-utils update-alternatives
 Requires(postun): desktop-file-utils update-alternatives
@@ -453,7 +443,7 @@ Conflicts: %{name}-impress <= 2.3.0.5-1mdv
 #  Conflicts: %{name}-kde <= 2.3.0.5-1mdv
 Conflicts: %{name}-writer <= 2.3.0.5-1mdv
 
-#pdf import extension
+#pdf import extension 
 Requires(post): %{name}-common = %{epoch}:%{version}
 
 %description core
@@ -737,7 +727,6 @@ OpenOffice.org is a full-featured office productivity suite that provides a
 near drop-in replacement for Microsoft(R) Office.
 
 This package contains the "crystal" symbol style, default style for KDE.
-
 %package style-hicontrast
 Group: Office
 Summary: Hicontrast symbol style for OpenOffice.org
@@ -2229,7 +2218,7 @@ This package contains the localized help files of OpenOffice.org in Zulu.
 %endif
 
 %prep
-%setup -q -n ooo-build-%{ooobuildver}
+%setup -q -n ooo-build-3.0.1-%{ooobuildver}
 
 # Add lzma support
 %if %{oootarext} == "lzma"
@@ -2283,22 +2272,21 @@ export PATH
 # export KDEDIR=/opt/kde3
 
 mkdir -p src
-# ln -sf %{SOURCE1} src/
-# ln -sf %{SOURCE2} src/
-# ln -sf %{SOURCE3} src/
-# ln -sf %{SOURCE4} src/
+
+ln -sf %{SOURCE3} src/
+ln -sf %{SOURCE4} src/
 ln -sf %{SOURCE5} src/
 ln -sf %{SOURCE6} src/
 ln -sf %{SOURCE7} src/
-# ln -sf %{SOURCE10} src/
-# ln -sf %{SOURCE11} src/
-# ln -sf %{SOURCE12} src/
 ln -sf %{SOURCE13} src/
 ln -sf %{SOURCE17} src/
 %if %{use_mono}
 ln -sf %{SOURCE20} src/
-ln -sf %{SOURCE21} src/
 %endif
+
+ln -sf %{SOURCE21} src/
+ln -sf %{SOURCE22} src/
+
 # ooo-build requests this even with mono off
 ln -sf %{SOURCE26} src/
 ln -sf %{SOURCE23} src/
@@ -2315,8 +2303,6 @@ ln -sf %{SOURCE30} src/
 # templates for kde context menu
 ln -sf %{SOURCE31} src/
 
-#dev300 - needed by added source 70
-ln -sf %{SOURCE70} src/
 ln -sf %{SOURCE71} src/
 ln -sf %{SOURCE72} src/
 ln -sf %{SOURCE73} src/
@@ -2359,7 +2345,7 @@ export ANT="%ant"
 # --with-system-libs
 # --with-num-cpus
 
-echo "Configure start at: "`date` >> ooobuildtime.log
+echo "Configure start at: "`date` >> ooobuildtime.log 
 # --with-jdk-home=%java_home \
 
 CFLAGS="%{optflags} %{optsafe} -g0 -fno-omit-frame-pointer -fno-strict-aliasing" \
@@ -2383,6 +2369,7 @@ CXXFLAGS="%{optflags} %{optsafe} -g0 -fno-omit-frame-pointer -fno-strict-aliasin
 	--with-system-xerces \
 	--with-system-xalan \
 	--with-system-xt \
+	--with-system-icu \
 	--with-system-xrender-headers \
 	--without-system-xmlsec \
 	--without-system-mspack \
@@ -2463,26 +2450,26 @@ CXXFLAGS="%{optflags} %{optsafe} -g0 -fno-omit-frame-pointer -fno-strict-aliasin
 
 #dev300 (ooo-build fixes by now).
 #This fix needs to be submmited to ooo-build
-cp -f %{SOURCE87} %{_builddir}/ooo-build-%{ooobuildver}/patches/dev300/apply
-cp -f %{SOURCE89} %{_builddir}/ooo-build-%{ooobuildver}/bin/package-ooo
-cp -f %{SOURCE88} %{_builddir}/ooo-build-%{ooobuildver}/patches/dev300/
-cp -f %{SOURCE91} %{_builddir}/ooo-build-%{ooobuildver}/patches/dev300/
-cp -f %{SOURCE92} %{_builddir}/ooo-build-%{ooobuildver}/patches/dev300/
+cp -f %{SOURCE87} %{_builddir}/ooo-build-3.0.1-%{ooobuildver}/patches/dev300/apply
+cp -f %{SOURCE89} %{_builddir}/ooo-build-3.0.1-%{ooobuildver}/bin/package-oo
+cp -f %{SOURCE88} %{_builddir}/ooo-build-3.0.1-%{ooobuildver}/patches/dev300/
+cp -f %{SOURCE91} %{_builddir}/ooo-build-3.0.1-%{ooobuildver}/patches/dev300/
+cp -f %{SOURCE92} %{_builddir}/ooo-build-3.0.1-%{ooobuildver}/patches/dev300/
 
-echo "Configure end at: "`date` >> ooobuildtime.log
+echo "Configure end at: "`date` >> ooobuildtime.log 
 
 #Patches back ported from newer ooo-builds - NONEED after 3.0.0.2
 # cp -f %{SOURCE100} %{_builddir}/ooo-build-%{ooobuildver}/patches/dev300/layout-simple-dialogs-toolkit.diff
 # cp -f %{SOURCE101} %{_builddir}/ooo-build-%{ooobuildver}/patches/dev300/layout-simple-dialogs-sc.diff
 
-echo "Make start at: "`date` >> ooobuildtime.log
+echo "Make start at: "`date` >> ooobuildtime.log 
 
-# some configs  to improve build process
+# some configs  to improve build process 
 # http://wiki.services.openoffice.org/wiki/Building_OpenOffice.org
-# needs to check if it does any effect
+# needs to check if it does any effect 
 export nodep=TRUE
-export NO_HIDS=TRUE
-export MAXPROCESS=4
+export NO_HIDS=TRUE 
+export MAXPROCESS=4 
 
 make \
 	ARCH_FLAGS="%{optflags} %{optsafe} -fno-omit-frame-pointer -fno-strict-aliasing" \
@@ -2490,9 +2477,9 @@ make \
 	ARCH_FLAGS_CXX="%{optflags} %{optsafe} -fno-omit-frame-pointer -fno-strict-aliasing -fpermissive -fvisibility-inlines-hidden" \
 	ARCH_FLAGS_OPT="%{optflags} -O2 %{optsafe}"
 
-echo "Make end at: "`date` >> ooobuildtime.log
+echo "Make end at: "`date` >> ooobuildtime.log 
 
-echo "Install start at: "`date` >> ooobuildtime.log
+echo "Install start at: "`date` >> ooobuildtime.log 
 
 %install
 # sbin due to icu stuff there
@@ -2579,12 +2566,12 @@ desktop-file-install \
   --add-mime-type="application/vnd.ms-powerpoint.presentation.macroEnabled.12" \
   --dir %{buildroot}%{_datadir}/applications %{buildroot}%{_datadir}/applications/impress*desktop
 
-# Remove version on names so better position on menu and give consistency under old links #43922
-for dskt in base calc draw impress math template web writer; do
+# Remove version on names so better position on menu and give consistency under old links #43922 
+for dskt in base calc draw impress math template web writer; do 
    %ifarch x86_64
-	mv %{buildroot}%{_datadir}/applications/${dskt}3.0_64.desktop %{buildroot}%{_datadir}/applications/${dskt}64.desktop
+	mv %{buildroot}%{_datadir}/applications/${dskt}3.0.1_64.desktop %{buildroot}%{_datadir}/applications/${dskt}64.desktop
    %else
-        mv %{buildroot}%{_datadir}/applications/${dskt}3.0.desktop %{buildroot}%{_datadir}/applications/${dskt}.desktop
+        mv %{buildroot}%{_datadir}/applications/${dskt}3.0.1.desktop %{buildroot}%{_datadir}/applications/${dskt}.desktop
   %endif
 done;
 
@@ -2663,7 +2650,7 @@ sed -i '/pt_BR/{s/OpenO/BrO/}' %{buildroot}%{_datadir}/applications/*.desktop
 # Place symlinks br<app> -> oo<app>
  %if %l10n
  cd %{buildroot}%{_bindir}
- # fix me wrong brffice symb link name
+ # fix me wrong brffice symb link name 
  for i in oo*; do
 	ln -s $i ${i/oo/br}
  done
@@ -2687,13 +2674,13 @@ echo 'ProgressSize=377,9' >> %{buildroot}%{ooodir}/program/sofficerc
 tar xjf %{SOURCE30} -C %{buildroot}%{_datadir}
 
 # remove old icons, 64 arch have use same icon as 586, duplicates ?
-rm -rf %{buildroot}%{_datadir}/icons/hicolor/*/apps/ooo-writer3.0_64.png
-rm -rf %{buildroot}%{_datadir}/icons/hicolor/*/apps/ooo-calc3.0_64.png
-rm -rf %{buildroot}%{_datadir}/icons/hicolor/*/apps/ooo-impress3.0_64.png
-rm -rf %{buildroot}%{_datadir}/icons/hicolor/*/apps/ooo-draw3.0_64.png
-rm -rf %{buildroot}%{_datadir}/icons/hicolor/*/apps/ooo-base3.0_64.png
-rm -rf %{buildroot}%{_datadir}/icons/hicolor/*/apps/ooo-math3.0_64.png
-rm -rf %{buildroot}%{_datadir}/icons/hicolor/*/apps/ooo-printeradmin3.0_64.png
+rm -rf %{buildroot}%{_datadir}/icons/hicolor/*/apps/ooo-writer3.0.1_64.png
+rm -rf %{buildroot}%{_datadir}/icons/hicolor/*/apps/ooo-calc3.0.1_64.png
+rm -rf %{buildroot}%{_datadir}/icons/hicolor/*/apps/ooo-impress3.0.1_64.png
+rm -rf %{buildroot}%{_datadir}/icons/hicolor/*/apps/ooo-draw3.0.1_64.png
+rm -rf %{buildroot}%{_datadir}/icons/hicolor/*/apps/ooo-base3.0.1_64.png
+rm -rf %{buildroot}%{_datadir}/icons/hicolor/*/apps/ooo-math3.0.1_64.png
+rm -rf %{buildroot}%{_datadir}/icons/hicolor/*/apps/ooo-printeradmin3.0.1_64.png
 
 # remove icons we dont have these sizes yet
 rm -rf %{buildroot}%{_datadir}/icons/hicolor/22x22/apps/*
@@ -2702,8 +2689,9 @@ rm -rf %{buildroot}%{_datadir}/icons/hicolor/24x24/apps/*
 # remove scalables icons since we dont have yet
 rm -rf %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/*
 
+# fix name of desktop icons on desktop files
 for f in %{buildroot}%{_datadir}/applications/*desktop; do
-   sed -i 's@Icon=ooo-\(base\|calc\|draw\|impress\|math\|writer\)3\.0_64@Icon=ooo-\13\.0@' $f
+   sed -i 's@Icon=ooo-\(base\|calc\|draw\|impress\|math\|writer\)3\.0.*@Icon=ooo-\13\.0@' $f
 done
 
 # XXX disable the menu entries for these
@@ -2714,8 +2702,8 @@ for f in %{buildroot}%{_datadir}/applications/template*desktop \
 	echo 'NoDisplay=true' >> $f
 done
 
-# Enable Formula - needs fixes xdg files
-# sed -i 's/NoDisplay=true//' %{buildroot}%{_datadir}/applications/math*desktop;
+# Enable Formula - needs fixes xdg files 
+# sed -i 's/NoDisplay=true//' %{buildroot}%{_datadir}/applications/math*desktop;                                             
 
 # Fixes japanese translations on desktop files
 # Find out a better solution (two patches)
@@ -2723,7 +2711,7 @@ done
 patch -p0 -d %{buildroot} < %{SOURCE103}
 %else
 patch -p0 -d %{buildroot} < %{SOURCE102}
-%endif
+%endif 
 
 # templates for kde "create new" context menu
 tar xjf %{SOURCE31} -C %{buildroot}%{_datadir}
@@ -2732,7 +2720,7 @@ tar xjf %{SOURCE31} -C %{buildroot}%{_datadir}
 # install -d -m 755 %{buildroot}%{ooodir}/extensions/pdfimport.oxt
 # unzip %{_builddir}/ooo-build-%{ooobuildver}/build/dev300-m28/solver/300/unxlng*/bin/pdfimport/pdfimport.oxt -d %{buildroot}%{ooodir}/extensions/pdfimport.oxt
 # chmod -x %{buildroot}%{ooodir}/extensions/pdfimport.oxt/help/component.txt
-cp %{_builddir}/ooo-build-%{ooobuildver}/build/%{oootagver}/solver/300/unxlng*/bin/pdfimport/pdfimport.oxt %{buildroot}%{ooodir}/
+cp %{_builddir}/ooo-build-3.0.1-%{ooobuildver}/build/%{oootagver}/solver/300/unxlng*/bin/pdfimport/pdfimport.oxt %{buildroot}%{ooodir}/ 
 
 %clean
 rm -rf %{buildroot}
@@ -2742,7 +2730,7 @@ rm -rf %{buildroot}
 if [ $1 -ge 1 ];then
 	%unopkg add --shared %{ooodir}/pdfimport.oxt 2> /dev/null
 	# clean whatever footprint cached
-	%unopkg list --shared &> /dev/null
+	%unopkg list --shared &> /dev/null 
 fi
 
 %post common
@@ -2792,8 +2780,12 @@ fi
 %update_icon_cache gnome
 %update_icon_cache hicolor
 
-# echo "Install end at: "`date` >> ooobuildtime.log
-rm -rf ooobuildtime.log
+# Remove ooobuildtime.log misplaced file
+if [ -f /ooobuildtime.log ]; then
+      mkdir -p /tmp/ooo.tmp.mdv.rc2/
+      mv /ooobuildtime.log /tmp/ooo.tmp.mdv.rc2/
+      rm -r /tmp/ooo.tmp.mdv.rc2/
+fi
 
 %postun common
 if [ ! -e "%{_bindir}/ooffice%{mdvsuffix}" ]; then
@@ -2810,7 +2802,7 @@ fi
 %clean_icon_cache hicolor
 
 
-%preun common
+%preun common 
 
 # Remove pdfimport extension
 if [ $1 -eq 0 ];then
@@ -2894,7 +2886,7 @@ fi
 %{_datadir}/templates/.source/ooo-spreadsheet.ods
 %{_mandir}/man1/oocalc%{mdvsuffix}.1*
 
-%files common -f build/common_list.txt
+%files common -f build/common_list.txt 
 %{_sysconfdir}/bash_completion.d/ooffice%{mdvsuffix}
 %{_sysconfdir}/profile.d/openoffice.org%{mdvsuffix}.*
 %{_bindir}/ooconfig%{mdvsuffix}
@@ -2902,10 +2894,6 @@ fi
 %{_bindir}/oofromtemplate%{mdvsuffix}
 %{_bindir}/ootool%{mdvsuffix}
 %{_bindir}/soffice%{mdvsuffix}
-# %dir %{ooodir}/share/dict
-# XXX: these .sxw will die soon, see comment on %%install
-# dev300: basis3.0 before share
-# %{ooodir}/share/dict/*.sxw     #missing dev300
 
 %{_datadir}/applications/template*.desktop
 
@@ -2921,20 +2909,9 @@ fi
 %{_datadir}/icons/hicolor/*/apps/ooo-writer3.0*
 %{_datadir}/icons/hicolor/*/apps/ooo-main3.0*
 
-# %{_datadir}/icons/hicolor/*/apps/ooo-base%{mdvsuffix}.*
-# %{_datadir}/icons/hicolor/*/apps/ooo-calc%{mdvsuffix}.*
-# %{_datadir}/icons/hicolor/*/apps/ooo-draw%{mdvsuffix}.*
-# %{_datadir}/icons/hicolor/*/apps/ooo-gulls%{mdvsuffix}.*
-# %{_datadir}/icons/hicolor/*/apps/ooo-impress%{mdvsuffix}.*
-# %{_datadir}/icons/hicolor/*/apps/ooo-math%{mdvsuffix}.*
-# %{_datadir}/icons/hicolor/*/apps/ooo-printeradmin%{mdvsuffix}.*
-# %{_datadir}/icons/hicolor/*/apps/ooo-template%{mdvsuffix}.*
-# %{_datadir}/icons/hicolor/*/apps/ooo-web%{mdvsuffix}.*
-# %{_datadir}/icons/hicolor/*/apps/ooo-writer%{mdvsuffix}.*
-
 # new icons
 # %{_datadir}/icons/hicolor/*/apps/openofficeorg3-*.png
-# moved to mandriva-kde-config
+# moved to mandriva-kde-config 
 #%{_datadir}/icons/hicolor/*/mimetypes/openofficeorg3-*.png
 # %{_datadir}/icons/gnome/*/apps/openofficeorg3-*.png
 # %{_datadir}/icons/gnome/*/mimetypes/openofficeorg3-*.png
@@ -2955,7 +2932,7 @@ fi
 # (.desktop files are not included because they are in their
 # respective subpackages already (#38412))
 
-#dev300
+#dev300 
 # %ghost %{ooodir}/program/bootstraprc.ooo
 # %ghost %{ooodir}/program/versionrc.ooo
 # %ghost %{ooodir}/basis3.0/program/versionrc.ooo
@@ -2989,17 +2966,17 @@ fi
 %{_datadir}/templates/.source/ooo-drawing.odg
 %{_mandir}/man1/oodraw%{mdvsuffix}.1*
 
-# dev300:
+# dev300: 
 # %files dtd-officedocument1.0 -f build/dtd_list.txt
 
-# dev300:
+# dev300: 
 %files filter-binfilter -f build/filter-binfilter_list.txt
 
 %files gnome -f build/gnome_list.txt
 
 %files impress -f build/impress_list.txt
 %{_bindir}/ooimpress%{mdvsuffix}
-%ifarch x86_64
+%ifarch x86_64 
 %{_datadir}/applications/impress64.desktop
 %else
 %{_datadir}/applications/impress.desktop
@@ -3018,7 +2995,7 @@ fi
 %{_datadir}/applications/math64.desktop
 %else
 %{_datadir}/applications/math.desktop
-%endif
+%endif 
 %{_mandir}/man1/oomath%{mdvsuffix}.1*
 
 %files openclipart -f build/gallery_list.txt
@@ -3066,13 +3043,13 @@ fi
 %else
 %{_datadir}/applications/writer.desktop
 %{_datadir}/applications/web.desktop
-%endif
+%endif 
 %{_datadir}/templates/ooo-text.desktop
 %{_datadir}/templates/.source/ooo-text.odt
 %{_mandir}/man1/ooweb%{mdvsuffix}.1*
 %{_mandir}/man1/oowriter%{mdvsuffix}.1*
 
-#dev300: missing files
+#dev300: missing files 
 %if %{use_mono}
 %files mono -f build/mono_list.txt
 %defattr(-,root,root)
@@ -3328,19 +3305,22 @@ fi
 %defattr(-,root,root)
 %endif
 
-
 %changelog
-* Wed Jan 13 2009 Jerome Soyer <saispo@mandriva.org> 0:3.0-2mdv2009.0
-- Rebuild against new Python
+* Mon Jan 12 2009 Rafael Cabral <cabral@mandriva.com> 0:3.0.1-0.rc1.1mdv2009.0
+- Revision 
+- New upstream version 3.0.1 (ooo-build call this release as rc1)
+- Changed to use libicu40 from the system (--with-system-icu)
+- Rebuild for Python 2.6 
+- Fix build (lots of rintf aruments clean up) ooo-build patch buildfix-fmtargs.diff
 
 * Fri Nov 20 2008 Rafael Cabral <cabral@mandriva.com> 0:3.0-1mdv2009.0
-- Revision
+- Revision 
 - ooo-build OpenOffice.org 3.0 based on stable upstream
 - Fix OOo Greek crash on start up - #44821
-- PyUno loadComponentFromUrl comes out - regression #45445
+- PyUno loadComponentFromUrl comes out - regression #45445 
 - It doesn't get clipart-openclipart - regression #45196.
 - Suggests help-en_US which is default l10n language - releated #44809
-- As suggested xdg-mail as default mailer - #43917
+- As suggested xdg-mail as default mailer - #43917 
 - Remove misplaced ooobuildtime.log
 - PDF-import extension must to work even OOo will be update
 
@@ -3348,15 +3328,15 @@ fi
 - Add epoch to fix upgrade from Mdv 2009 RC2 and allow gnome subpackage to be installed
 
 * Mon Sep 30 2008 Rafael da Veiga Cabral <cabral@mandriva.com> 3.0-0.rc2.1mdv2009.0
-+ Revision 290159
++ Revision 290159  
 + Using new ooo-build-3.0 svn branch based on OpenOffice.org rc2
 + Remove svn revision from package name
-  - Ooo-build has migrated it 3.0 sources to a new stable branch and that svn
-    revision info doesn't make sense anymore for us and further naming package wasn't
-    following Mandriva standards as well.
+  - Ooo-build has migrated it 3.0 sources to a new stable branch and that svn 
+    revision info doesn't make sense anymore for us and further naming package wasn't 
+    following Mandriva standards as well. 
 + Path of Python Uno integration fixed
 + Calc fixes
-   - Formulas was not being saved - #44032
+   - Formulas was not being saved - #44032 
    - Formulas onto spreadsheets of old OOo versions was not being showed - #44010
 + Improving build
  -  exporting nodep, NO_HIDS, MAXPROCESS
@@ -3365,10 +3345,10 @@ fi
 * Mon Sep 22 2008 Rafael da Veiga Cabral <cabral@mandriva.com> 3.0svn13581-3mdv2009.0
 + Revision 287960
 - New menu icons - #43937
-- New mime types icons
+- New mime types icons  
 - Rename desktop icons file name - #43922
 - Calc hangs on sorting (reversed sc-sort-cell-note-position.diff) - #43932
-- Added conflicts on common package with gnome why libvclplug_gtkli.so
+- Added conflicts on common package with gnome why libvclplug_gtkli.so 
 has been moved - #43920
 
 * Mon Sep 01 2008 Rafael da Veiga Cabral <cabral@mandriva.com> 3.0svn13581-2mdv2009.0
@@ -3378,7 +3358,7 @@ has been moved - #43920
 - Split misplaced help files out of l10n packages
 - Split misplaced en_US help files out of common to a new package
 - Java-common changed to base Suggests
-- None writing aids fixed (using system hunspell) - #42885
+- None writing aids fixed (using system hunspell) - #42885 
 - Drop printer-properties-disable patch - #40834
 - Moved librdf.so.0 to provides exception (ksnapshot) - #42927
 - New splash and about banners
@@ -3387,7 +3367,7 @@ has been moved - #43920
 - For a better look libvclplug_gtkli.so has been moved to common package
   We've got gtk layouts as default
 - libraptor.so.1 to provides exceptions (ksnapshot/amarok) - #42927
-- Linking with neon 0.27 - #43368
+- Linking with neon 0.27 - #43368 
 - Calc hangs whenever adding a new sheet from Insert menu - #43405
 - Impress and Draw hang by using zoom from menu View - #43384
 - Weak dependency of Mono (mono and libmono0 is now as requires exception) - #43484
