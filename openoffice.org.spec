@@ -2451,7 +2451,7 @@ CXXFLAGS="%{optflags} %{optsafe} -g0 -fno-omit-frame-pointer -fno-strict-aliasin
 #dev300 (ooo-build fixes by now).
 #This fix needs to be submmited to ooo-build
 cp -f %{SOURCE87} %{_builddir}/ooo-build-3.0.1-%{ooobuildver}/patches/dev300/apply
-cp -f %{SOURCE89} %{_builddir}/ooo-build-3.0.1-%{ooobuildver}/bin/package-oo
+cp -f %{SOURCE89} %{_builddir}/ooo-build-3.0.1-%{ooobuildver}/bin/package-ooo
 cp -f %{SOURCE88} %{_builddir}/ooo-build-3.0.1-%{ooobuildver}/patches/dev300/
 cp -f %{SOURCE91} %{_builddir}/ooo-build-3.0.1-%{ooobuildver}/patches/dev300/
 cp -f %{SOURCE92} %{_builddir}/ooo-build-3.0.1-%{ooobuildver}/patches/dev300/
