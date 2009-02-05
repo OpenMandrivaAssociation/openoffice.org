@@ -3305,7 +3305,7 @@ fi
 
 %changelog
 * Fri Fev 05 2009 Rafael Cabral <cabral@mandriva.com> 0:3.0.1-1mdv2009.1
-- Revision 
+- Revision 337780
 - New upstream version 3.0.1 (official stable release)
 
 * Fri Nov 20 2008 Rafael Cabral <cabral@mandriva.com> 0:3.0-1mdv2009.1
