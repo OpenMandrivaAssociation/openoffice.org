@@ -22,10 +22,10 @@
 #define _source_payload w9.bzdio
 
 %define version	        3.0.1
-%define release		%mkrel rc1.1
+%define release		%mkrel 1
 
 %define oootagver	ooo300-m14
-%define ooobuildver	r15090
+%define ooobuildver	r15224
 %define jdkver		1_5_0_11
 %ifarch x86_64
 %define mdvsuffix	3.0.1_64
@@ -302,7 +302,6 @@ Source89:	mdv-package-ooo
 Source92:	mdv-xdgmailasmailer.diff
 Source102:	mdv-desktop-japanese.patch
 source103:	mdv-desktop-japanese64.patch
-source91:       mdv-buildfix-fmtargs.diff 
 Source88:       mdv-sysui-disableslack.diff
 Source30: 	icons.tar.bz2
 
@@ -2453,7 +2452,6 @@ CXXFLAGS="%{optflags} %{optsafe} -g0 -fno-omit-frame-pointer -fno-strict-aliasin
 cp -f %{SOURCE87} %{_builddir}/ooo-build-3.0.1-%{ooobuildver}/patches/dev300/apply
 cp -f %{SOURCE89} %{_builddir}/ooo-build-3.0.1-%{ooobuildver}/bin/package-ooo
 cp -f %{SOURCE88} %{_builddir}/ooo-build-3.0.1-%{ooobuildver}/patches/dev300/
-cp -f %{SOURCE91} %{_builddir}/ooo-build-3.0.1-%{ooobuildver}/patches/dev300/
 cp -f %{SOURCE92} %{_builddir}/ooo-build-3.0.1-%{ooobuildver}/patches/dev300/
 
 echo "Configure end at: "`date` >> ooobuildtime.log 
@@ -3306,15 +3304,12 @@ fi
 %endif
 
 %changelog
-* Mon Jan 12 2009 Rafael Cabral <cabral@mandriva.com> 0:3.0.1-0.rc1.1mdv2009.0
-- Revision 332572
-- New upstream version 3.0.1 (ooo-build call this release as rc1)
-- Changed to use libicu40 from the system (--with-system-icu)
-- Rebuild for Python 2.6 
-- Fix build (lots of rintf aruments clean up) ooo-build patch buildfix-fmtargs.diff
-
-* Fri Nov 20 2008 Rafael Cabral <cabral@mandriva.com> 0:3.0-1mdv2009.0
+* Fri Fev 05 2009 Rafael Cabral <cabral@mandriva.com> 0:3.0.1-1mdv2009.1
 - Revision 
+- New upstream version 3.0.1 (official stable release)
+
+* Fri Nov 20 2008 Rafael Cabral <cabral@mandriva.com> 0:3.0-1mdv2009.1
+- Revision 332829 
 - ooo-build OpenOffice.org 3.0 based on stable upstream
 - Fix OOo Greek crash on start up - #44821
 - PyUno loadComponentFromUrl comes out - regression #45445 
