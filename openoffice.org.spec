@@ -3304,11 +3304,18 @@ fi
 %endif
 
 %changelog
-* Fri Fev 05 2009 Rafael Cabral <cabral@mandriva.com> 0:3.0.1-1mdv2009.1
-- Revision 337780
+* Fri Feb 05 2009 Rafael Cabral <cabral@mandriva.com> 0:3.0.1-1mdv2009.1
+- Revision 337781
 - New upstream version 3.0.1 (official stable release)
 
-* Fri Nov 20 2008 Rafael Cabral <cabral@mandriva.com> 0:3.0-1mdv2009.1
+* Mon Jan 12 2009 Rafael Cabral <cabral@mandriva.com> 0:3.0.1-0.rc1.1mdv2009.0
+- Revision 332829
+- New upstream version 3.0.1 (ooo-build call this release as rc1)
+- Changed to use libicu40 from the system (--with-system-icu)
+- Rebuild for Python 2.6
+- Fix build (lots of rintf aruments clean up) ooo-build patch buildfix-fmtargs.diff
+
+* Fri Nov 20 2008 Rafael Cabral <cabral@mandriva.com> 0:3.0-1mdv2009.0
 - Revision 332829 
 - ooo-build OpenOffice.org 3.0 based on stable upstream
 - Fix OOo Greek crash on start up - #44821
