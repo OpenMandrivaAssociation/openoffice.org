@@ -22,7 +22,7 @@
 #define _source_payload w9.bzdio
 
 %define version	        3.0.1
-%define release		%mkrel 1
+%define release		%mkrel 2
 
 %define oootagver	ooo300-m14
 %define ooobuildver	r15224
@@ -117,7 +117,8 @@ Requires:	%{name}-draw = %{epoch}:%{version}
 Requires:	%{name}-impress = %{epoch}:%{version}
 Requires:	%{name}-math = %{epoch}:%{version}
 Requires:	%{name}-writer = %{epoch}:%{version}
-Suggests:	%{name}-dtd-officedocument1.0 = %{epoch}:%{version}
+# Suggests:	%{name}-dtd-officedocument1.0 = %{epoch}:%{version}
+Suggests: 	%{name}-pdfimport = %{epoch}:%{version}
 Obsoletes:	OpenOffice.org
 Obsoletes:	OpenOffice.org-libs
 Obsoletes:	%{ooname}-go-ooo <= %{version}
@@ -155,7 +156,7 @@ BuildRequires:	gnutls-devel
 BuildRequires:	gnome-vfsmm2.6-devel
 BuildRequires:	gperf
 BuildRequires:	ImageMagick
-BuildRequires:	kdelibs-devel
+# BuildRequires:	kdelibs-devel
 BuildRequires:	kernel-source
 BuildRequires:	db1-devel
 %if %{use_systemdb}
@@ -198,7 +199,7 @@ BuildRequires:	perl-MDK-Common
 BuildRequires:	perl-HTML-Parser
 BuildRequires:	perl-XML-Twig
 BuildRequires:	python-devel
-BuildRequires:	qt3-devel
+# BuildRequires:	qt3-devel
 BuildRequires:	readline-devel
 BuildRequires:	recode
 BuildRequires:	sane-devel
@@ -412,10 +413,6 @@ Requires: %{mklibname hunspell 1.2_0}
 Requires(post): desktop-file-utils update-alternatives
 Requires(postun): desktop-file-utils update-alternatives
 
-# dev300 - pdfimporit extension
-Requires: %{name}-draw = %{epoch}:%{version}
-Requires(preun): %{name}-core = %{epoch}:%{version}
-
 # Due to the split
 Conflicts: %{name} <= 2.1.0
 Conflicts: %{name}-devel <= 2.3.0.5-1mdv
@@ -441,9 +438,6 @@ Conflicts: %{name}-draw <= 2.3.0.5-1mdv
 Conflicts: %{name}-impress <= 2.3.0.5-1mdv
 #  Conflicts: %{name}-kde <= 2.3.0.5-1mdv
 Conflicts: %{name}-writer <= 2.3.0.5-1mdv
-
-#pdf import extension 
-Requires(post): %{name}-common = %{epoch}:%{version}
 
 %description core
 OpenOffice.org is a full-featured office productivity suite that provides a
@@ -801,6 +795,89 @@ set of APIs exposed by OpenOffice.org via UNO.
 
 Currently the use of Mono for add-ins & scripting inside OO.o itself is
 not supported.
+
+%package pdfimport
+Group: Office
+Summary: OpenOffice.org office suite - PDF Import extension
+Requires: %{name}-core = %{epoch}:%{version}
+Requires: %{name}-common = %{epoch}:%{version}
+Requires: %{name}-draw = %{epoch}:%{version}
+# Due to the split
+Conflicts: %{name} <= 2.2.1
+Conflicts: %{name}-common <= 2.3.0.5-1mdv
+Conflicts: %{name}-core <= 2.3.0.5-1mdv
+
+%description pdfimport
+PDF import extension enables PDF documments importing and basic editing of PDF
+documments by using OpenOffice.org-draw application.
+
+%package presenter-screen
+Group: Office
+Summary: OpenOffice.org office suite - Presenter Screen extension
+Requires: %{name}-core = %{epoch}:%{version}
+Requires: %{name}-common = %{epoch}:%{version}
+Requires: %{name}-impress = %{epoch}:%{version}
+# Due to the split
+Conflicts: %{name} <= 2.2.1
+Conflicts: %{name}-common <= 2.3.0.5-1mdv
+Conflicts: %{name}-core <= 2.3.0.5-1mdv
+
+%description presenter-screen
+Presenter Screen extension helps users to see upcoming slides and slide notes
+of presentations inside a second view not visible for the spectators.
+
+# %package report-builder
+# Group: Office
+# Summary: OpenOffice.org office suite - Report Builder extension
+# Requires: %{name}-core = %{epoch}:%{version}
+# Requires: %{name}-common = %{epoch}:%{version}
+# Requires: %{name}-base = %{epoch}:%{version}
+# Due to the split
+# Conflicts: %{name} <= 2.2.1
+# Conflicts: %{name}-common <= 2.3.0.5-1mdv
+# Conflicts: %{name}-core <= 2.3.0.5-1mdv
+
+# %description report-builder
+# By using %{name}-base the Report Builder extesion enables creating of smart and 
+# professional looking reports. Further the reports can be exported to PDF or 
+# OpenDocuments formats.
+
+%package wiki-publisher
+Group: Office
+Summary: OpenOffice.org office suite - Wiki Publisher extension
+Requires: %{name}-core = %{epoch}:%{version}
+Requires: %{name}-common = %{epoch}:%{version}
+Requires: %{name}-writer = %{epoch}:%{version}
+Requires: jakarta-commons-codec, jakarta-commons-httpclient
+Requires: jakarta-commons-lang, jakarta-commons-logging
+# Due to the split
+Conflicts: %{name} <= 2.2.1
+Conflicts: %{name}-common <= 2.3.0.5-1mdv
+Conflicts: %{name}-core <= 2.3.0.5-1mdv
+
+%description wiki-publisher
+With Wiki Publisher extesion is possible by using %{name}-writer to create 
+wiki page articles on MediaWiki servers without having to know the syntax of 
+MediaWiki markup language. This extension also enables publishing of the
+wiki pages.
+
+%package presentation-minimizer
+Group: Office
+Summary: OpenOffice.org office suite - Presentation Minimizer extension
+Requires: %{name}-core = %{epoch}:%{version}
+Requires: %{name}-common = %{epoch}:%{version}
+Requires: %{name}-impress = %{epoch}:%{version}
+# Due to the split
+Conflicts: %{name} <= 2.2.1
+Conflicts: %{name}-common <= 2.3.0.5-1mdv
+Conflicts: %{name}-core <= 2.3.0.5-1mdv
+
+%description presentation-minimizer
+With Presentation Minimizer extesion is possible to reduce the file size of the 
+presentation by compressing images and removing data not needed in a automatizated
+way.
+
+Note: The Presentation Minimizer also works on Microsoft PowerPoint presentations. 
 
 %if %l10n
 %package l10n-it
@@ -2234,10 +2311,15 @@ This package contains the localized help files of OpenOffice.org in Zulu.
 #sed -i /disable-odk/d distro-configs/Mandriva*
 
 %build
+
 # Workaround for bug http://qa.mandriva.com/show_bug.cgi?id=27771
-if [ -z $QTDIR ]; then
-	. /etc/profile.d/50qtdir3.sh
-fi
+# if [ -z $QTDIR ]; then
+# . /etc/profile.d/60qt4.sh
+# fi
+export QTDIR=%{_libdir}/qt4
+export QTINC=%{_libdir}/qt4/include
+export QTLIB=%{_libdir}/qt4/lib
+
 %if !%{use_gcj}
 if [ -z $JAVA_HOME ]; then
 	. /etc/profile.d/jdk-%{jdkver}.sh
@@ -2245,12 +2327,13 @@ fi
 %endif
 
 # add moc in PATH
-if [ ! -z $QTDIR ]; then
-	export QTPATH=$QTDIR/bin
-	export PATH=$PATH:$QTPATH
-else
-	export PATH=$PATH:%{_prefix}/lib/qt3
-fi
+# if [ ! -z $QTDIR ]; then
+#	export QTPATH=$QTDIR/bin
+#	export PATH=$PATH:$QTPATH
+#else
+#	export PATH=$PATH:%{_prefix}/lib/qt3
+
+# fi
 
 %if %{use_gcj}
 if [ "`readlink -f %{_bindir}/java`" = "%{_bindir}/jamvm" ]; then
@@ -2340,10 +2423,6 @@ export JAVAC=%javac
 export ANT="%ant"
 %endif
 
-#dev300: removed parameters :
-# --with-system-libs
-# --with-num-cpus
-
 echo "Configure start at: "`date` >> ooobuildtime.log 
 # --with-jdk-home=%java_home \
 
@@ -2412,12 +2491,14 @@ CXXFLAGS="%{optflags} %{optsafe} -g0 -fno-omit-frame-pointer -fno-strict-aliasin
         --with-external-hyph-dir=%{_datadir}/dict/ooo \
         --with-external-thes-dir=%{_datadir}/dict/ooo \
 	--with-system-poppler \
-	--disable-kde \
-	--disable-kdeab \
-	--disable-mediawiki \
-	--enable-pdfimport \
+        --disable-kde \
+        --disable-kdeab \
+        --enable-pdfimport \
+        --enable-minimizer \
+        --enable-presenter-console \
+        --enable-wiki-publisher \
 %if %{use_openclipart}
-	--with-openclipart=%{_datadir}/images/openclipart \
+        --with-openclipart=%{_datadir}/images/openclipart \
 %endif
 %if %{use_mono}
 # dev300
@@ -2446,6 +2527,7 @@ CXXFLAGS="%{optflags} %{optsafe} -g0 -fno-omit-frame-pointer -fno-strict-aliasin
   %endif
  %endif
 %endif
+
 
 #dev300 (ooo-build fixes by now).
 #This fix needs to be submmited to ooo-build
@@ -2718,18 +2800,16 @@ tar xjf %{SOURCE31} -C %{buildroot}%{_datadir}
 # install -d -m 755 %{buildroot}%{ooodir}/extensions/pdfimport.oxt
 # unzip %{_builddir}/ooo-build-%{ooobuildver}/build/dev300-m28/solver/300/unxlng*/bin/pdfimport/pdfimport.oxt -d %{buildroot}%{ooodir}/extensions/pdfimport.oxt
 # chmod -x %{buildroot}%{ooodir}/extensions/pdfimport.oxt/help/component.txt
+
+# copy extensions 
 cp %{_builddir}/ooo-build-3.0.1-%{ooobuildver}/build/%{oootagver}/solver/300/unxlng*/bin/pdfimport/pdfimport.oxt %{buildroot}%{ooodir}/ 
+cp %{_builddir}/ooo-build-3.0.1-%{ooobuildver}/build/%{oootagver}/solver/300/unxlng*/bin/presenter/presenter-screen.oxt %{buildroot}%{ooodir}/ 
+# cp %{_builddir}/ooo-build-3.0.1-%{ooobuildver}/build/%{oootagver}/solver/300/unxlng*/bin/sun-report-builder.oxt %{buildroot}%{ooodir}/ 
+cp %{_builddir}/ooo-build-3.0.1-%{ooobuildver}/build/%{oootagver}/solver/300/unxlng*/bin/swext/wiki-publisher.oxt %{buildroot}%{ooodir}/ 
+cp %{_builddir}/ooo-build-3.0.1-%{ooobuildver}/build/%{oootagver}/solver/300/unxlng*/bin/minimizer/sun-presentation-minimizer.oxt %{buildroot}%{ooodir}/ 
 
 %clean
 rm -rf %{buildroot}
-
-%post
-
-if [ $1 -ge 1 ];then
-	%unopkg add --shared %{ooodir}/pdfimport.oxt 2> /dev/null
-	# clean whatever footprint cached
-	%unopkg list --shared &> /dev/null 
-fi
 
 %post common
 # <mrl> Bogus versioning in previous alternatives setup forces us to do this
@@ -2800,18 +2880,6 @@ fi
 %clean_icon_cache hicolor
 
 
-%preun common 
-
-# Remove pdfimport extension
-if [ $1 -eq 0 ];then
-	idpdfimport=$(%unopkg list --shared 2> /dev/null | sed -ne 's/^Identifier: \(com.sun.star.PDFImport-linux.*\)/\1/p');
-	if [ "z$idpdfimport" != "z" ]; then
-		%unopkg remove --shared $idpdfimport 2> /dev/null
-		#clean footprint cache
-		%unopkg list --shared &> /dev/null
-	fi
-fi
-
 %if %l10n
 %post l10n-pt_BR
 # BrOffice support %post l10n-pt_BR
@@ -2863,6 +2931,123 @@ fi
 %{update_desktop_database}
 %postun writer
 %{clean_desktop_database}
+
+%post pdfimport
+# upgrade 
+if [ $1 -ge 2 ];then
+	# removes old installed pdfimport extension 
+	idpdfimport=$(%unopkg list --shared 2> /dev/null | sed -ne 's/^Identifier: \(com.sun.star.PDFImport-linux.*\)/\1/p');
+	if [ "z$idpdfimport" != "z" ]; then
+		%unopkg remove --shared $idpdfimport 2> /dev/null
+		%unopkg list --shared &> /dev/null
+	fi
+fi
+#install new pdfimport version
+%unopkg add --shared %{ooodir}/pdfimport.oxt 2> /dev/null
+%unopkg list --shared &> /dev/null 
+
+#uninstall
+%preun pdfimport 
+if [ $1 -eq 0 ];then
+	idpdfimport=$(%unopkg list --shared 2> /dev/null | sed -ne 's/^Identifier: \(com.sun.star.PDFImport-linux.*\)/\1/p');
+	if [ "z$idpdfimport" != "z" ]; then
+		%unopkg remove --shared $idpdfimport 2> /dev/null
+		#clean footprint cache
+		%unopkg list --shared &> /dev/null
+	fi
+fi
+
+%post presenter-screen
+# upgrade 
+if [ $1 -ge 2 ];then
+	idextension=$(%unopkg list --shared 2> /dev/null | sed -ne 's/^Identifier: \(com.sun.PresenterScreen-linux.*\)/\1/p');
+	if [ "z$idextension" ! "z" ]; then
+		%unopkg remove --shared $idextension 2> /dev/null
+		%unopkg list --shared &> /dev/null
+	fi
+fi
+#install 
+%unopkg add --shared %{ooodir}/presenter-screen.oxt 2> /dev/null
+%unopkg list --shared &> /dev/null 
+
+
+%preun presenter-screen  
+if [ $1 -eq 0 ];then
+	idextension=$(%unopkg list --shared 2> /dev/null | sed -ne 's/^Identifier: \(com.sun.PresenterScreen-linux.*\)/\1/p');
+	if [ "z$idextension" != "z" ]; then
+		%unopkg remove --shared $idextension 2> /dev/null
+		%unopkg list --shared &> /dev/null
+	fi
+fi
+
+# %post report-builder
+# upgrade 
+# if [ $1 -ge 1 ];then
+#	idextension=$(%unopkg list --shared 2> /dev/null | sed -ne 's/^Identifier: \(com.sun.reportdesigner\)/\1/p');
+#	if [ "z$idextension" != "z" ]; then
+#		%unopkg remove --shared $idextension 2> /dev/null
+#		%unopkg list --shared &> /dev/null
+#	fi
+# fi
+#install 
+# %unopkg add --shared %{ooodir}/sun-report-builder.oxt 2> /dev/null
+# %unopkg list --shared &> /dev/null 
+
+#uninstall
+# %preun report-builder
+# if [ $1 -eq 0 ];then
+#	idextension=$(%unopkg list --shared 2> /dev/null | sed -ne 's/^Identifier: \(com.sun.reportdesigner\)/\1/p');
+#	if [ "z$idextension" != "z" ]; then
+#		%unopkg remove --shared $idextension 2> /dev/null
+#		%unopkg list --shared &> /dev/null
+#	fi
+# fi
+
+%post wiki-publisher
+# upgrade 
+if [ $1 -ge 2 ];then
+	idextension=$(%unopkg list --shared 2> /dev/null | sed -ne 's/^Identifier: \(com.sun.wiki-publisher\)/\1/p');
+	if [ "z$idextension" != "z" ]; then
+		%unopkg remove --shared $idextension 2> /dev/null
+		%unopkg list --shared &> /dev/null
+	fi
+fi	
+#install 
+%unopkg add --shared %{ooodir}/wiki-publisher.oxt 2> /dev/null
+%unopkg list --shared &> /dev/null 
+
+%preun wiki-publisher
+if [ $1 -eq 0 ];then
+	idextension=$(%unopkg list --shared 2> /dev/null | sed -ne 's/^Identifier: \(com.sun.wiki-publisher\)/\1/p');
+	if [ "z$idextension" != "z" ]; then
+		%unopkg remove --shared $idextension 2> /dev/null
+		%unopkg list --shared &> /dev/null
+	fi
+fi
+
+%post presentation-minimizer
+# upgrade 
+if [ $1 -ge 2 ];then
+	idextension=$(%unopkg list --shared 2> /dev/null | sed -ne 's/^Identifier: \(com.sun.star.PresentationMinimizer-linux.*\)/\1/p');
+	if [ "z$idextension" != "z" ]; then
+		%unopkg remove --shared $idextension 2> /dev/null
+		%unopkg list --shared &> /dev/null
+	fi
+fi
+#install 
+%unopkg add --shared %{ooodir}/sun-presentation-minimizer.oxt 2> /dev/null
+%unopkg list --shared &> /dev/null 
+
+%preun presentation-minimizer
+if [ $1 -eq 0 ];then
+	idextension=$(%unopkg list --shared 2> /dev/null | sed -ne 's/^Identifier: \(com.sun.star.PresentationMinimizer-linux.*\)/\1/p');
+	if [ "z$idpdfimport" != "z" ]; then
+		%unopkg remove --shared $idextension 2> /dev/null
+		%unopkg list --shared &> /dev/null
+	fi
+fi
+
+%files
 
 %files base -f build/base_list.txt
 %{_bindir}/oobase%{mdvsuffix}
@@ -2942,9 +3127,6 @@ fi
 %{_mandir}/man1/unopkg%{mdvsuffix}.1*
 %{_datadir}/applications/ooo-extension-manager*.desktop
 
-#pdfimport extension (dev300)
-%defattr(-,root,root,-)
-%{ooodir}/pdfimport.oxt
 
 %files core -f build/core_list.txt
 
@@ -3000,8 +3182,6 @@ fi
 
 %files pyuno -f build/pyuno_list.txt
 
-%files
-
 #%files qa-api-tests
 #%{ooodir}/qadevOOo
 
@@ -3047,7 +3227,6 @@ fi
 %{_mandir}/man1/ooweb%{mdvsuffix}.1*
 %{_mandir}/man1/oowriter%{mdvsuffix}.1*
 
-#dev300: missing files 
 %if %{use_mono}
 %files mono -f build/mono_list.txt
 %defattr(-,root,root)
@@ -3056,6 +3235,26 @@ fi
 # %{_libdir}/mono/*/*/*
 # %{_libdir}/mono/ooo-%{mdvsuffix}
 %endif
+
+%files pdfimport
+%defattr(-,root,root,-)
+%{ooodir}/pdfimport.oxt
+
+%files presenter-screen
+%defattr(-,root,root,-)
+%{ooodir}/presenter-screen.oxt
+
+# %files report-builder
+# %defattr(-,root,root,-)
+# %{ooodir}/sun-report-builder.oxt
+
+%files wiki-publisher
+%defattr(-,root,root,-)
+%{ooodir}/wiki-publisher.oxt
+
+%files presentation-minimizer
+%defattr(-,root,root,-)
+%{ooodir}/sun-presentation-minimizer.oxt
 
 %if %l10n
 %files l10n-it -f build/lang_it_list.txt
@@ -3304,8 +3503,20 @@ fi
 %endif
 
 %changelog
+* Tue Mar 03 2009 Rafael Cabral <cabral@mandriva.com> 0:3.0.1-2mdv2009.1
+- split out pdf import extension from common to a new package: 
+  openoffice.org-pdfimport
+- new enabled extension packages: 
+  openoffice.org-wiki-publisher
+  openoffice.org-presenter-screen
+  openoffice.org-presentation-minimizer
+- remove kde-libs from build requires
+- change qt3-devel to qt4-devel in build requires since the build
+  scream about that even we are not using qt things yet.
+- rebuild to cooker 
+
 * Fri Feb 05 2009 Rafael Cabral <cabral@mandriva.com> 0:3.0.1-1mdv2009.1
-- Revision 337781
+- Revision 337782
 - New upstream version 3.0.1 (official stable release)
 
 * Mon Jan 12 2009 Rafael Cabral <cabral@mandriva.com> 0:3.0.1-0.rc1.1mdv2009.0
