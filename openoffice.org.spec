@@ -1736,7 +1736,6 @@ Group:		Office
 Provides:	%{ooname}-l10n = %{epoch}:%{version}-%{release}
 Requires:	%{ooname}-common = %{epoch}:%{version}
 Requires:	locales-zh
-Requires:	fonts-ttf-chinese
 Obsoletes:	OpenOffice.org-l10n-zh_TW
 Provides:	OpenOffice.org-l10n-zh_TW
 Obsoletes:	%{ooname}-go-ooo-l10n-zh_TW <= %{version}
