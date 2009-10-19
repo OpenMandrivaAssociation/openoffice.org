@@ -15,11 +15,12 @@
 %define _binary_payload w9.lzdio
 #define _source_payload w9.bzdio
 
-%define version	        3.1
-%define release		%mkrel 5
+%define version	        3.1.1
+%define release		%mkrel 1
 
-%define oootagver	ooo310-m14
-%define ooobuildver     3.1.0.6.20090709
+%define oootagver	ooo310-m19
+# define ooobuildver     3.1.0.6.20090709
+%define ooobuildver     3.1.1.2
 %define basis           basis3.1
 %define jdkver		1_5_0_11
 %define ooodir		%{_libdir}/ooo
@@ -256,7 +257,7 @@ BuildRequires:  task-kde4-devel
 # Sources
 #
 ####################################################################
-Source0:	http://download.go-oo.org/DEV310/ooo-build-%{ooobuildver}.tar.gz
+Source0:	http://download.go-oo.org/DEV310/ooo-build-%{ooobuildver}.tar.bz2
 Source5:	http://download.go-oo.org/DEV310/%{oootagver}-sdk.tar.%{oootarext}
 Source71:	 http://download.go-oo.org/OOO310/%{oootagver}-ure.tar.%{oootarext}
 Source72:	 http://download.go-oo.org/OOO310/%{oootagver}-base.tar.%{oootarext}
@@ -2917,7 +2918,6 @@ CXXFLAGS="%{optflags} %{optsafe} -g0 -fno-omit-frame-pointer -fno-strict-aliasin
         --with-system-hunspell \
 	--disable-kde \
 	--enable-kde4 \
-	--enable-crashdump=yes \
 	--with-intro-bitmaps="%{SOURCE27}" \
 	--with-about-bitmaps="%{SOURCE28}" \
 %if %use_gcj
@@ -3961,6 +3961,10 @@ fi
 # - add task-kde4-devel build require and removes kdelibs-devel
 
 %changelog
+* Thu Oct 15 2009 Rafael Cabral <cabral@mandriva.com> 0:3.1.1-1mdv2010.0
+- new openoffice.org 3.1.1 upstream plus ooo-build 3.1.1.2
+- should solve release criticals bugs #54334 and #54592
+
 * Thu Sep 24 2009 Rafael Cabral <cabral@mandriva.com> 0:3.1-5mdv2010.0
 - fix icu40 regression
 
