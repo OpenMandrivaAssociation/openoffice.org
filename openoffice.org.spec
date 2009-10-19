@@ -1,38 +1,28 @@
 %define unstable	0
 %define debug_package  %{nil}
 
-#dev300 (Alpha2): to improve building packages (wihout l10n) at first
 %define l10n   1
 %{?_with_l10n: %global l10n 1}
 %{?_without_l10n: %global l10n 0}
 
-%ifarch x86_64
-%define	ooname		openoffice.org64
-%define name		openoffice.org64
-%define oooaltpri	25
-%else
+%define use_kde4 0
+
 %define	ooname		openoffice.org
 %define name		openoffice.org
-%define oooaltpri	24
-%endif
 
 #define _binary_payload w1.gzdio
 #define _binary_payload w9.bzdio
 %define _binary_payload w9.lzdio
 #define _source_payload w9.bzdio
 
-%define version	        3.0.1
-%define release		%mkrel 2
+%define version	        3.1
+%define release		%mkrel 5
 
-%define oootagver	ooo300-m14
-%define ooobuildver	r15224
+%define oootagver	ooo310-m14
+%define ooobuildver     3.1.0.6.20090709
+%define basis           basis3.1
 %define jdkver		1_5_0_11
-%ifarch x86_64
-%define mdvsuffix	3.0.1_64
-%else
-%define mdvsuffix	3.0.1
-%endif
-%define ooodir		%{_libdir}/ooo-%{mdvsuffix}
+%define ooodir		%{_libdir}/ooo
 %define libdbver	4.2
 %if l10n
 %define ooolangs	"en-US af ar bg br bs ca cs cy da de el en-GB es et eu fi fr he hi hu it ja ko mk nb nl nn pl pt pt-BR ru sk sl sv ta tr zh-TW zh-CN zu"
@@ -67,7 +57,7 @@
 %{?_without_icecream: %global use_icecream 0}
 
 %define use_ccache	0
-%define ccachedir	~/.ccache-OOo%{mdvsuffix}
+%define ccachedir	~/.ccache-OOo
 %{?_with_ccache: %global use_ccache 1}
 %{?_without_ccache: %global use_ccache 0}
 
@@ -94,10 +84,10 @@
 # (fix to avoid gcc 4.0.2 produces segfaulting javaldx bin which breaks
 # building process)
 %define optsafe	""
-%define _requires_exceptions libjawt.so\\|libmyspell.so\\|libstlport_gcc.so\\|libjpeg.so\\|libmono.so\\|mono
+%define _requires_exceptions libjawt.so\\|libmyspell.so\\|libstlport_gcc.so\\|libmono.so\\|mono
 %define _provides_exceptions libsndfile.so\\|libportaudio.so\\|libdb-4.2.so\\|libdb_java-4.2.so\\|libmyspell.so\\|libstlport_gcc.so\\|librdf.so.0\\|libraptor.so.1\\|libxmlsec1-nss.so.1\\|libxmlsec1.so.1
 
-%define unopkg  unopkg%{mdvsuffix}
+%define unopkg  unopkg
 
 Summary:	Office suite (ooo-build)
 Name:		%{name}
@@ -122,6 +112,10 @@ Suggests: 	%{name}-pdfimport = %{epoch}:%{version}
 Obsoletes:	OpenOffice.org
 Obsoletes:	OpenOffice.org-libs
 Obsoletes:	%{ooname}-go-ooo <= %{version}
+%ifarch x86_64
+Obsoletes:     openoffice.org64 <= 1:3.1-4
+Obsoletes:     openoffice.org64-go-ooo < 3.1-4
+%endif
 Provides:	OpenOffice.org
 Provides:	OpenOffice.org-libs
 #
@@ -156,14 +150,13 @@ BuildRequires:	gnutls-devel
 BuildRequires:	gnome-vfsmm2.6-devel
 BuildRequires:	gperf
 BuildRequires:	ImageMagick
-# BuildRequires:	kdelibs-devel
-BuildRequires:	kernel-source
 BuildRequires:	db1-devel
 %if %{use_systemdb}
 BuildRequires:	%{mklibname db 4.2} >= 4.2.5-4mdk
 BuildRequires:	libdbcxx >= 4.2.5-4mdk
 BuildRequires:	db-devel >= 4.2.5-4mdk
-BuildRequires:	libdbjava >= 4.2.5-4mdk
+# BuildRequires:	libdbjava >= 4.2.5-4mdk
+BuildRequires:	db4.7
 %else
 BuildConflicts: libdbjava4.2
 %endif
@@ -241,7 +234,7 @@ BuildRequires:	hsqldb
 BuildRequires:	libwpg-devel
 BuildRequires:	libwps-devel
 BuildRequires:	icu
-BuildRequires:	libicu-devel
+BuildRequires:  %{mklibname icu}-devel
 BuildRequires:	libmdbtools-devel
 BuildRequires:  ant-apache-regexp
 BuildRequires:  xulrunner-devel
@@ -249,48 +242,58 @@ BuildRequires:  %{mklibname vigra}-devel
 BuildRequires:  hunspell-devel
 #pdfimport extension
 BuildRequires:  %{mklibname poppler}-devel
+BuildRequires:  %{mklibname xtst6}-devel
+BuildRequires:  desktop-file-utils
+BuildRequires:  %{mklibname mesaglu1}-devel 
+%if %{use_kde4}
+BuildRequires:  qt4-devel 
+BuildRequires:  task-kde4-devel 
+%endif 
+
 
 ####################################################################
 #
 # Sources
 #
 ####################################################################
+Source0:	http://download.go-oo.org/DEV310/ooo-build-%{ooobuildver}.tar.gz
+Source5:	http://download.go-oo.org/DEV310/%{oootagver}-sdk.tar.%{oootarext}
+Source71:	 http://download.go-oo.org/OOO310/%{oootagver}-ure.tar.%{oootarext}
+Source72:	 http://download.go-oo.org/OOO310/%{oootagver}-base.tar.%{oootarext}
+Source73:	 http://download.go-oo.org/OOO310/%{oootagver}-calc.tar.%{oootarext}
+Source74:	 http://download.go-oo.org/OOO310/%{oootagver}-impress.tar.%{oootarext}
+Source75:	 http://download.go-oo.org/OOO310/%{oootagver}-writer.tar.%{oootarext}
+# Source76:	 http://download.go-oo.org/OOO310/%{oootagver}-l10n.tar.%{oootarext}
+Source77:	 http://download.go-oo.org/OOO310/%{oootagver}-artwork.tar.%{oootarext}
+Source78:	 http://download.go-oo.org/OOO310/%{oootagver}-filters.tar.%{oootarext}
+Source79:	 http://download.go-oo.org/OOO310/%{oootagver}-testing.tar.%{oootarext}
+Source80:	 http://download.go-oo.org/OOO310/%{oootagver}-bootstrap.tar.%{oootarext}
+Source81:	 http://download.go-oo.org/OOO310/%{oootagver}-libs-gui.tar.%{oootarext}
+Source82:	 http://download.go-oo.org/OOO310/%{oootagver}-libs-core.tar.%{oootarext}
+Source83:	 http://download.go-oo.org/OOO310/%{oootagver}-libs-extern.tar.%{oootarext}
+Source84:	 http://download.go-oo.org/OOO310/%{oootagver}-libs-extern-sys.tar.%{oootarext}
+Source85:	 http://download.go-oo.org/OOO310/%{oootagver}-components.tar.%{oootarext}
+Source86:	 http://download.go-oo.org/OOO310/%{oootagver}-postprocess.tar.%{oootarext}
+# Source90:	 http://download.go-oo.org/DEV310/scsolver.2008-10-30.tar.bz2
+Source90:        autogen.sh
+Source91:        http://download.go-oo.org/DEV300/ooo_oxygen_images-2009-06-17.tar.gz
+Source104: 	 http://download.go-oo.org/OOO310/%{oootagver}-extensions.tar.bz2
+Source106:	 http://download.go-oo.org/OOO310/%{oootagver}-help.tar.%{oootarext}
+Source107:	 http://download.go-oo.org/OOO310/%{oootagver}-extras.tar.%{oootarext}
 
-Source0:	http://download.go-oo.org/DEV300/ooo-build-3.0.1-%{ooobuildver}.tar.gz
-Source5:	http://download.go-oo.org/DEV300/%{oootagver}-sdk.tar.%{oootarext}
-Source71:	 http://download.go-oo.org/OOO300/%{oootagver}-ure.tar.%{oootarext}
-Source72:	 http://download.go-oo.org/OOO300/%{oootagver}-base.tar.%{oootarext}
-Source73:	 http://download.go-oo.org/OOO300/%{oootagver}-calc.tar.%{oootarext}
-Source74:	 http://download.go-oo.org/OOO300/%{oootagver}-impress.tar.%{oootarext}
-Source75:	 http://download.go-oo.org/OOO300/%{oootagver}-writer.tar.%{oootarext}
-Source76:	 http://download.go-oo.org/OOO300/%{oootagver}-l10n.tar.%{oootarext}
-Source77:	 http://download.go-oo.org/OOO300/%{oootagver}-artwork.tar.%{oootarext}
-Source78:	 http://download.go-oo.org/OOO300/%{oootagver}-filters.tar.%{oootarext}
-Source79:	 http://download.go-oo.org/OOO300/%{oootagver}-testing.tar.%{oootarext}
-Source80:	 http://download.go-oo.org/OOO300/%{oootagver}-bootstrap.tar.%{oootarext}
-Source81:	 http://download.go-oo.org/OOO300/%{oootagver}-libs_gui.tar.%{oootarext}
-Source82:	 http://download.go-oo.org/OOO300/%{oootagver}-libs_core.tar.%{oootarext}
-Source83:	 http://download.go-oo.org/OOOV300/%{oootagver}-libs_extern.tar.%{oootarext}
-Source84:	 http://download.go-oo.org/OOO300/%{oootagver}-libs_extern_sys.tar.%{oootarext}
-Source85:	 http://download.go-oo.org/OOO300/%{oootagver}-components.tar.%{oootarext}
-Source86:	 http://download.go-oo.org/OOO300/%{oootagver}-postprocess.tar.%{oootarext}
-Source90:	 http://download.go-oo.org/DEV300/scsolver.2008-10-30.tar.bz2
-Source104: 	 http://download.go-oo.org/OOO300/%{oootagver}-extensions.tar.bz2
-
-Source6:	http://download.go-oo.org/SRC680/oox.2008-02-29.tar.bz2
-Source7:	http://download.go-oo.org/SRC680/writerfilter.2008-02-29.tar.bz2
+# Source6:	http://download.go-oo.org/SRC680/oox.2008-02-29.tar.bz2
+# Source7:	http://download.go-oo.org/SRC680/writerfilter.2008-02-29.tar.bz2
 Source13:	http://download.go-oo.org/SRC680/extras-3.tar.bz2
 Source17:	http://download.go-oo.org/SRC680/mdbtools-0.6pre1.tar.gz
 
-Source20:	http://download.go-oo.org/OOO300/ooo-cli-prebuilt-3.0.1.tar.bz2
+Source20:	http://download.go-oo.org/OOO300/ooo-cli-prebuilt-3.1.tar.bz2
 Source21:       http://download.go-oo.org/OOO300/cairo-1.4.10.tar.gz
 Source22: 	http://download.go-oo.org/OOO300/libwpd-0.8.14.tar.gz
-
 Source3: 	http://download.go-oo.org/OOO300/libwps-0.1.2.tar.gz
 Source4:        http://download.go-oo.org/OOO300/libwpg-0.1.3.tar.gz
 
-Source23:	http://download.go-oo.org/xt/xt-20051206-src-only.zip
-Source24:	http://download.go-oo.org/SRC680/lp_solve_5.5.0.10_source.tar.gz
+# Source23:	http://download.go-oo.org/xt/xt-20051206-src-only.zip
+# Source24:	http://download.go-oo.org/SRC680/lp_solve_5.5.0.10_source.tar.gz
 Source25:	http://download.go-oo.org/SRC680/biblio.tar.bz2
 Source26:	http://tools.openoffice.org/unowinreg_prebuild/680/unowinreg.dll
 # splash screens and about images
@@ -298,12 +301,9 @@ Source27:	openintro_mandriva.bmp
 Source28:	openabout_mandriva.bmp
 
 #dev300
-Source87:	mdv-apply
 Source89:	mdv-package-ooo
-Source92:	mdv-xdgmailasmailer.diff
+# Source92:	mdv-xdgmailasmailer.diff
 Source102:	mdv-desktop-japanese.patch
-source103:	mdv-desktop-japanese64.patch
-Source88:       mdv-sysui-disableslack.diff
 Source30: 	icons.tar.bz2
 
 # templates for kde "create new" context menu
@@ -334,6 +334,11 @@ Suggests: %{name}-java-common = %{epoch}:%{version}
 # Due to the split
 Conflicts: %{name} <= 2.2.1
 Conflicts: %{name}-common <= 2.3.0.5-1mdv
+%ifarch x86_64
+Conflicts: %{name}64 <= 2.2.1
+Conflicts: %{name}64-common <= 2.3.0.5-1mdv
+Obsoletes: openoffice.org64-base <= 1:3.1-4
+%endif
 
 %description base
 OpenOffice.org is a full-featured office productivity suite that provides a
@@ -366,6 +371,11 @@ Requires: %{name}-common = %{epoch}:%{version}
 # Due to the split
 Conflicts: %{name} <= 2.2.1
 Conflicts: %{name}-common <= 2.3.0.5-1mdv
+%ifarch x86_64
+Conflicts: %{name}64 <= 2.2.1
+Conflicts: %{name}64-common <= 2.3.0.5-1mdv
+Obsoletes: openoffice.org64-calc <= 1:3.1-4
+%endif
 
 %description calc
 OpenOffice.org is a full-featured office productivity suite that provides a
@@ -408,7 +418,7 @@ Requires: sane-backends
 # Due to %{_bindir}/paperconf
 Requires: paper-utils
 #dev300
-Requires: %{mklibname icu 40} 
+Requires: %{mklibname icu 42} 
 Requires: %{mklibname hunspell 1.2_0}
 Requires(post): desktop-file-utils update-alternatives
 Requires(postun): desktop-file-utils update-alternatives
@@ -419,6 +429,15 @@ Conflicts: %{name}-devel <= 2.3.0.5-1mdv
 Conflicts: %{name}-math <= 2.3.0.5-1mdv
 Conflicts: %{name}-core <= 2.3.99.4-1mdv
 Conflicts: %{name}-gnome < 3.0svn13581-2mdv
+%ifarch x86_64
+Conflicts: %{name}64 <= 2.1.0
+Conflicts: %{name}64-devel <= 2.3.0.5-1mdv
+Conflicts: %{name}64-math <= 2.3.0.5-1mdv
+Conflicts: %{name}64-core <= 2.3.99.4-1mdv
+Conflicts: %{name}64-gnome < 3.0svn13581-2mdv
+Obsoletes: openoffice.org64-common <= 1:3.1-4
+%endif
+
 
 %description common
 OpenOffice.org is a full-featured office productivity suite that provides a
@@ -438,6 +457,16 @@ Conflicts: %{name}-draw <= 2.3.0.5-1mdv
 Conflicts: %{name}-impress <= 2.3.0.5-1mdv
 #  Conflicts: %{name}-kde <= 2.3.0.5-1mdv
 Conflicts: %{name}-writer <= 2.3.0.5-1mdv
+%ifarch x86_64
+Conflicts: %{name}64 <= 2.1.0
+Conflicts: %{name}64-base <= 2.3.0.5-1mdv
+Conflicts: %{name}64-common <= 2.3.1-1mdv
+Conflicts: %{name}64-devel <= 2.3.0.5-1mdv
+Conflicts: %{name}64-draw <= 2.3.0.5-1mdv
+Conflicts: %{name}64-impress <= 2.3.0.5-1mdv
+Conflicts: %{name}64-writer <= 2.3.0.5-1mdv
+Obsoletes: openoffice.org64-core <= 1:3.1-4
+%endif
 
 %description core
 OpenOffice.org is a full-featured office productivity suite that provides a
@@ -453,6 +482,10 @@ Requires: %{name}-core = %{epoch}:%{version}
 Requires: %{name}-common = %{epoch}:%{version}
 # Due to the split
 Conflicts: %{name} <= 2.2.1
+%ifarch x86_64
+Conflicts: %{name}64 <= 2.2.1
+Obsoletes: openoffice.org64-devel <= 1:3.1-4
+%endif
 
 %description devel
 OpenOffice.org is a full-featured office productivity suite that provides a
@@ -468,6 +501,10 @@ Summary: OpenOffice.org SDK - documentation
 Requires: %{name}-devel = %{epoch}:%{version}
 # Due to the split
 Conflicts: %{name} <= 2.2.1
+%ifarch x86_64
+Conflicts: %{name}64 <= 2.2.1
+Obsoletes: openoffice.org64-devel-doc <= 1:3.1-4
+%endif
 
 %description devel-doc
 OpenOffice.org is a full-featured office productivity suite that provides
@@ -490,6 +527,12 @@ Requires: %{name}-common = %{epoch}:%{version}
 Conflicts: %{name} <= 2.2.1
 Conflicts: %{name}-common <= 2.3.0.5-1mdv
 Conflicts: %{name}-impress <= 2.3.0.5-1mdv
+%ifarch x86_64
+Conflicts: %{name}64 <= 2.2.1
+Conflicts: %{name}64-common <= 2.3.0.5-1mdv
+Conflicts: %{name}64-impress <= 2.3.0.5-1mdv
+Obsoletes: openoffice.org64-draw <= 1:3.1-4
+%endif
 
 %description draw
 OpenOffice.org is a full-featured office productivity suite that provides a
@@ -522,6 +565,14 @@ Obsoletes: %{name}-filter-mobiledev <= 2.3.0.5
 Conflicts: %{name}-filter-mobiledev <= 2.3.0.5
 Conflicts: %{name}-common <= 2.3.0.5-1mdv
 Conflicts: %{name}-core <= 2.3.0.5-1mdv
+%ifarch x86_64
+Conflicts: %{name}64 <= 2.2.1
+Conflicts: %{name}64-common <= 2.3.0.5-1mdv
+Conflicts: %{name}64-core <= 2.3.0.5-1mdv
+Obsoletes: %{name}64-filter-mobiledev <= 2.3.0.5
+Obsoletes: openoffice.org64-filter-binfilter <= 1:3.1-4
+%endif
+
 
 %description filter-binfilter
 OpenOffice.org is a full-featured office productivity suite that provides
@@ -547,6 +598,13 @@ Conflicts: %{name}-qstart <= 2.3.0.5
 Obsoletes: %{name}-evolution <= 2.3.0.5
 Conflicts: %{name}-evolution <= 2.3.0.5
 # Suggests: %{name}-style-tango = %{epoch}:%{version}
+%ifarch x86_64
+Conflicts: %{name}64 <= 2.2.1
+Obsoletes: %{name}64-gtk <= 2.3.0.5
+Obsoletes: %{name}64-qstart <= 2.3.0.5
+Obsoletes: %{name}64-evolution <= 2.3.0.5
+Obsoletes: openoffice.org64-gnome <= 1:3.1-4
+%endif
 
 %description gnome
 OpenOffice.org is a full-featured office productivity suite that provides a
@@ -568,6 +626,11 @@ Requires: %{name}-draw = %{epoch}:%{version}
 # Due to the split
 Conflicts: %{name} <= 2.2.1
 Conflicts: %{name}-common <= 2.3.0.5-1mdv
+%ifarch x86_64
+Conflicts: %{name}64 <= 2.2.1
+Conflicts: %{name}64-common <= 2.3.0.5-1mdv
+Obsoletes: openoffice.org64-impress <= 1:3.1-4
+%endif
 
 %description impress
 OpenOffice.org is a full-featured office productivity suite that provides a
@@ -575,26 +638,28 @@ near drop-in replacement for Microsoft(R) Office.
 
 This package contains the presentation component for OpenOffice.org.
 
-# %package kde
-# Group: Office
-# Summary: KDE Integration for OpenOffice.org (Widgets, Dialogs, Addressbook)
-# Requires: %{name}-common = %{epoch}:%{version}
-# Requires: %{name}-core = %{epoch}:%{version}
-# Suggests: %{name}-style-crystal = %{epoch}:%{version}
+%if %{use_kde4}
+%package kde4
+Group: Office
+Summary: KDE4 Integration for OpenOffice.org (Widgets, Dialogs, Addressbook)
+Requires: %{name}-common = %{epoch}:%{version}
+Requires: %{name}-core = %{epoch}:%{version}
+Suggests: %{name}-style-oxygen = %{epoch}:%{version}
 # Due to the split
-# Conflicts: %{name} <= 2.2.1
+Conflicts: %{name} <= 2.2.1
+%ifarch x86_64
+Conflicts: %{name}64 <= 2.2.1
+Obsoletes: openoffice.org64-kde <= 1:3.1-4
+%endif
 
-# %description kde
-# OpenOffice.org is a full-featured office productivity suite that provides a
-# near drop-in replacement for Microsoft(R) Office.
+%description kde4
+OpenOffice.org is a full-featured office productivity suite that provides a
+near drop-in replacement for Microsoft(R) Office.
 
-# This package contains the KDE plugin for drawing OOo's widgets with KDE/Qt, a
-# KDEish File Picker when running under KDE and KDE Addressbook integration.
-# You can extend the functionality of this by installing these packages:
-
-# * konqueror / kmail
-# * kaddressbook
-
+This package contains the KDE4 plugin for drawing OOo's widgets with KDE4/Qt4.5 and 
+a KDEish File Picker when running under KDE4.
+%endif 
+ 
 %package java-common
 Group: Office
 Summary: OpenOffice.org office suite Java support arch. independent files
@@ -604,6 +669,11 @@ Requires: java
 # Due to the split
 Conflicts: %{name} <= 2.2.1
 Conflicts: %{name}-common <= 2.3.0.5-1mdv
+%ifarch x86_64
+Conflicts: %{name}64 <= 2.2.1
+Conflicts: %{name}64-common <= 2.3.0.5-1mdv
+Obsoletes: openoffice.org64-java-common <= 1:3.1-4
+%endif
 
 %description java-common
 OpenOffice.org is a full-featured office productivity suite that provides a
@@ -623,6 +693,11 @@ Requires: %{name}-common = %{epoch}:%{version}
 # Due to the split
 Conflicts: %{name} <= 2.2.1
 Conflicts: %{name}-common <= 2.3.0.5-1mdv
+%ifarch x86_64
+Conflicts: %{name}64 <= 2.2.1
+Conflicts: %{name}64-common <= 2.3.0.5-1mdv
+Obsoletes: openoffice.org64-math <= 1:3.1-4
+%endif
 
 %description math
 OpenOffice.org is a full-featured office productivity suite that provides a
@@ -639,6 +714,11 @@ Requires: clipart-openclipart
 # Due to the split
 Conflicts: %{name} <= 2.2.1
 Obsoletes: %{name}-galleries <= 2.2.1
+%ifarch x86_64
+Conflicts: %{name}64 <= 2.2.1
+Obsoletes: %{name}64-galleries <= 2.2.1
+Obsoletes: openoffice.org64-openclipart <= 1:3.1-4
+%endif
 
 %description openclipart
 OpenOffice.org is a full-featured office productivity suite that provides a
@@ -653,6 +733,10 @@ Summary: Python bindings for UNO library
 # FIXME: what should we require: -common, -core, both, none?
 #Requires: %{name}-common = %{epoch}:%{version}
 Conflicts: %{name}-common <= 2.3.0.5-1mdv
+%ifarch x86_64
+Conflicts: %{name}64-common <= 2.3.0.5-1mdv
+Obsoletes: openoffice.org64-pyuno <= 1:3.1-4
+%endif
 
 %description pyuno
 OpenOffice.org is a full-featured office productivity suite that provides a
@@ -680,6 +764,11 @@ Requires: %{name}-common = %{epoch}:%{version}
 # Due to the split
 Conflicts: %{name} <= 2.2.1
 Conflicts: %{name}-common <= 2.3.0.5-1mdv
+%ifarch x86_64
+Conflicts: %{name}64 <= 2.2.1
+Conflicts: %{name}64-common <= 2.3.0.5-1mdv
+Obsoletes: openoffice.org64-testtool <= 1:3.1-4
+%endif
 
 %description testtool
 OpenOffice.org is a full-featured office productivity suite that provides a
@@ -697,6 +786,10 @@ Provides: %{name}-style = %{epoch}:%{version}-%{release}
 # Due to the split
 Conflicts: %{name} <= 2.2.1
 Obsoletes: %{name}-style-andromeda = %{epoch}:%{version}
+%ifarch x86_64
+Conflicts: %{name}64 <= 2.2.1
+Obsoletes: openoffice.org64-style-galaxy <= 1:3.1-4
+%endif
 
 %description style-galaxy
 OpenOffice.org is a full-featured office productivity suite that provides a
@@ -714,6 +807,10 @@ Requires: %{name}-common = %{epoch}:%{version}
 Provides: %{name}-style = %{epoch}:%{version}-%{release}
 # Due to the split
 Conflicts: %{name} <= 2.2.1
+%ifarch x86_64
+Conflicts: %{name}64 <= 2.2.1
+Obsoletes: openoffice.org64-style-crystal <= 1:3.1-4
+%endif
 
 %description style-crystal
 OpenOffice.org is a full-featured office productivity suite that provides a
@@ -728,6 +825,10 @@ Requires: %{name}-common = %{epoch}:%{version}
 Provides: %{name}-style = %{epoch}:%{version}-%{release}
 # Due to the split
 Conflicts: %{name} <= 2.2.1
+%ifarch x86_64
+Conflicts: %{name}64 <= 2.2.1
+Obsoletes: openoffice.org64-style-hicontrast <= 1:3.1-4
+%endif
 
 %description style-hicontrast
 OpenOffice.org is a full-featured office productivity suite that provides a
@@ -744,6 +845,10 @@ Requires: %{name}-common = %{epoch}:%{version}
 Provides: %{name}-style = %{epoch}:%{version}-%{release}
 # Due to the split
 Conflicts: %{name} <= 2.2.1
+%ifarch x86_64
+Conflicts: %{name}64 <= 2.2.1
+Obsoletes: openoffice.org64-style-industrial <= 1:3.1-4
+%endif
 
 %description style-industrial
 OpenOffice.org is a full-featured office productivity suite that provides a
@@ -759,12 +864,33 @@ Requires: %{name}-common = %{epoch}:%{version}
 Provides: %{name}-style = %{epoch}:%{version}-%{release}
 # Due to the split
 Conflicts: %{name} = 2.2.1
+%ifarch x86_64
+Conflicts: %{name}64 <= 2.2.1
+Obsoletes: openoffice.org64-style-tango <= 1:3.1-4
+%endif
 
 %description style-tango
 OpenOffice.org is a full-featured office productivity suite that provides a
 near drop-in replacement for Microsoft(R) Office.
 
 This package contains the "tango" symbol style, default style for GTK/Gnome.
+
+%if %{use_kde4}
+%package style-oxygen
+Group: Office
+Summary: Oxygen symbol style for OpenOffice.org
+Requires: %{name}-core = %{epoch}:%{version}
+Requires: %{name}-common = %{epoch}:%{version}
+Provides: %{name}-style = %{epoch}:%{version}-%{release}
+# Due to the split
+Conflicts: %{name} = 2.2.1
+
+%description style-oxygen
+OpenOffice.org is a full-featured office productivity suite that provides a
+near drop-in replacement for Microsoft(R) Office.
+
+This package contains the "oxygen" symbol style, default style for KDE4.
+%endif
 
 %package writer
 Group: Office
@@ -775,6 +901,11 @@ Requires: %{name}-common = %{epoch}:%{version}
 Conflicts: %{name} <= 2.2.1
 Conflicts: %{name}-common <= 2.3.0.5-1mdv
 Conflicts: %{name}-core <= 2.3.0.5-1mdv
+%ifarch x86_64
+Conflicts: %{name}64 <= 2.2.1
+Conflicts: %{name}64-common <= 2.3.0.5-1mdv
+Obsoletes: openoffice.org64-writer <= 1:3.1-4
+%endif
 
 %description writer
 OpenOffice.org is a full-featured office productivity suite that provides a
@@ -788,6 +919,9 @@ Summary:	Mono UNO Bridge for OpenOffice.org
 Group:		Office
 Requires:	%{ooname} = %{epoch}:%{version}
 Obsoletes:	%{ooname}-go-ooo-mono <= %{version}
+%ifarch x86_64
+Obsoletes: openoffice.org64-mono <= 1:3.1-4
+%endif
 
 %description mono
 The Mono/UNO binding allows a Mono application to access the complete
@@ -806,6 +940,12 @@ Requires: %{name}-draw = %{epoch}:%{version}
 Conflicts: %{name} <= 2.2.1
 Conflicts: %{name}-common <= 2.3.0.5-1mdv
 Conflicts: %{name}-core <= 2.3.0.5-1mdv
+%ifarch x86_64
+Conflicts: %{name}64 <= 2.2.1
+Conflicts: %{name}64-common <= 2.3.0.5-1mdv
+Conflicts: %{name}64-core <= 2.3.0.5-1mdv
+Obsoletes: openoffice.org64-pdfimport <= 1:3.1-4
+%endif
 
 %description pdfimport
 PDF import extension enables PDF documments importing and basic editing of PDF
@@ -821,6 +961,12 @@ Requires: %{name}-impress = %{epoch}:%{version}
 Conflicts: %{name} <= 2.2.1
 Conflicts: %{name}-common <= 2.3.0.5-1mdv
 Conflicts: %{name}-core <= 2.3.0.5-1mdv
+%ifarch x86_64
+Conflicts: %{name}64 <= 2.2.1
+Conflicts: %{name}64-common <= 2.3.0.5-1mdv
+Conflicts: %{name}64-core <= 2.3.0.5-1mdv
+Obsoletes: openoffice.org64-presenter-screen <= 1:3.1-4
+%endif
 
 %description presenter-screen
 Presenter Screen extension helps users to see upcoming slides and slide notes
@@ -836,6 +982,12 @@ of presentations inside a second view not visible for the spectators.
 # Conflicts: %{name} <= 2.2.1
 # Conflicts: %{name}-common <= 2.3.0.5-1mdv
 # Conflicts: %{name}-core <= 2.3.0.5-1mdv
+# %ifarch x86_64
+# Conflicts: %{name}64 <= 2.2.1
+# Conflicts: %{name}64-common <= 2.3.0.5-1mdv
+# Conflicts: %{name}64-core <= 2.3.0.5-1mdv
+# Obsoletes: openoffice.org64-report-builder < 1:3.1-4
+# %endif
 
 # %description report-builder
 # By using %{name}-base the Report Builder extesion enables creating of smart and 
@@ -854,6 +1006,12 @@ Requires: jakarta-commons-lang, jakarta-commons-logging
 Conflicts: %{name} <= 2.2.1
 Conflicts: %{name}-common <= 2.3.0.5-1mdv
 Conflicts: %{name}-core <= 2.3.0.5-1mdv
+%ifarch x86_64
+Conflicts: %{name}64 <= 2.2.1
+Conflicts: %{name}64-common <= 2.3.0.5-1mdv
+Conflicts: %{name}64-core <= 2.3.0.5-1mdv
+Obsoletes: openoffice.org64-wiki-publisher <= 1:3.1-4
+%endif
 
 %description wiki-publisher
 With Wiki Publisher extesion is possible by using %{name}-writer to create 
@@ -871,6 +1029,12 @@ Requires: %{name}-impress = %{epoch}:%{version}
 Conflicts: %{name} <= 2.2.1
 Conflicts: %{name}-common <= 2.3.0.5-1mdv
 Conflicts: %{name}-core <= 2.3.0.5-1mdv
+%ifarch x86_64
+Conflicts: %{name}64 <= 2.2.1
+Conflicts: %{name}64-common <= 2.3.0.5-1mdv
+Conflicts: %{name}64-core <= 2.3.0.5-1mdv
+Obsoletes: openoffice.org64-presentation-minimizer <= 1:3.1-4
+%endif
 
 %description presentation-minimizer
 With Presentation Minimizer extesion is possible to reduce the file size of the 
@@ -892,6 +1056,10 @@ Requires:	myspell-it
 Requires:	myspell-hyph-it
 Obsoletes:	%{ooname}-go-ooo-l10n-it <= %{version}
 Suggests:	%{ooname}-help-it
+%ifarch x86_64
+Obsoletes:     openoffice.org64-l10n-it <= 1:3.1-4
+Obsoletes:     openoffice.org64-go-ooo-l10n-it <= 3.1-4
+%endif
 
 %description l10n-it
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -914,6 +1082,10 @@ Obsoletes:	OpenOffice.org-l10n-af
 Provides:	OpenOffice.org-l10n-af
 Obsoletes:	%{ooname}-go-ooo-l10n-af <= %{version}
 Suggests:	%{ooname}-help-af
+%ifarch x86_64
+Obsoletes:     openoffice.org64-l10n-af <= 1:3.1-4
+Obsoletes:     openoffice.org64-go-ooo-l10n-af < 3.1-4
+%endif
 
 %description l10n-af
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -936,6 +1108,10 @@ Obsoletes:	OpenOffice.org-l10n-ar
 Provides:	OpenOffice.org-l10n-ar
 Obsoletes:	%{ooname}-go-ooo-l10n-ar <= %{version}
 Suggests:	%{ooname}-help-ar
+%ifarch x86_64
+Obsoletes:     openoffice.org64-l10n-ar <= 1:3.1-4
+Obsoletes:     openoffice.org64-go-ooo-l10n-ar < 3.1-4
+%endif
 
 %description l10n-ar
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -957,6 +1133,10 @@ Obsoletes:	OpenOffice.org-l10n-bg
 Provides:	OpenOffice.org-l10n-bg
 Obsoletes:	%{ooname}-go-ooo-l10n-bg <= %{version}
 Suggests:	%{ooname}-help-bg
+%ifarch x86_64
+Obsoletes:     openoffice.org64-l10n-bg <= 1:3.1-4
+Obsoletes:     openoffice.org64-go-ooo-l10n-bg < 3.1-4
+%endif
 
 %description l10n-bg
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -976,6 +1156,10 @@ Requires:	%{ooname}-common = %{epoch}:%{version}
 Requires:	locales-br
 Obsoletes:	%{ooname}-go-ooo-l10n-br <= %{version}
 Suggests:	%{ooname}-help-br
+%ifarch x86_64
+Obsoletes:     openoffice.org64-l10n-br <= 1:3.1-4
+Obsoletes:     openoffice.org64-go-ooo-l10n-br < 3.1-4
+%endif
 
 %description l10n-br
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -995,6 +1179,10 @@ Requires:	%{ooname}-common = %{epoch}:%{version}
 Requires:	locales-bs
 Obsoletes:	%{ooname}-go-ooo-l10n-bs <= %{version}
 Suggests:	%{ooname}-help-bs
+%ifarch x86_64
+Obsoletes:     openoffice.org64-l10n-bs <= 1:3.1-4
+Obsoletes:     openoffice.org64-go-ooo-l10n-bs < 3.1-4
+%endif
 
 %description l10n-bs
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1018,6 +1206,10 @@ Obsoletes:	OpenOffice.org-l10n-ca
 Provides:	OpenOffice.org-l10n-ca
 Obsoletes:	%{ooname}-go-ooo-l10n-ca <= %{version}
 Suggests:	%{ooname}-help-ca
+%ifarch x86_64
+Obsoletes:     openoffice.org64-l10n-ca <= 1:3.1-4
+Obsoletes:     openoffice.org64-go-ooo-l10n-ca < 3.1-4
+%endif
 
 %description l10n-ca
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1042,6 +1234,10 @@ Obsoletes:	%{ooname}-go-ooo-l10n-cs <= %{version}
 Obsoletes:	OpenOffice.org-l10n-cs
 Provides:	OpenOffice.org-l10n-cs
 Suggests:	%{ooname}-help-cs
+%ifarch x86_64
+Obsoletes:     openoffice.org64-l10n-cs <= 1:3.1-4
+Obsoletes:     openoffice.org64-go-ooo-l10n-cs < 3.1-4
+%endif
 
 %description l10n-cs
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1065,6 +1261,10 @@ Obsoletes:	OpenOffice.org-l10n-cy
 Provides:	OpenOffice.org-l10n-cy
 Obsoletes:	%{ooname}-go-ooo-l10n-cy <= %{version}
 Suggests:	%{ooname}-help-cy
+%ifarch x86_64
+Obsoletes:     openoffice.org64-l10n-cy <= 1:3.1-4
+Obsoletes:     openoffice.org64-go-ooo-l10n-cy < 3.1-4
+%endif
 
 %description l10n-cy
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1089,6 +1289,10 @@ Obsoletes:	OpenOffice.org-l10n-da
 Provides:	OpenOffice.org-l10n-da
 Obsoletes:	%{ooname}-go-ooo-l10n-da <= %{version}
 Suggests:	%{ooname}-help-da
+%ifarch x86_64
+Obsoletes:     openoffice.org64-l10n-da <= 1:3.1-4
+Obsoletes:     openoffice.org64-go-ooo-l10n-da < 3.1-4
+%endif
 
 %description l10n-da
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1114,6 +1318,10 @@ Obsoletes:	%{ooname}-go-ooo-l10n-de <= %{version}
 Obsoletes:	OpenOffice.org-l10n-de
 Provides:	OpenOffice.org-l10n-de
 Suggests:	%{ooname}-help-de
+%ifarch x86_64
+Obsoletes:     openoffice.org64-l10n-de <= 1:3.1-4
+Obsoletes:     openoffice.org64-go-ooo-l10n-de < 3.1-4
+%endif
 
 %description l10n-de
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1138,6 +1346,10 @@ Obsoletes:	OpenOffice.org-l10n-el
 Provides:	OpenOffice.org-l10n-el
 Obsoletes:	%{ooname}-go-ooo-l10n-el <= %{version}
 Suggests:	%{ooname}-help-el
+%ifarch x86_64
+Obsoletes:     openoffice.org64-l10n-el <= 1:3.1-4
+Obsoletes:     openoffice.org64-go-ooo-l10n-el < 3.1-4
+%endif
 
 %description l10n-el
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1160,6 +1372,10 @@ Requires:	myspell-en_GB
 Requires:	myspell-hyph-en
 Obsoletes:	%{ooname}-go-ooo-l10n-en_GB <= %{version}
 Suggests:	%{ooname}-help-en_GB
+%ifarch x86_64
+Obsoletes:     openoffice.org64-l10n-en_GB <= 1:3.1-4
+Obsoletes:     openoffice.org64-go-ooo-l10n-en_GB < 3.1-4
+%endif
 
 %description l10n-en_GB
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1185,6 +1401,10 @@ Obsoletes:	%{ooname}-go-ooo-l10n-es <= %{version}
 Obsoletes:	OpenOffice.org-l10n-es
 Provides:	OpenOffice.org-l10n-es
 Suggests:	%{ooname}-help-es
+%ifarch x86_64
+Obsoletes:     openoffice.org64-l10n-es <= 1:3.1-4
+Obsoletes:     openoffice.org64-go-ooo-l10n-es < 3.1-4
+%endif
 
 %description l10n-es
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1210,6 +1430,10 @@ Obsoletes:	OpenOffice.org-l10n-et
 Provides:	OpenOffice.org-l10n-et
 Obsoletes:	%{ooname}-go-ooo-l10n-et <= %{version}
 Suggests:	%{ooname}-help-et
+%ifarch x86_64
+Obsoletes:     openoffice.org64-l10n-et <= 1:3.1-4
+Obsoletes:     openoffice.org64-go-ooo-l10n-et < 3.1-4
+%endif
 
 %description l10n-et
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1233,6 +1457,10 @@ Obsoletes:	OpenOffice.org-l10n-eu
 Provides:	OpenOffice.org-l10n-eu
 Obsoletes:	%{ooname}-go-ooo-l10n-eu <= %{version}
 Suggests:	%{ooname}-help-eu
+%ifarch x86_64
+Obsoletes:     openoffice.org64-l10n-eu <= 1:3.1-4
+Obsoletes:     openoffice.org64-go-ooo-l10n-eu < 3.1-4
+%endif
 
 %description l10n-eu
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1259,6 +1487,10 @@ Obsoletes:	%{ooname}-go-ooo-l10n-fi <= %{version}
 # dev300 checking if its really necessary
 # Obsoletes:	%{ooname}-voikko
 Suggests:	%{ooname}-help-fi
+%ifarch x86_64
+Obsoletes:     openoffice.org64-l10n-fi <= 1:3.1-4
+Obsoletes:     openoffice.org64-go-ooo-l10n-fi < 3.1-4
+%endif
 
 %description l10n-fi
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1284,6 +1516,10 @@ Obsoletes:	OpenOffice.org-l10n-fr
 Provides:	OpenOffice.org-l10n-fr
 Obsoletes:	%{ooname}-go-ooo-l10n-fr <= %{version}
 Suggests:	%{ooname}-help-fr
+%ifarch x86_64
+Obsoletes:     openoffice.org64-l10n-fr <= 1:3.1-4
+Obsoletes:     openoffice.org64-go-ooo-l10n-fr < 3.1-4
+%endif
 
 %description l10n-fr
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1306,6 +1542,11 @@ Obsoletes:	OpenOffice.org-l10n-he
 Provides:	OpenOffice.org-l10n-he
 Obsoletes:	%{ooname}-go-ooo-l10n-he <= %{version}
 Suggests:	%{ooname}-help-he
+%ifarch x86_64
+Obsoletes:     openoffice.org64-l10n-he <= 1:3.1-4
+Obsoletes:     openoffice.org64-go-ooo-l10n-he < 3.1-4
+%endif
+
 
 %description l10n-he
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1328,6 +1569,10 @@ Obsoletes:	OpenOffice.org-l10n-hi
 Provides:	OpenOffice.org-l10n-hi
 Obsoletes:	%{ooname}-go-ooo-l10n-hi <= %{version}
 Suggests:	%{ooname}-help-hi
+%ifarch x86_64
+Obsoletes:     openoffice.org64-l10n-hi <= 1:3.1-4
+Obsoletes:     openoffice.org64-go-ooo-l10n-hi < 3.1-4
+%endif
 
 %description l10n-hi
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1352,6 +1597,10 @@ Obsoletes:	OpenOffice.org-l10n-hu
 Provides:	OpenOffice.org-l10n-hu
 Obsoletes:	%{ooname}-go-ooo-l10n-hu <= %{version}
 Suggests:	%{ooname}-help-hu
+%ifarch x86_64
+Obsoletes:     openoffice.org64-l10n-hu <= 1:3.1-4
+Obsoletes:     openoffice.org64-go-ooo-l10n-hu < 3.1-4
+%endif
 
 %description l10n-hu
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1374,6 +1623,10 @@ Obsoletes:	OpenOffice.org-l10n-ja
 Provides:	OpenOffice.org-l10n-ja
 Obsoletes:	%{ooname}-go-ooo-l10n-ja <= %{version}
 Suggests:	%{ooname}-help-ja
+%ifarch x86_64
+Obsoletes:     openoffice.org64-l10n-ja <= 1:3.1-4
+Obsoletes:     openoffice.org64-go-ooo-l10n-ja < 3.1-4
+%endif
 
 %description l10n-ja
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1396,6 +1649,10 @@ Obsoletes:	OpenOffice.org-l10n-ko
 Provides:	OpenOffice.org-l10n-ko
 Obsoletes:	%{ooname}-go-ooo-l10n-ko <= %{version}
 Suggests:	%{ooname}-help-ko
+%ifarch x86_64
+Obsoletes:     openoffice.org64-l10n-ko <= 1:3.1-4
+Obsoletes:     openoffice.org64-go-ooo-l10n-ko < 3.1-4
+%endif
 
 %description l10n-ko
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1415,6 +1672,11 @@ Requires:	%{ooname}-common = %{epoch}:%{version}
 Requires:	locales-mk
 Obsoletes:	%{ooname}-go-ooo-l10n-mk <= %{version}
 Suggests:	%{ooname}-help-mk
+%ifarch x86_64
+Obsoletes:     openoffice.org64-l10n-mk < 1:3.1-4
+Obsoletes:     openoffice.org64-go-ooo-l10n-mk <= 3.1-4
+%endif
+
 
 %description l10n-mk
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1437,6 +1699,11 @@ Obsoletes:	OpenOffice.org-l10n-nb
 Provides:	OpenOffice.org-l10n-nb
 Obsoletes:	%{ooname}-go-ooo-l10n-nb <= %{version}
 Suggests:	%{ooname}-help-nb
+%ifarch x86_64
+Obsoletes:     openoffice.org64-l10n-nb <= 1:3.1-4
+Obsoletes:     openoffice.org64-go-ooo-l10n-nb < 3.1-4
+%endif
+
 
 %description l10n-nb
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1462,6 +1729,10 @@ Obsoletes:	OpenOffice.org-l10n-nl
 Provides:	OpenOffice.org-l10n-nl
 Obsoletes:	%{ooname}-go-ooo-l10n-nl <= %{version}
 Suggests:	%{ooname}-help-nl
+%ifarch x86_64
+Obsoletes:     openoffice.org64-l10n-nl <= 1:3.1-4
+Obsoletes:     openoffice.org64-go-ooo-l10n-nl < 3.1-4
+%endif
 
 %description l10n-nl
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1484,6 +1755,10 @@ Obsoletes:	OpenOffice.org-l10n-nn
 Provides:	OpenOffice.org-l10n-nn
 Obsoletes:	%{ooname}-go-ooo-l10n-nn <= %{version}
 Suggests:	%{ooname}-help-nn
+%ifarch x86_64
+Obsoletes:     openoffice.org64-l10n-nn <= 1:3.1-4
+Obsoletes:     openoffice.org64-go-ooo-l10n-nn < 3.1-4
+%endif
 
 %description l10n-nn
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1508,6 +1783,10 @@ Obsoletes:	OpenOffice.org-l10n-pl
 Provides:	OpenOffice.org-l10n-pl
 Obsoletes:	%{ooname}-go-ooo-l10n-pl <= %{version}
 Suggests:	%{ooname}-help-pl
+%ifarch x86_64
+Obsoletes:     openoffice.org64-l10n-pl <= 1:3.1-4
+Obsoletes:     openoffice.org64-go-ooo-l10n-pl < 3.1-4
+%endif
 
 %description l10n-pl
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1533,6 +1812,11 @@ Obsoletes:	OpenOffice.org-l10n-pt
 Provides:	OpenOffice.org-l10n-pt
 Obsoletes:	%{ooname}-go-ooo-l10n-pt <= %{version}
 Suggests:	%{ooname}-help-pt
+%ifarch x86_64
+Obsoletes:     openoffice.org64-l10n-pt <= 1:3.1-4
+Obsoletes:     openoffice.org64-go-ooo-l10n-pt < 3.1-4
+%endif
+
 
 %description l10n-pt
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1550,6 +1834,8 @@ Group:		Office
 Provides:	%{ooname}-l10n = %{epoch}:%{version}-%{release}
 # Due to alternatives setup, we must have -release here. (BrOffice)
 Requires:	%{ooname}-common = %{epoch}:%{version}-%{release}
+Requires(post): update-alternatives %{ooname}-common
+Requires(postun): update-alternatives %{ooname}-common
 Requires:	locales-pt
 Requires:	urw-fonts
 Requires:	myspell-pt_BR
@@ -1557,6 +1843,10 @@ Obsoletes:	OpenOffice.org-l10n_pt_BR
 Provides:	OpenOffice.org-l10n_pt_BR
 Obsoletes:	%{ooname}-go-ooo-l10n-pt_BR <= %{version}
 Suggests:	%{ooname}-help-pt_BR
+%ifarch x86_64
+Obsoletes:     openoffice.org64-l10n-pt_BR <= 1:3.1-4
+Obsoletes:     openoffice.org64-go-ooo-l10n-pt_BR < 3.1-4
+%endif
 
 %description l10n-pt_BR
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1582,6 +1872,10 @@ Obsoletes:	OpenOffice.org-l10n-ru
 Provides:	OpenOffice.org-l10n-ru
 Obsoletes:	%{ooname}-go-ooo-l10n-ru <= %{version}
 Suggests:	%{ooname}-help-ru
+%ifarch x86_64
+Obsoletes:     openoffice.org64-l10n-ru <= 1:3.1-4
+Obsoletes:     openoffice.org64-go-ooo-l10n-ru < 3.1-4
+%endif
 
 %description l10n-ru
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1606,6 +1900,10 @@ Obsoletes:	OpenOffice.org-l10n-sk
 Provides:	OpenOffice.org-l10n-sk
 Obsoletes:	%{ooname}-go-ooo-l10n-sk <= %{version}
 Suggests:	%{ooname}-help-sk
+%ifarch x86_64
+Obsoletes:     openoffice.org64-l10n-sk <= 1:3.1-4
+Obsoletes:     openoffice.org64-go-ooo-l10n-sk < 3.1-4
+%endif
 
 %description l10n-sk
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1629,6 +1927,10 @@ Obsoletes:	OpenOffice.org-l10n-sl
 Provides:	OpenOffice.org-l10n-sl
 Obsoletes:	%{ooname}-go-ooo-l10n-sl <= %{version}
 Suggests:	%{ooname}-help-sl
+%ifarch x86_64
+Obsoletes:     openoffice.org64-l10n-sl <= 1:3.1-4
+Obsoletes:     openoffice.org64-go-ooo-l10n-sl < 3.1-4
+%endif
 
 %description l10n-sl
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1654,6 +1956,10 @@ Obsoletes:	OpenOffice.org-l10n-sv
 Provides:	OpenOffice.org-l10n-sv
 Obsoletes:	%{ooname}-go-ooo-l10n-sv <= %{version}
 Suggests:	%{ooname}-help-sv
+%ifarch x86_64
+Obsoletes:     openoffice.org64-l10n-sv <= 1:3.1-4
+Obsoletes:     openoffice.org64-go-ooo-l10n-sv < 3.1-4
+%endif
 
 %description l10n-sv
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1676,6 +1982,10 @@ Obsoletes:	OpenOffice.org-l10n-ta
 Provides:	OpenOffice.org-l10n-ta
 Obsoletes:	%{ooname}-go-ooo-l10n-ta <= %{version}
 Suggests:	%{ooname}-help-ta
+%ifarch x86_64
+Obsoletes:     openoffice.org64-l10n-ta <= 1:3.1-4
+Obsoletes:     openoffice.org64-go-ooo-l10n-ta < 3.1-4
+%endif
 
 %description l10n-ta
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1698,6 +2008,10 @@ Obsoletes:	OpenOffice.org-l10n-tr
 Provides:	OpenOffice.org-l10n-tr
 Obsoletes:	%{ooname}-go-ooo-l10n-tr <= %{version}
 Suggests:	%{ooname}-help-tr
+%ifarch x86_64
+Obsoletes:     openoffice.org64-l10n-tr <= 1:3.1-4
+Obsoletes:     openoffice.org64-go-ooo-l10n-tr < 3.1-4
+%endif
 
 %description l10n-tr
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1715,10 +2029,15 @@ Group:		Office
 Provides:	%{ooname}-l10n = %{epoch}:%{version}-%{release}
 Requires:	%{ooname}-common = %{epoch}:%{version}
 Requires:	locales-zh
+Requires:	fonts-ttf-chinese
 Obsoletes:	OpenOffice.org-l10n-zh_CN
 Provides:	OpenOffice.org-l10n-zh_CN
 Obsoletes:	%{ooname}-go-ooo-l10n-zh_CN <= %{version}
 Suggests:	%{ooname}-help-zh_CN
+%ifarch x86_64
+Obsoletes:     openoffice.org64-l10n-zh_CN <= 1:3.1-4
+Obsoletes:     openoffice.org64-go-ooo-l10n-zh_CN < 3.1-4
+%endif
 
 %description l10n-zh_CN
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1736,10 +2055,15 @@ Group:		Office
 Provides:	%{ooname}-l10n = %{epoch}:%{version}-%{release}
 Requires:	%{ooname}-common = %{epoch}:%{version}
 Requires:	locales-zh
+Requires:	fonts-ttf-chinese
 Obsoletes:	OpenOffice.org-l10n-zh_TW
 Provides:	OpenOffice.org-l10n-zh_TW
 Obsoletes:	%{ooname}-go-ooo-l10n-zh_TW <= %{version}
 Suggests:	%{ooname}-help-zh_TW
+%ifarch x86_64
+Obsoletes:     openoffice.org64-l10n-zh_TW <= 1:3.1-4
+Obsoletes:     openoffice.org64-go-ooo-l10n-zh_TW < 3.1-4
+%endif
 
 %description l10n-zh_TW
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1764,6 +2088,10 @@ Obsoletes:	OpenOffice.org-l10n-zu
 Provides:	OpenOffice.org-l10n-zu
 Obsoletes:	%{ooname}-go-ooo-l10n-zu <= %{version}
 Suggests:	%{ooname}-help-zu
+%ifarch x86_64
+Obsoletes:     openoffice.org64-l10n-zu <= 1:3.1-4
+Obsoletes:     openoffice.org64-go-ooo-l10n-zu < 3.1-4
+%endif
 
 %description l10n-zu
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1779,6 +2107,9 @@ Summary:	Italian help for OpenOffice.org
 Group:		Office
 Provides:	%{ooname}-help = %{epoch}:%{version}-%{release}
 Requires:	%{ooname}-l10n-it = %{epoch}:%{version}
+%ifarch x86_64
+Obsoletes:     openoffice.org64-help-it <= 1:3.1-4
+%endif
 
 %description help-it
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1790,6 +2121,9 @@ Summary:	Afrikaans help for OpenOffice.org
 Group:		Office
 Provides:	%{ooname}-help = %{epoch}:%{version}-%{release}
 Requires:	%{ooname}-l10n-af = %{epoch}:%{version}
+%ifarch x86_64
+Obsoletes:     openoffice.org64-help-af <= 1:3.1-4
+%endif
 
 %description help-af
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1802,6 +2136,9 @@ Summary:	Arabic help for OpenOffice.org
 Group:		Office
 Provides:	%{ooname}-help = %{epoch}:%{version}-%{release}
 Requires:	%{ooname}-l10n-ar = %{epoch}:%{version}
+%ifarch x86_64
+Obsoletes:     openoffice.org64-help-ar <= 1:3.1-4
+%endif
 
 %description help-ar
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1814,6 +2151,9 @@ Summary:	Bulgarian help for OpenOffice.org
 Group:		Office
 Provides:	%{ooname}-help = %{epoch}:%{version}-%{release}
 Requires:	%{ooname}-l10n-bg = %{epoch}:%{version}
+%ifarch x86_64
+Obsoletes:     openoffice.org64-help-bg <= 1:3.1-4
+%endif
 
 %description help-bg
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1826,6 +2166,9 @@ Summary:	Breton help for OpenOffice.org
 Group:		Office
 Provides:	%{ooname}-help = %{epoch}:%{version}-%{release}
 Requires:	%{ooname}-l10n-br = %{epoch}:%{version}
+%ifarch x86_64
+Obsoletes:     openoffice.org64-help-br <= 1:3.1-4
+%endif
 
 %description help-br
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1838,6 +2181,9 @@ Summary:	Bosnian help for OpenOffice.org
 Group:		Office
 Provides:	%{ooname}-help = %{epoch}:%{version}-%{release}
 Requires:	%{ooname}-l10n-bs = %{epoch}:%{version}
+%ifarch x86_64
+Obsoletes:     openoffice.org64-help-br <= 1:3.1-4
+%endif
 
 %description help-bs
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1850,6 +2196,9 @@ Summary:	Catalan help for OpenOffice.org
 Group:		Office
 Provides:	%{ooname}-help = %{epoch}:%{version}-%{release}
 Requires:	%{ooname}-l10n-ca = %{epoch}:%{version}
+%ifarch x86_64
+Obsoletes:     openoffice.org64-help-ca <= 1:3.1-4
+%endif
 
 %description help-ca
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1864,6 +2213,9 @@ Provides:	%{ooname}-help = %{epoch}:%{version}-%{release}
 Requires:	%{ooname}-l10n-cs = %{epoch}:%{version}
 Obsoletes:	OpenOffice.org-help-cs
 Provides:	OpenOffice.org-help-cs
+%ifarch x86_64
+Obsoletes:     openoffice.org64-help-cs <= 1:3.1-4
+%endif
 
 %description help-cs
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1876,6 +2228,9 @@ Summary:	Welsh help for OpenOffice.org
 Group:		Office
 Provides:	%{ooname}-help = %{epoch}:%{version}-%{release}
 Requires:	%{ooname}-l10n-cy = %{epoch}:%{version}
+%ifarch x86_64
+Obsoletes:     openoffice.org64-help-cy <= 1:3.1-4
+%endif
 
 %description help-cy
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1888,6 +2243,9 @@ Summary:	Danish help for OpenOffice.org
 Group:		Office
 Provides:	%{ooname}-help = %{epoch}:%{version}-%{release}
 Requires:	%{ooname}-l10n-da = %{epoch}:%{version}
+%ifarch x86_64
+Obsoletes:     openoffice.org64-help-da <= 1:3.1-4
+%endif
 
 %description help-da
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1902,6 +2260,9 @@ Provides:	%{ooname}-help = %{epoch}:%{version}-%{release}
 Requires:	%{ooname}-l10n-de = %{epoch}:%{version}
 Obsoletes:	OpenOffice.org-help-de
 Provides:	OpenOffice.org-help-de
+%ifarch x86_64
+Obsoletes:     openoffice.org64-help-de <= 1:3.1-4
+%endif
 
 %description help-de
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1914,6 +2275,9 @@ Summary:	Greek help for OpenOffice.org
 Group:		Office
 Provides:	%{ooname}-help = %{epoch}:%{version}-%{release}
 Requires:	%{ooname}-l10n-el = %{epoch}:%{version}
+%ifarch x86_64
+Obsoletes:     openoffice.org64-help-el <= 1:3.1-4
+%endif
 
 %description help-el
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1926,6 +2290,9 @@ Summary:	British help for OpenOffice.org
 Group:		Office
 Provides:	%{ooname}-help = %{epoch}:%{version}-%{release}
 Requires:	%{ooname}-l10n-en_GB = %{epoch}:%{version}
+%ifarch x86_64
+Obsoletes:     openoffice.org64-help-en_GB <= 1:3.1-4
+%endif
 
 %description help-en_GB
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1938,6 +2305,9 @@ Summary:	American English help for OpenOffice.org
 Group:		Office
 Provides:	%{ooname}-help = %{epoch}:%{version}-%{release}
 Requires:	%{ooname}-common = %{epoch}:%{version}
+%ifarch x86_64
+Obsoletes:     openoffice.org64-help-en_US <= 1:3.1-4
+%endif
 
 %description help-en_US
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1952,6 +2322,9 @@ Provides:	%{ooname}-help = %{epoch}:%{version}-%{release}
 Requires:	%{ooname}-l10n-es = %{epoch}:%{version}
 Obsoletes:	OpenOffice.org-help-es
 Provides:	OpenOffice.org-help-es
+%ifarch x86_64
+Obsoletes:     openoffice.org64-help-es <= 1:3.1-4
+%endif
 
 %description help-es
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1964,6 +2337,9 @@ Summary:	Estonian help for OpenOffice.org
 Group:		Office
 Provides:	%{ooname}-help = %{epoch}:%{version}-%{release}
 Requires:	%{ooname}-l10n-et = %{epoch}:%{version}
+%ifarch x86_64
+Obsoletes:     openoffice.org64-help-et <= 1:3.1-4
+%endif
 
 %description help-et
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1978,6 +2354,9 @@ Provides:	%{ooname}-help = %{epoch}:%{version}-%{release}
 Requires:	%{ooname}-l10n-eu = %{epoch}:%{version}
 Obsoletes:	OpenOffice.org-help-eu
 Provides:	OpenOffice.org-help-eu
+%ifarch x86_64
+Obsoletes:     openoffice.org64-help-eu <= 1:3.1-4
+%endif
 
 %description help-eu
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -1992,6 +2371,9 @@ Provides:	%{ooname}-help = %{epoch}:%{version}-%{release}
 Requires:	%{ooname}-l10n-fi = %{epoch}:%{version}
 Obsoletes:	OpenOffice.org-help-fi
 Provides:	OpenOffice.org-help-fi
+%ifarch x86_64
+Obsoletes:     openoffice.org64-help-fi <= 1:3.1-4
+%endif
 
 %description help-fi
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -2006,6 +2388,9 @@ Provides:	%{ooname}-help = %{epoch}:%{version}-%{release}
 Requires:	%{ooname}-l10n-fr = %{epoch}:%{version}
 Obsoletes:	OpenOffice.org-help-fr
 Provides:	OpenOffice.org-help-fr
+%ifarch x86_64
+Obsoletes:     openoffice.org64-help-fr <= 1:3.1-4
+%endif
 
 %description help-fr
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -2018,6 +2403,9 @@ Summary:	Hebrew help for OpenOffice.org
 Group:		Office
 Provides:	%{ooname}-help = %{epoch}:%{version}-%{release}
 Requires:	%{ooname}-l10n-he = %{epoch}:%{version}
+%ifarch x86_64
+Obsoletes:     openoffice.org64-help-he <= 1:3.1-4
+%endif
 
 %description help-he
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -2030,6 +2418,9 @@ Summary:	Hindi help for OpenOffice.org
 Group:		Office
 Provides:	%{ooname}-help = %{epoch}:%{version}-%{release}
 Requires:	%{ooname}-l10n-hi = %{epoch}:%{version}
+%ifarch x86_64
+Obsoletes:     openoffice.org64-help-hi <= 1:3.1-4
+%endif
 
 %description help-hi
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -2042,6 +2433,9 @@ Summary:	Hungarian help for OpenOffice.org
 Group:		Office
 Provides:	%{ooname}-help = %{epoch}:%{version}-%{release}
 Requires:	%{ooname}-l10n-hu = %{epoch}:%{version}
+%ifarch x86_64
+Obsoletes:     openoffice.org64-help-hu <= 1:3.1-4
+%endif
 
 %description help-hu
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -2056,6 +2450,9 @@ Provides:	%{ooname}-help = %{epoch}:%{version}-%{release}
 Requires:	%{ooname}-l10n-ja = %{epoch}:%{version}
 Obsoletes:	OpenOffice.org-help-ja
 Provides:	OpenOffice.org-help-ja
+%ifarch x86_64
+Obsoletes:     openoffice.org64-help-ja <= 1:3.1-4
+%endif
 
 %description help-ja
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -2070,6 +2467,9 @@ Provides:	%{ooname}-help = %{epoch}:%{version}-%{release}
 Requires:	%{ooname}-l10n-ko = %{epoch}:%{version}
 Obsoletes:	OpenOffice.org-help-ko
 Provides:	OpenOffice.org-help-ko
+%ifarch x86_64
+Obsoletes:     openoffice.org64-help-ko <= 1:3.1-4
+%endif
 
 %description help-ko
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -2082,6 +2482,9 @@ Summary:	Macedonian help for OpenOffice.org
 Group:		Office
 Provides:	%{ooname}-help = %{epoch}:%{version}-%{release}
 Requires:	%{ooname}-l10n-mk = %{epoch}:%{version}
+%ifarch x86_64
+Obsoletes:     openoffice.org64-help-mk <= 1:3.1-4
+%endif
 
 %description help-mk
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -2094,6 +2497,9 @@ Summary:	Norwegian Bokmal help for OpenOffice.org
 Group:		Office
 Provides:	%{ooname}-help = %{epoch}:%{version}-%{release}
 Requires:	%{ooname}-l10n-nb = %{epoch}:%{version}
+%ifarch x86_64
+Obsoletes:     openoffice.org64-help-nb <= 1:3.1-4
+%endif
 
 %description help-nb
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -2109,6 +2515,9 @@ Provides:	%{ooname}-help = %{epoch}:%{version}-%{release}
 Requires:	%{ooname}-l10n-nl = %{epoch}:%{version}
 Obsoletes:	OpenOffice.org-help-nl
 Provides:	OpenOffice.org-help-nl
+%ifarch x86_64
+Obsoletes:     openoffice.org64-help-nl <= 1:3.1-4
+%endif
 
 %description help-nl
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -2121,6 +2530,9 @@ Summary:	Norwegian Nynorsk help for OpenOffice.org
 Group:		Office
 Provides:	%{ooname}-help = %{epoch}:%{version}-%{release}
 Requires:	%{ooname}-l10n-nn = %{epoch}:%{version}
+%ifarch x86_64
+Obsoletes:     openoffice.org64-help-nn <= 1:3.1-4
+%endif
 
 %description help-nn
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -2133,6 +2545,9 @@ Summary:	Polish help for OpenOffice.org
 Group:		Office
 Provides:	%{ooname}-help = %{epoch}:%{version}-%{release}
 Requires:	%{ooname}-l10n-pl = %{epoch}:%{version}
+%ifarch x86_64
+Obsoletes:     openoffice.org64-help-pl <= 1:3.1-4
+%endif
 
 %description help-pl
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -2145,6 +2560,9 @@ Summary:	Portuguese help for OpenOffice.org
 Group:		Office
 Provides:	%{ooname}-help = %{epoch}:%{version}-%{release}
 Requires:	%{ooname}-l10n-pt = %{epoch}:%{version}
+%ifarch x86_64
+Obsoletes:     openoffice.org64-help-pt <= 1:3.1-4
+%endif
 
 %description help-pt
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -2159,6 +2577,9 @@ Provides:	%{ooname}-help = %{epoch}:%{version}-%{release}
 Requires:	%{ooname}-l10n-pt_BR = %{epoch}:%{version}
 Obsoletes:	OpenOffice.org-help-pt_BR
 Provides:	OpenOffice.org-help-pt_BR
+%ifarch x86_64
+Obsoletes:     openoffice.org64-help-pt_BR <= 1:3.1-4
+%endif
 
 %description help-pt_BR
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -2174,6 +2595,9 @@ Provides:	%{ooname}-help = %{epoch}:%{version}-%{release}
 Requires:	%{ooname}-l10n-ru = %{epoch}:%{version}
 Obsoletes:	OpenOffice.org-help-ru
 Provides:	OpenOffice.org-help-ru
+%ifarch x86_64
+Obsoletes:     openoffice.org64-help-ru <= 1:3.1-4
+%endif
 
 %description help-ru
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -2188,6 +2612,9 @@ Provides:	%{ooname}-help = %{epoch}:%{version}-%{release}
 Requires:	%{ooname}-l10n-sk = %{epoch}:%{version}
 Obsoletes:	OpenOffice.org-help-sk
 Provides:	OpenOffice.org-help-sk
+%ifarch x86_64
+Obsoletes:     openoffice.org64-help-sk <= 1:3.1-4
+%endif
 
 %description help-sk
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -2202,6 +2629,9 @@ Provides:	%{ooname}-help = %{epoch}:%{version}-%{release}
 Requires:	%{ooname}-l10n-sl = %{epoch}:%{version}
 Obsoletes:	OpenOffice.org-help-sl
 Provides:	OpenOffice.org-help-sl
+%ifarch x86_64
+Obsoletes:     openoffice.org64-help-sl <= 1:3.1-4
+%endif
 
 %description help-sl
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -2216,6 +2646,9 @@ Provides:	%{ooname}-help = %{epoch}:%{version}-%{release}
 Requires:	%{ooname}-l10n-sv = %{epoch}:%{version}
 Obsoletes:	OpenOffice.org-help-sv
 Provides:	OpenOffice.org-help-sv
+%ifarch x86_64
+Obsoletes:     openoffice.org64-help-sv <= 1:3.1-4
+%endif
 
 %description help-sv
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -2228,6 +2661,9 @@ Summary:	Tamil help for OpenOffice.org
 Group:		Office
 Provides:	%{ooname}-help = %{epoch}:%{version}-%{release}
 Requires:	%{ooname}-l10n-ta = %{epoch}:%{version}
+%ifarch x86_64
+Obsoletes:     openoffice.org64-help-ta <= 1:3.1-4
+%endif
 
 %description help-ta
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -2242,6 +2678,9 @@ Provides:	%{ooname}-help = %{epoch}:%{version}-%{release}
 Requires:	%{ooname}-l10n-tr = %{epoch}:%{version}
 Obsoletes:	OpenOffice.org-help-tr
 Provides:	OpenOffice.org-help-tr
+%ifarch x86_64
+Obsoletes:     openoffice.org64-help-tr <= 1:3.1-4
+%endif
 
 %description help-tr
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -2256,6 +2695,9 @@ Provides:	%{ooname}-help = %{epoch}:%{version}-%{release}
 Requires:	%{ooname}-l10n-zh_CN = %{epoch}:%{version}
 Obsoletes:	OpenOffice.org-help-zh_CN
 Provides:	OpenOffice.org-help-zh_CN
+%ifarch x86_64
+Obsoletes:     openoffice.org64-help-zh_CN <= 1:3.1-4
+%endif
 
 %description help-zh_CN
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -2271,6 +2713,9 @@ Provides:	%{ooname}-help = %{epoch}:%{version}-%{release}
 Requires:	%{ooname}-l10n-zh_TW = %{epoch}:%{version}
 Obsoletes:	OpenOffice.org-help-zh_TW
 Provides:	OpenOffice.org-help-zh_TW
+%ifarch x86_64
+Obsoletes:     openoffice.org64-help-zh_TW <= 1:3.1-4
+%endif
 
 %description help-zh_TW
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -2284,6 +2729,9 @@ Summary:	Zulu help for OpenOffice.org
 Group:		Office
 Provides:	%{ooname}-help = %{epoch}:%{version}-%{release}
 Requires:	%{ooname}-l10n-zu = %{epoch}:%{version}
+%ifarch x86_64
+Obsoletes:     openoffice.org64-help-zu <= 1:3.1-4
+%endif
 
 %description help-zu
 OpenOffice.org is an Open Source, community-developed, office suite.
@@ -2292,7 +2740,7 @@ This package contains the localized help files of OpenOffice.org in Zulu.
 %endif
 
 %prep
-%setup -q -n ooo-build-3.0.1-%{ooobuildver}
+%setup -q -n ooo-build-%{ooobuildver}
 
 # Add lzma support
 %if %{oootarext} == "lzma"
@@ -2315,7 +2763,11 @@ This package contains the localized help files of OpenOffice.org in Zulu.
 # . /etc/profile.d/60qt4.sh
 # fi
 export QTDIR=%{_libdir}/qt4
-export QTINC=%{_libdir}/qt4/include
+%ifarch X86_64 
+	export QTINC=/usr/lib/qt4/include
+%else
+	export QTINC=%{_libdir}/qt4/include
+%endif 
 export QTLIB=%{_libdir}/qt4/lib
 
 %if !%{use_gcj}
@@ -2349,15 +2801,17 @@ export PATH
 %endif
 
 # Force KDE3 support instead of KDE4 (dev 300)
-# export KDEDIR=/opt/kde3
+#%ifarch x86_64 
+#export KDEDIR=/opt/kde
+#%endif
 
 mkdir -p src
 
 ln -sf %{SOURCE3} src/
 ln -sf %{SOURCE4} src/
 ln -sf %{SOURCE5} src/
-ln -sf %{SOURCE6} src/
-ln -sf %{SOURCE7} src/
+# ln -sf %{SOURCE6} src/
+# ln -sf %{SOURCE7} src/
 ln -sf %{SOURCE13} src/
 ln -sf %{SOURCE17} src/
 %if %{use_mono}
@@ -2369,8 +2823,8 @@ ln -sf %{SOURCE22} src/
 
 # ooo-build requests this even with mono off
 ln -sf %{SOURCE26} src/
-ln -sf %{SOURCE23} src/
-ln -sf %{SOURCE24} src/
+#ln -sf %{SOURCE23} src/
+#ln -sf %{SOURCE24} src/
 ln -sf %{SOURCE25} src/
 
 # splash screen
@@ -2388,7 +2842,7 @@ ln -sf %{SOURCE72} src/
 ln -sf %{SOURCE73} src/
 ln -sf %{SOURCE74} src/
 ln -sf %{SOURCE75} src/
-ln -sf %{SOURCE76} src/
+#ln -sf %{SOURCE76} src/
 ln -sf %{SOURCE77} src/
 ln -sf %{SOURCE78} src/
 ln -sf %{SOURCE79} src/
@@ -2399,8 +2853,13 @@ ln -sf %{SOURCE83} src/
 ln -sf %{SOURCE84} src/
 ln -sf %{SOURCE85} src/
 ln -sf %{SOURCE86} src/
-ln -sf %{SOURCE90} src/
+#ln -sf %{SOURCE90} src/
+ln -sf %{SOURCE91} src/
 ln -sf %{SOURCE104} src/
+ln -sf %{SOURCE106} src/
+ln -sf %{SOURCE107} src/
+
+cp -f %{SOURCE90} %{_builddir}/ooo-build-%{ooobuildver}/
 
 if [ -x ./autogen.sh ]; then
 	NOCONFIGURE=1 ./autogen.sh --with-distro=%{distroname}
@@ -2438,7 +2897,7 @@ CXXFLAGS="%{optflags} %{optsafe} -g0 -fno-omit-frame-pointer -fno-strict-aliasin
 	--enable-lockdown \
 	--enable-opengl \
 	--with-firefox \
-	--with-system-mozilla \
+	--with-system-mozilla=xulrunner \
 	--with-system-hsqldb \
 	--with-system-beanshell \
 	--with-system-xml-apis \
@@ -2454,6 +2913,11 @@ CXXFLAGS="%{optflags} %{optsafe} -g0 -fno-omit-frame-pointer -fno-strict-aliasin
 	--with-system-libwpg \
 	--with-system-libsvg \
 	--with-system-sablot \
+        --with-system-jpeg \
+        --with-system-hunspell \
+	--disable-kde \
+	--enable-kde4 \
+	--enable-crashdump=yes \
 	--with-intro-bitmaps="%{SOURCE27}" \
 	--with-about-bitmaps="%{SOURCE28}" \
 %if %use_gcj
@@ -2470,9 +2934,9 @@ CXXFLAGS="%{optflags} %{optsafe} -g0 -fno-omit-frame-pointer -fno-strict-aliasin
 %endif
 	--with-system-gcc \
 	--with-lang=%{ooolangs} \
-	--with-binsuffix=%{mdvsuffix} \
-	--with-installed-ooo-dirname=ooo-%{mdvsuffix} \
-	--with-docdir=%{_datadir}/doc/packages/ooo-%{mdvsuffix} \
+        --without-binsuffix \
+        --with-installed-ooo-dirname=ooo \
+        --with-docdir=%{_datadir}/doc/packages/ooo \
 	--with-system-glitz \
 	--with-system-sane-header \
 	--with-system-cairo \
@@ -2489,8 +2953,6 @@ CXXFLAGS="%{optflags} %{optsafe} -g0 -fno-omit-frame-pointer -fno-strict-aliasin
         --with-external-hyph-dir=%{_datadir}/dict/ooo \
         --with-external-thes-dir=%{_datadir}/dict/ooo \
 	--with-system-poppler \
-        --disable-kde \
-        --disable-kdeab \
         --enable-pdfimport \
         --enable-minimizer \
         --enable-presenter-console \
@@ -2529,17 +2991,9 @@ CXXFLAGS="%{optflags} %{optsafe} -g0 -fno-omit-frame-pointer -fno-strict-aliasin
 
 #dev300 (ooo-build fixes by now).
 #This fix needs to be submmited to ooo-build
-cp -f %{SOURCE87} %{_builddir}/ooo-build-3.0.1-%{ooobuildver}/patches/dev300/apply
-cp -f %{SOURCE89} %{_builddir}/ooo-build-3.0.1-%{ooobuildver}/bin/package-ooo
-cp -f %{SOURCE88} %{_builddir}/ooo-build-3.0.1-%{ooobuildver}/patches/dev300/
-cp -f %{SOURCE92} %{_builddir}/ooo-build-3.0.1-%{ooobuildver}/patches/dev300/
+cp -f %{SOURCE89} %{_builddir}/ooo-build-%{ooobuildver}/bin/package-ooo
 
 echo "Configure end at: "`date` >> ooobuildtime.log 
-
-#Patches back ported from newer ooo-builds - NONEED after 3.0.0.2
-# cp -f %{SOURCE100} %{_builddir}/ooo-build-%{ooobuildver}/patches/dev300/layout-simple-dialogs-toolkit.diff
-# cp -f %{SOURCE101} %{_builddir}/ooo-build-%{ooobuildver}/patches/dev300/layout-simple-dialogs-sc.diff
-
 echo "Make start at: "`date` >> ooobuildtime.log 
 
 # some configs  to improve build process 
@@ -2556,12 +3010,14 @@ make \
 	ARCH_FLAGS_OPT="%{optflags} -O2 %{optsafe}"
 
 echo "Make end at: "`date` >> ooobuildtime.log 
-
 echo "Install start at: "`date` >> ooobuildtime.log 
 
 %install
 # sbin due to icu stuff there
 PATH=$PATH:/usr/sbin
+
+# clear lists in case of short-circuiting:
+rm -f build/*_list.txt
 
 rm -rf %{buildroot}
 make install DESTDIR=%{buildroot}
@@ -2572,6 +3028,19 @@ rm -rf %{buildroot}/opt
 # use the dicts from myspell-<lang>
 # rm -rf %{buildroot}%{ooodir}/share/dict/ooo
 # ln -s %{_datadir}/dict/ooo %{buildroot}%{ooodir}/share/dict
+
+# get rid of KDE4 integration since it was enabled on the build but we are
+# not right to go with that yet
+%if !%{use_kde4}
+rm -f %{buildroot}%{ooodir}/%basis/program/libvclplug_kde4*
+rm -f %{buildroot}%{ooodir}/%basis/program/fps_kde4.uno.so
+sed -i s/^.*fps_kde4\.uno\.so$// %{_builddir}/ooo-build-%{ooobuildver}/build/core_list.txt
+
+# get rid of oxygen
+# rm -f %{buildroot}%{ooodir}/%basis/share/config/images_oxygen.zip
+# sed -i s/^.*images_oxygen\.zip$// %{_builddir}/ooo-build-%{ooobuildver}/build/common_list.txt
+%endif
+
 
 # desktop files
 desktop-file-install --vendor="" \
@@ -2644,14 +3113,15 @@ desktop-file-install \
   --add-mime-type="application/vnd.ms-powerpoint.presentation.macroEnabled.12" \
   --dir %{buildroot}%{_datadir}/applications %{buildroot}%{_datadir}/applications/impress*desktop
 
+# Anssi patch
 # Remove version on names so better position on menu and give consistency under old links #43922 
-for dskt in base calc draw impress math template web writer; do 
-   %ifarch x86_64
-	mv %{buildroot}%{_datadir}/applications/${dskt}3.0.1_64.desktop %{buildroot}%{_datadir}/applications/${dskt}64.desktop
-   %else
-        mv %{buildroot}%{_datadir}/applications/${dskt}3.0.1.desktop %{buildroot}%{_datadir}/applications/${dskt}.desktop
-  %endif
-done;
+# for dskt in base calc draw impress math template web writer; do 
+#   %ifarch x86_64
+#	mv %{buildroot}%{_datadir}/applications/${dskt}3.1_64.desktop %{buildroot}%{_datadir}/applications/${dskt}64.desktop
+#   %else
+#        mv %{buildroot}%{_datadir}/applications/${dskt}3.1.desktop %{buildroot}%{_datadir}/applications/${dskt}.desktop
+#  %endif
+# done;
 
 # XXX FontOOo|DictOOo wizard
 # these should die soon (after 2008.1)
@@ -2665,23 +3135,25 @@ find %{buildroot} -type f -exec chmod u+rw '{}' \;
 # fix permission of .so libraries
 find %{buildroot} -type f \( -name '*.so' -o -name '*.so.*' \) -exec chmod a+x '{}' \;
 
+# Anssi patch
 # remove /usr/bin/soffice (made with update-alternatives)
-rm -f %{buildroot}%{_bindir}/soffice
+# rm -f %{buildroot}%{_bindir}/soffice
 
 # Fix sdk listing
 sort -u build/sdk_list.txt > build/sdk_list_fixed.txt
 
+# Anssi patch
 # Versionify bash_completion (ooo-wrapper.sh)
-if [ -f %{buildroot}%{_sysconfdir}/bash_completion.d/ooo-wrapper.sh ]; then
- mv %{buildroot}%{_sysconfdir}/bash_completion.d/ooo-wrapper.sh \
- 	%{buildroot}%{_sysconfdir}/bash_completion.d/ooo-wrapper%{mdvsuffix}
-fi
+# if [ -f %{buildroot}%{_sysconfdir}/bash_completion.d/ooo-wrapper.sh ]; then
+# mv %{buildroot}%{_sysconfdir}/bash_completion.d/ooo-wrapper.sh \
+# 	%{buildroot}%{_sysconfdir}/bash_completion.d/ooo-wrapper%{mdvsuffix}
+# fi
 
 # Versionify bash_completion (ooffice.sh)
-if [ -f %{buildroot}%{_sysconfdir}/bash_completion.d/ooffice*.sh ]; then
- mv %{buildroot}%{_sysconfdir}/bash_completion.d/ooffice*.sh \
- 	%{buildroot}%{_sysconfdir}/bash_completion.d/ooffice%{mdvsuffix}
-fi
+# if [ -f %{buildroot}%{_sysconfdir}/bash_completion.d/ooffice*.sh ]; then
+# mv %{buildroot}%{_sysconfdir}/bash_completion.d/ooffice*.sh \
+# 	%{buildroot}%{_sysconfdir}/bash_completion.d/ooffice%{mdvsuffix}
+# fi
 
 # dev 300 2.3 ???
 # %if %{use_mono}
@@ -2695,32 +3167,27 @@ fi
 mkdir -p %{buildroot}%{_sysconfdir}/profile.d
 sed 's@%%{ooodir}@%{ooodir}@g' \
 	%{_sourcedir}/openoffice.org.csh > \
-	%{buildroot}%{_sysconfdir}/profile.d/openoffice.org%{mdvsuffix}.csh
+	%{buildroot}%{_sysconfdir}/profile.d/openoffice.org.csh
 sed 's@%%{ooodir}@%{ooodir}@g' \
 	%{_sourcedir}/openoffice.org.sh > \
-	%{buildroot}%{_sysconfdir}/profile.d/openoffice.org%{mdvsuffix}.sh
+	%{buildroot}%{_sysconfdir}/profile.d/openoffice.org.sh
 
-# dev300 (Alpha2) :
 # BrOffice.org Support (install)
 function bro() {
    exp="$1"
    f="$2"
-#   mv "$f" "$f.ooo"
-#   mv "$f" "$f.ooo"
-#   echo -n > "$f"
+   mv "%{buildroot}$f" "%{buildroot}$f.ooo"
+   echo -n > "%{buildroot}$f"
   %if %l10n
-#   sed "$exp" "$f.ooo" > "$f.bro"
-   sed "$exp" "$f" > "$f.bro"
+   sed "$exp" "%{buildroot}$f.ooo" > "%{buildroot}$f.bro"
   %endif
-#  sed -i "s@$f\$@$f.ooo@" %{_builddir}/ooo-build-%{ooobuildver}/build/*.txt
+  sed -i "s@$f\$@$f.ooo@" %{_builddir}/ooo-build-%{ooobuildver}/build/*.txt
 }
 
 ## Change suite name in the program itself
-cd %{buildroot}%{ooodir}
- bro "s/OpenO/BrO/;s/openo/bro/" program/bootstraprc
- bro "s/en-US/pt-BR/;s/openo/bro/" program/versionrc
- bro "s/OpenO/BrO/" basis3.0/share/registry/data/org/openoffice/Setup.xcu
-cd -
+bro "s/OpenO/BrO/;s/openo/bro/" %{ooodir}/program/bootstraprc
+bro "s/en-US/pt-BR/;s/openo/bro/" %{ooodir}/program/versionrc
+bro "s/OpenO/BrO/" %{ooodir}/%basis/share/registry/data/org/openoffice/Setup.xcu
 
 # Change the suite name in .desktop files for pt_BR locale
 sed -i '/pt_BR/{s/OpenO/BrO/}' %{buildroot}%{_datadir}/applications/*.desktop
@@ -2751,15 +3218,6 @@ echo 'ProgressSize=377,9' >> %{buildroot}%{ooodir}/program/sofficerc
 # new icons
 tar xjf %{SOURCE30} -C %{buildroot}%{_datadir}
 
-# remove old icons, 64 arch have use same icon as 586, duplicates ?
-rm -rf %{buildroot}%{_datadir}/icons/hicolor/*/apps/ooo-writer3.0.1_64.png
-rm -rf %{buildroot}%{_datadir}/icons/hicolor/*/apps/ooo-calc3.0.1_64.png
-rm -rf %{buildroot}%{_datadir}/icons/hicolor/*/apps/ooo-impress3.0.1_64.png
-rm -rf %{buildroot}%{_datadir}/icons/hicolor/*/apps/ooo-draw3.0.1_64.png
-rm -rf %{buildroot}%{_datadir}/icons/hicolor/*/apps/ooo-base3.0.1_64.png
-rm -rf %{buildroot}%{_datadir}/icons/hicolor/*/apps/ooo-math3.0.1_64.png
-rm -rf %{buildroot}%{_datadir}/icons/hicolor/*/apps/ooo-printeradmin3.0.1_64.png
-
 # remove icons we dont have these sizes yet
 rm -rf %{buildroot}%{_datadir}/icons/hicolor/22x22/apps/*
 rm -rf %{buildroot}%{_datadir}/icons/hicolor/24x24/apps/*
@@ -2784,12 +3242,7 @@ done
 # sed -i 's/NoDisplay=true//' %{buildroot}%{_datadir}/applications/math*desktop;                                             
 
 # Fixes japanese translations on desktop files
-# Find out a better solution (two patches)
-%ifarch x86_64
-patch -p0 -d %{buildroot} < %{SOURCE103}
-%else
 patch -p0 -d %{buildroot} < %{SOURCE102}
-%endif 
 
 # templates for kde "create new" context menu
 tar xjf %{SOURCE31} -C %{buildroot}%{_datadir}
@@ -2800,11 +3253,12 @@ tar xjf %{SOURCE31} -C %{buildroot}%{_datadir}
 # chmod -x %{buildroot}%{ooodir}/extensions/pdfimport.oxt/help/component.txt
 
 # copy extensions 
-cp %{_builddir}/ooo-build-3.0.1-%{ooobuildver}/build/%{oootagver}/solver/300/unxlng*/bin/pdfimport/pdfimport.oxt %{buildroot}%{ooodir}/ 
-cp %{_builddir}/ooo-build-3.0.1-%{ooobuildver}/build/%{oootagver}/solver/300/unxlng*/bin/presenter/presenter-screen.oxt %{buildroot}%{ooodir}/ 
+cp %{_builddir}/ooo-build-%{ooobuildver}/build/%{oootagver}/solver/310/unxlng*/bin/pdfimport/pdfimport.oxt %{buildroot}%{ooodir}/ 
+cp %{_builddir}/ooo-build-%{ooobuildver}/build/%{oootagver}/solver/310/unxlng*/bin/presenter/presenter-screen.oxt %{buildroot}%{ooodir}/ 
+
 # cp %{_builddir}/ooo-build-3.0.1-%{ooobuildver}/build/%{oootagver}/solver/300/unxlng*/bin/sun-report-builder.oxt %{buildroot}%{ooodir}/ 
-cp %{_builddir}/ooo-build-3.0.1-%{ooobuildver}/build/%{oootagver}/solver/300/unxlng*/bin/swext/wiki-publisher.oxt %{buildroot}%{ooodir}/ 
-cp %{_builddir}/ooo-build-3.0.1-%{ooobuildver}/build/%{oootagver}/solver/300/unxlng*/bin/minimizer/sun-presentation-minimizer.oxt %{buildroot}%{ooodir}/ 
+cp %{_builddir}/ooo-build-%{ooobuildver}/build/%{oootagver}/solver/310/unxlng*/bin/swext/wiki-publisher.oxt %{buildroot}%{ooodir}/ 
+cp %{_builddir}/ooo-build-%{ooobuildver}/build/%{oootagver}/solver/310/unxlng*/bin/minimizer/sun-presentation-minimizer.oxt %{buildroot}%{ooodir}/ 
 
 %clean
 rm -rf %{buildroot}
@@ -2815,17 +3269,6 @@ rm -rf %{buildroot}
 /usr/sbin/update-alternatives --remove ooffice %{_bindir}/ooffice2.1 || :
 # We changed the master name here.
 /usr/sbin/update-alternatives --remove ooffice %{_bindir}/ooffice2.3 || :
-/usr/sbin/update-alternatives \
-	--install %{_bindir}/soffice soffice   %{_bindir}/ooffice%{mdvsuffix} %{oooaltpri} \
-	--slave %{_bindir}/ooffice   ooffice   %{_bindir}/ooffice%{mdvsuffix} \
-	--slave %{_bindir}/oowriter  oowriter  %{_bindir}/oowriter%{mdvsuffix} \
-	--slave %{_bindir}/oobase    oobase    %{_bindir}/oobase%{mdvsuffix} \
-	--slave %{_bindir}/oodraw    oodraw    %{_bindir}/oodraw%{mdvsuffix} \
-	--slave %{_bindir}/ooimpress ooimpress %{_bindir}/ooimpress%{mdvsuffix} \
-	--slave %{_bindir}/oocalc    oocalc    %{_bindir}/oocalc%{mdvsuffix} \
-	--slave %{_bindir}/ootool    ootool    %{_bindir}/ootool%{mdvsuffix} \
-	--slave %{_bindir}/ooweb     ooweb     %{_bindir}/ooweb%{mdvsuffix}
-[ -e %{_bindir}/soffice ] || /usr/sbin/update-alternatives --auto soffice
 
 # Dev300 without bootstraptc no interface language can be determinated
 # BrOffice support %post
@@ -2842,12 +3285,12 @@ rm -rf %{buildroot}
 #dev300: including basis3.0 before program
 # alternatives names follows oobr_<filename> mark, making it explicit.
  /usr/sbin/update-alternatives \
-	--install %{ooodir}/program/bootstraprc oobr_bootstraprc%{mdvsuffix} \
+	--install %{ooodir}/program/bootstraprc oobr_bootstraprc \
 		%{ooodir}/program/bootstraprc.ooo 1 \
-	--slave %{ooodir}/program/versionrc oobr_versionrc%{mdvsuffix} \
+	--slave %{ooodir}/program/versionrc oobr_versionrc \
 		%{ooodir}/program/versionrc.ooo \
-	--slave %{ooodir}/basis3.0/share/registry/data/org/openoffice/Setup.xcu oobr_Setup.xcu%{mdvsuffix} \
-		%{ooodir}/basis3.0/share/registry/data/org/openoffice/Setup.xcu.ooo
+	--slave %{ooodir}/%basis/share/registry/data/org/openoffice/Setup.xcu oobr_Setup.xcu \
+		%{ooodir}/%basis/share/registry/data/org/openoffice/Setup.xcu.ooo
 # Always do this configuration, as the switch should be transparent.
 /usr/sbin/update-alternatives --auto oobr_bootstraprc
 # End of BrOffice support %post
@@ -2864,13 +3307,10 @@ if [ -f /ooobuildtime.log ]; then
 fi
 
 %postun common
-if [ ! -e "%{_bindir}/ooffice%{mdvsuffix}" ]; then
-        /usr/sbin/update-alternatives --remove soffice %{_bindir}/ooffice%{mdvsuffix}
-fi
 
 # BrOffice support %postun common
  if [ ! -e "%{ooodir}/program/bootstraprc.ooo" ]; then
-        /usr/sbin/update-alternatives --remove oobr_bootstraprc%{mdvsuffix} %{ooodir}/program/bootstraprc.ooo
+       /usr/sbin/update-alternatives --remove oobr_bootstraprc %{ooodir}/program/bootstraprc.ooo
  fi
 # End of BrOffice support %postun common
 %{clean_desktop_database}
@@ -2883,12 +3323,12 @@ fi
 # BrOffice support %post l10n-pt_BR
 # alternatives names follows oobr_<filename> mark, making it explicit.
  /usr/sbin/update-alternatives \
-	--install %{ooodir}/program/bootstraprc oobr_bootstraprc%{mdvsuffix} \
+	--install %{ooodir}/program/bootstraprc oobr_bootstraprc \
 		%{ooodir}/program/bootstraprc.bro 2 \
-	--slave %{ooodir}/program/versionrc oobr_versionrc%{mdvsuffix} \
+	--slave %{ooodir}/program/versionrc oobr_versionrc \
 		%{ooodir}/program/versionrc.bro \
-	--slave %{ooodir}/basis3.0/share/registry/data/org/openoffice/Setup.xcu oobr_Setup.xcu%{mdvsuffix} \
-		%{ooodir}/basis3.0/share/registry/data/org/openoffice/Setup.xcu.bro
+	--slave %{ooodir}/%basis/share/registry/data/org/openoffice/Setup.xcu oobr_Setup.xcu
+		%{ooodir}/%basis/share/registry/data/org/openoffice/Setup.xcu.bro
 # Always do this configuration, as the switch should be transparent.
 /usr/sbin/update-alternatives --auto oobr_bootstraprc
 # End of BrOffice support %post l10n-pt_BR
@@ -2898,7 +3338,7 @@ fi
 %postun l10n-pt_BR
 # BrOffice support %postun l10n-pt_BR
  if [ ! -e "%{ooodir}/program/bootstraprc.bro" ]; then
-        /usr/sbin/update-alternatives --remove oobr_bootstraprc%{mdvsuffix} %{ooodir}/program/bootstraprc.bro
+        /usr/sbin/update-alternatives --remove oobr_bootstraprc %{ooodir}/program/bootstraprc.bro
  fi
 # End of BrOffice support %postun l10n-pt_BR
 
@@ -3048,47 +3488,50 @@ fi
 %files
 
 %files base -f build/base_list.txt
-%{_bindir}/oobase%{mdvsuffix}
-%ifarch x86_64
-%{_datadir}/applications/base64.desktop
-%else
+%{_bindir}/oobase
+%{_mandir}/man1/oobase.1*
 %{_datadir}/applications/base.desktop
-%endif
-%{_mandir}/man1/oobase%{mdvsuffix}.1*
 
 %files calc -f build/calc_list.txt
-%{_bindir}/oocalc%{mdvsuffix}
-%ifarch x86_64
-%{_datadir}/applications/calc64.desktop
-%else
-%{_datadir}/applications/calc.desktop
-%endif
+%{_bindir}/oocalc
 %{_datadir}/templates/ooo-spreadsheet.desktop
 %{_datadir}/templates/.source/ooo-spreadsheet.ods
-%{_mandir}/man1/oocalc%{mdvsuffix}.1*
+%{_mandir}/man1/oocalc.1*
+%{_datadir}/applications/calc.desktop
 
 %files common -f build/common_list.txt 
-%{_sysconfdir}/bash_completion.d/ooffice%{mdvsuffix}
-%{_sysconfdir}/profile.d/openoffice.org%{mdvsuffix}.*
-%{_bindir}/ooconfig%{mdvsuffix}
-%{_bindir}/ooffice%{mdvsuffix}
-%{_bindir}/oofromtemplate%{mdvsuffix}
-%{_bindir}/ootool%{mdvsuffix}
-%{_bindir}/soffice%{mdvsuffix}
+%{_sysconfdir}/bash_completion.d/ooffice.sh
+%{_sysconfdir}/profile.d/openoffice.org.*
+%{_bindir}/ooconfig
+%{_bindir}/ooffice
+%{_bindir}/oofromtemplate
+%{_bindir}/ootool
+%{_bindir}/soffice
 
 %{_datadir}/applications/template*.desktop
+%{_datadir}/applications/startcenter.desktop
 
+%{_datadir}/icons/hicolor/*/apps/ooo-base.*
+%{_datadir}/icons/hicolor/*/apps/ooo-calc.*
+%{_datadir}/icons/hicolor/*/apps/ooo-draw.*
+%{_datadir}/icons/hicolor/*/apps/ooo-gulls.*
+%{_datadir}/icons/hicolor/*/apps/ooo-impress.*
+%{_datadir}/icons/hicolor/*/apps/ooo-math.*
+%{_datadir}/icons/hicolor/*/apps/ooo-printeradmin.*
+%{_datadir}/icons/hicolor/*/apps/ooo-template.*
+%{_datadir}/icons/hicolor/*/apps/ooo-web.*
+%{_datadir}/icons/hicolor/*/apps/ooo-writer.*
+
+#old stuff ??
+%{_datadir}/icons/hicolor/*/apps/ooo-writer3.0*
+%{_datadir}/icons/hicolor/*/apps/ooo-main3.0*
 %{_datadir}/icons/hicolor/*/apps/ooo-base3.0*
 %{_datadir}/icons/hicolor/*/apps/ooo-calc3.0*
 %{_datadir}/icons/hicolor/*/apps/ooo-draw3.0*
-%{_datadir}/icons/hicolor/*/apps/ooo-gulls3.0*
 %{_datadir}/icons/hicolor/*/apps/ooo-impress3.0*
 %{_datadir}/icons/hicolor/*/apps/ooo-math3.0*
 %{_datadir}/icons/hicolor/*/apps/ooo-printeradmin3.0*
-%{_datadir}/icons/hicolor/*/apps/ooo-template3.0*
-%{_datadir}/icons/hicolor/*/apps/ooo-web3.0*
-%{_datadir}/icons/hicolor/*/apps/ooo-writer3.0*
-%{_datadir}/icons/hicolor/*/apps/ooo-main3.0*
+
 
 # new icons
 # %{_datadir}/icons/hicolor/*/apps/openofficeorg3-*.png
@@ -3096,33 +3539,32 @@ fi
 #%{_datadir}/icons/hicolor/*/mimetypes/openofficeorg3-*.png
 # %{_datadir}/icons/gnome/*/apps/openofficeorg3-*.png
 # %{_datadir}/icons/gnome/*/mimetypes/openofficeorg3-*.png
-%{_datadir}/pixmaps/ooo-base%{mdvsuffix}.png
-%{_datadir}/pixmaps/ooo-calc%{mdvsuffix}.png
-%{_datadir}/pixmaps/ooo-draw%{mdvsuffix}.png
-%{_datadir}/pixmaps/ooo-gulls%{mdvsuffix}.png
-%{_datadir}/pixmaps/ooo-impress%{mdvsuffix}.png
-%{_datadir}/pixmaps/ooo-math%{mdvsuffix}.png
-%{_datadir}/pixmaps/ooo-template%{mdvsuffix}.png
-%{_datadir}/pixmaps/ooo-web%{mdvsuffix}.png
-%{_datadir}/pixmaps/ooo-writer%{mdvsuffix}.png
-%{_mandir}/man1/ooffice%{mdvsuffix}.1*
-%{_mandir}/man1/oofromtemplate%{mdvsuffix}.1*
-%{_mandir}/man1/openoffice%{mdvsuffix}.1*
+%{_datadir}/pixmaps/ooo-base.png
+%{_datadir}/pixmaps/ooo-calc.png
+%{_datadir}/pixmaps/ooo-draw.png
+%{_datadir}/pixmaps/ooo-gulls.png
+%{_datadir}/pixmaps/ooo-impress.png
+%{_datadir}/pixmaps/ooo-math.png
+%{_datadir}/pixmaps/ooo-template.png
+%{_datadir}/pixmaps/ooo-web.png
+%{_datadir}/pixmaps/ooo-writer.png
+%{_mandir}/man1/ooffice.1*
+%{_mandir}/man1/oofromtemplate.1*
+%{_mandir}/man1/openoffice.1*
 %{_datadir}/mime
 # XXX Due to alternatives upgrade from 2.3.0.5-1mdv to -2mdv
 # (.desktop files are not included because they are in their
 # respective subpackages already (#38412))
 
 #dev300 
-# %ghost %{ooodir}/program/bootstraprc.ooo
-# %ghost %{ooodir}/program/versionrc.ooo
-# %ghost %{ooodir}/basis3.0/program/versionrc.ooo
-# ghost %{ooodir}/basis3.0/share/registry/data/org/openoffice/Setup.xcu.ooo
 # %ghost %{ooodir}/share/uno_packages
+%ghost %{ooodir}/program/bootstraprc
+%ghost %{ooodir}/program/versionrc
+%ghost %{ooodir}/%basis/share/registry/data/org/openoffice/Setup.xcu
 
 # XXX not sure where these came from
-%{_bindir}/unopkg%{mdvsuffix}
-%{_mandir}/man1/unopkg%{mdvsuffix}.1*
+%{_bindir}/unopkg
+%{_mandir}/man1/unopkg.1*
 %{_datadir}/applications/ooo-extension-manager*.desktop
 
 
@@ -3133,16 +3575,12 @@ fi
 %files devel-doc -f build/sdk_doc_list.txt
 
 %files draw -f build/draw_list.txt
-%{_bindir}/oodraw%{mdvsuffix}
-%ifarch x86_64
-%{_datadir}/applications/draw64.desktop
-%else
+%{_bindir}/oodraw
 %{_datadir}/applications/draw.desktop
-%endif
 
 %{_datadir}/templates/ooo-drawing.desktop
 %{_datadir}/templates/.source/ooo-drawing.odg
-%{_mandir}/man1/oodraw%{mdvsuffix}.1*
+%{_mandir}/man1/oodraw.1*
 
 # dev300: 
 # %files dtd-officedocument1.0 -f build/dtd_list.txt
@@ -3153,28 +3591,22 @@ fi
 %files gnome -f build/gnome_list.txt
 
 %files impress -f build/impress_list.txt
-%{_bindir}/ooimpress%{mdvsuffix}
-%ifarch x86_64 
-%{_datadir}/applications/impress64.desktop
-%else
+%{_bindir}/ooimpress
 %{_datadir}/applications/impress.desktop
-%endif
 %{_datadir}/templates/ooo-presentation.desktop
 %{_datadir}/templates/.source/ooo-presentation.odp
-%{_mandir}/man1/ooimpress%{mdvsuffix}.1*
+%{_mandir}/man1/ooimpress.1*
 
 %files java-common -f build/java_common_list.txt
 
-# %files kde -f build/kde_list.txt
+%if %{use_kde4}
+%files kde4 -f build/kde_list.txt
+%endif
 
 %files math -f build/math_list.txt
-%{_bindir}/oomath%{mdvsuffix}
-%ifarch x86_64
-%{_datadir}/applications/math64.desktop
-%else
+%{_bindir}/oomath
 %{_datadir}/applications/math.desktop
-%endif 
-%{_mandir}/man1/oomath%{mdvsuffix}.1*
+%{_mandir}/man1/oomath.1*
 
 %files openclipart -f build/gallery_list.txt
 
@@ -3188,47 +3620,47 @@ fi
 #dev300: file not found
 %files style-galaxy
 #%{ooodir}/share/config/images.zip
-%{ooodir}/basis3.0/share/config/images.zip
+%{ooodir}/%basis/share/config/images.zip
 
 #dev300: file not found
 %files style-crystal
 #%{ooodir}/share/config/images_crystal.zip
-%{ooodir}/basis3.0/share/config/images_crystal.zip
+%{ooodir}/%basis/share/config/images_crystal.zip
 
 #dev300: file not found
 %files style-hicontrast
 #%{ooodir}/share/config/images_hicontrast.zip
-%{ooodir}/basis3.0/share/config/images_hicontrast.zip
+%{ooodir}/%basis/share/config/images_hicontrast.zip
 
 #dev300: file not found
 %files style-industrial
 # %{ooodir}/share/config/images_industrial.zip
-%{ooodir}/basis3.0/share/config/images_industrial.zip
+%{ooodir}/%basis/share/config/images_industrial.zip
 
 #dev300: file not found
 %files style-tango
 #%{ooodir}/share/config/images_tango.zip
-%{ooodir}/basis3.0/share/config/images_tango.zip
+%{ooodir}/%basis/share/config/images_tango.zip
+
+%if %{use_kde4}
+%files style-oxygen
+%{ooodir}/%basis/share/config/images_oxygen.zip
+%endif
 
 %files writer -f build/writer_list.txt
-%{_bindir}/ooweb%{mdvsuffix}
-%{_bindir}/oowriter%{mdvsuffix}
-%ifarch x86_64
-%{_datadir}/applications/writer64.desktop
-%{_datadir}/applications/web64.desktop
-%else
+%{_bindir}/ooweb
+%{_bindir}/oowriter
 %{_datadir}/applications/writer.desktop
 %{_datadir}/applications/web.desktop
-%endif 
 %{_datadir}/templates/ooo-text.desktop
 %{_datadir}/templates/.source/ooo-text.odt
-%{_mandir}/man1/ooweb%{mdvsuffix}.1*
-%{_mandir}/man1/oowriter%{mdvsuffix}.1*
+%{_mandir}/man1/ooweb.1*
+%{_mandir}/man1/oowriter.1*
 
 %if %{use_mono}
 %files mono -f build/mono_list.txt
 %defattr(-,root,root)
-%{_libdir}/pkgconfig/mono-ooo-%{mdvsuffix}.pc
+%{_libdir}/pkgconfig/mono-ooo.pc
 # %{_libdir}/pkgconfig/mono-ooo%{mdvsuffix}-2.3.pc
 # %{_libdir}/mono/*/*/*
 # %{_libdir}/mono/ooo-%{mdvsuffix}
@@ -3350,7 +3782,10 @@ fi
 %{_bindir}/br*
 %{ooodir}/program/bootstraprc.bro
 %{ooodir}/program/versionrc.bro
-%{ooodir}/basis3.0/share/registry/data/org/openoffice/Setup.xcu.bro
+%{ooodir}/%basis/share/registry/data/org/openoffice/Setup.xcu.bro
+%ghost %{ooodir}/program/bootstraprc
+%ghost %{ooodir}/program/versionrc
+%ghost %{ooodir}/%basis/share/registry/data/org/openoffice/Setup.xcu
 
 %files l10n-ru -f build/lang_ru_list.txt
 %defattr(-,root,root)
@@ -3500,8 +3935,81 @@ fi
 %defattr(-,root,root)
 %endif
 
+# %changelog
+# * Fri Jul 17 2009 Rafael Cabral <cabral@mandriva.com> 0:3.1-2mdv2010.0
+# - readded mdv-sysui-disableslack.diff to solve build issues
+# - readded mdv-xdgmailasmailer.diff to set default mail client as xdg
+# - added mdv-fix-xdg-work-directory.diff to fix setting default 
+#  working directory using xdg-user-dirs tool, i#101461, blino
+# - enabled patch to workarround mono 2.4 build issues 
+# - removed mdv-exceptcxx-include-string since it's not needed anymore
+# - added headers-printf-gcc4.diff to include stdio header for some 
+#  build issues with gcc4.4 
+# - enable kde4 integration: 
+#   merged properly kde4 stuff and oxygen icons from ooo-build git trunk 
+#    in their 3.1 stable resulting in our new packages: 
+#    openoffice.org-kde4 and openoffice.org-style-oxygen
+#    Our fixes (kde4-filepicker-fixes.diff) : 
+#	* opening files by using double click 
+#        * add suport to open multiple files 
+#        * add filters in the open file picker
+# - fixed version releases on changelog
+
+#(needs to check exceptio require jpeg) 62/70
+
+# - add qt4-devel build require
+# - add task-kde4-devel build require and removes kdelibs-devel
+
 %changelog
+* Thu Sep 24 2009 Rafael Cabral <cabral@mandriva.com> 0:3.1-5mdv2010.0
+- fix icu40 regression
+
+* Mon Sep 21 2009 Rafael Cabral <cabral@mandriva.com> 0:3.1-4mdv2010.0
+- remove kernel-source build require
+- remove libdb-java build require
+- add mesaglu1 build require
+- uses libjpeg from system, actually libjpeg7, remove exception require
+  fixes #53763
+- uses hunspell from system
+- fix Setup.xcu.ooo update-alternatives
+- add anssi's patches: drop-64bit-naming.patch and 
+  move-to-ooo-and-drop-alternatives.patch to renaming openoffice.org64 
+  packages to openoffice.org (it is no a requirement maintaining different 
+  names to both archs anymore). Further his last patch changes 
+  ooo-mdvsuffix dir to ooo - keeps easy maintenance 
+
+* Fri Aug 14 2009 Rafael Cabral <cabral@mandriva.com> 0:3.1-3mdv2010.0
+- fix kde dependence bug 
+
+* Wed Aug 12 2009 Rafael Cabral <cabral@mandriva.com> 0:3.1-2mdv2010.0
+- change icu40 require to icu42 since it was built against the last one
+  (due icu40 requires uneeded space on One product)
+
+* Fri Jun 26 2009 Rafael Cabral <cabral@mandriva.com> 0:3.1-1mdv2010.0
+- ooo-build 3.1 official release
+
+* Wed May 06 2009 Rafael Cabral <cabral@mandriva.com> 0:3.1-0.beta6.1mdv2010.0
+- first 3.1 (beta6) ooo-buid upstream 
+- remains using old 3.0.1 package-ooo  
+- disable mdv-exceptcxx-include-string.diff (build fix uneeded anymore)
+- change all references to bases3.0 to bases3.1 dir via mdvsuffix
+
+* Fri Mar 20 2009 Rafael Cabral <cabral@mandriva.com> 0:3.0.1-5mdv2009.1
+- fix crash on certain table configurations from Office documents #48629
+  backported sw-table-crash-fix-i99564.diff
+
+* Tue Mar 17 2009 Rafael Cabral <cabral@mandriva.com> 0:3.0.1-4mdv2009.1
+- fix file conflicts in openoffice.org-common and openoffice.org-help-en_US
+
+* Thu Mar 12 2009 Rafael Cabral <cabral@mandriva.com> 0:3.0.1-3mdv2009.1
+- Upstream maintenance update (ooo-build version 3.0.1.3)
+- Patches mdv-xdgmailasmailer.diff, mdv-sysui-disableslack.diff were 
+  integrated in this upstream release
+- Changed to new Mandriva splash and about screens
+- Added desktop-utils and libxtst6-devel as build requires
+
 * Tue Mar 03 2009 Rafael Cabral <cabral@mandriva.com> 0:3.0.1-2mdv2009.1
+- Revision 347802
 - split out pdf import extension from common to a new package: 
   openoffice.org-pdfimport
 - new enabled extension packages: 
