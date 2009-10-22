@@ -16,7 +16,7 @@
 #define _source_payload w9.bzdio
 
 %define version	        3.1.1
-%define release		%mkrel 1
+%define release		%mkrel 2
 
 %define oootagver	ooo310-m19
 # define ooobuildver     3.1.0.6.20090709
@@ -417,7 +417,7 @@ Requires: desktop-common-data >= 2008
 # configs needed at this package, so we must require it too.
 Requires: sane-backends
 # Due to %{_bindir}/paperconf
-Requires: paper-utils
+# Requires: paper-utils
 #dev300
 Requires: %{mklibname icu 42} 
 Requires: %{mklibname hunspell 1.2_0}
@@ -3225,11 +3225,6 @@ rm -rf %{buildroot}%{_datadir}/icons/hicolor/24x24/apps/*
 # remove scalables icons since we dont have yet
 rm -rf %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/*
 
-# fix name of desktop icons on desktop files
-for f in %{buildroot}%{_datadir}/applications/*desktop; do
-   sed -i 's@Icon=ooo-\(base\|calc\|draw\|impress\|math\|writer\)3\.0.*@Icon=ooo-\13\.0@' $f
-done
-
 # XXX disable the menu entries for these
 # besides not being real apps, we don't have new-style icons for them
 # see #26311#c33
@@ -3521,17 +3516,7 @@ fi
 %{_datadir}/icons/hicolor/*/apps/ooo-template.*
 %{_datadir}/icons/hicolor/*/apps/ooo-web.*
 %{_datadir}/icons/hicolor/*/apps/ooo-writer.*
-
-#old stuff ??
-%{_datadir}/icons/hicolor/*/apps/ooo-writer3.0*
-%{_datadir}/icons/hicolor/*/apps/ooo-main3.0*
-%{_datadir}/icons/hicolor/*/apps/ooo-base3.0*
-%{_datadir}/icons/hicolor/*/apps/ooo-calc3.0*
-%{_datadir}/icons/hicolor/*/apps/ooo-draw3.0*
-%{_datadir}/icons/hicolor/*/apps/ooo-impress3.0*
-%{_datadir}/icons/hicolor/*/apps/ooo-math3.0*
-%{_datadir}/icons/hicolor/*/apps/ooo-printeradmin3.0*
-
+%{_datadir}/icons/hicolor/*/apps/ooo-main.*
 
 # new icons
 # %{_datadir}/icons/hicolor/*/apps/openofficeorg3-*.png
@@ -3961,6 +3946,10 @@ fi
 # - add task-kde4-devel build require and removes kdelibs-devel
 
 %changelog
+* Thu Oct 20 2009 Rafael Cabral <cabral@mandriva.com> 0:3.1.1-2mdv2010.0
+- add fashion menu icons
+- remove paper-utils require #45804
+
 * Thu Oct 15 2009 Rafael Cabral <cabral@mandriva.com> 0:3.1.1-1mdv2010.0
 - new openoffice.org 3.1.1 upstream plus ooo-build 3.1.1.2
 - should solve release criticals bugs #54334 and #54592
