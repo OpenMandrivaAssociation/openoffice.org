@@ -10,8 +10,10 @@
 
 #define _binary_payload w1.gzdio
 #define _binary_payload w9.bzdio
-%define _binary_payload w9.lzdio
+#define _binary_payload w9.lzdio
 #define _source_payload w9.bzdio
+%define _binary_payload w9.gzdio
+%define _source_payload w9.gzdio
 
 %define version	        3.2
 %define release		%mkrel 4
