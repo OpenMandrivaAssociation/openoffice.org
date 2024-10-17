@@ -96,7 +96,7 @@ Name:		%{name}
 Epoch:		1
 Version:	%{version}
 Release:	%{release}
-URL:		http://www.go-ooo.org
+URL:		https://www.go-ooo.org
 License:	LGPL
 Group:		Office
 Vendor:		Mandriva
