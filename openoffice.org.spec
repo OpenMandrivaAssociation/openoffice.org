@@ -124,6 +124,8 @@ Provides:	OpenOffice.org-libs
 # Requirements for building
 #
 %if %{use_icecream}
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
 BuildRequires:	icecream
 %endif
 %if %{use_ccache}
