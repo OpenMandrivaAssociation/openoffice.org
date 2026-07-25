@@ -16,7 +16,7 @@
 %define _source_payload w1.gzdio
 
 %define version	        3.2
-%define release		%mkrel 4
+%define release 5
 
 %define oootagver	ooo320-m12
 %define ooobuildver     3.2.0.9
